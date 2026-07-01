@@ -1,0 +1,8 @@
+.desktop {
+    position: relative;
+    width: 100vw;
+    height: calc(100vh - 32px); /* 32 px is the height of the taskbar */
+    background-color: var(--win-bg);
+    padding: 4px;
+    overflow: hidden;
+}

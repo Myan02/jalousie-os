@@ -1,0 +1,33 @@
+/* Global styling */
+
+@font-face {
+    font-family: "MS Sans Serif";
+    src: url("./assets/fonts/MS-Sans-Serif.ttf");
+}
+
+@font-face {
+    font-family: "MS Sans Serif Bold";
+    src: url("./assets/fonts/MS-Sans-Serif-Bold.ttf");
+}
+
+/* Reset styling */
+*, *::before, *::after {
+    box-sizing: border-box; /* Keep elements from overflowing into parent containers */
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    font-family: "MS Sans Serif", sans-serif;
+    overflow: hidden;
+
+    /* Color Variables */
+    --win-bg:      #008080;
+    --win-silver:  #c0c0c0;
+    --win-dark:    #808080;
+    --win-white:   #ffffff;
+    --win-navy:    #000080;
+    --win-navy-end:#1081c3;
+    --win-text:    #dcdcdc;
+    --win-content: #fafafa;
+}

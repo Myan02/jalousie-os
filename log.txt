@@ -1,0 +1,12 @@
+- window content
+    - fix the div
+    - add content to display 
+    - add new icons and windows
+- make windows sizes scalable
+- automatically open guide when rendering site
+- fix taskbar start button
+    - make a custom window thaty is not draggable
+    - change the way it looks
+- add a dark mode button to either the task bar or as an icon exe
+- add a volume slider for audio
+    - add audio

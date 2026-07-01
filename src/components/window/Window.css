@@ -1,0 +1,98 @@
+.window {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    min-height: 200px;
+    background-color: var(--win-silver);
+
+    border: 3px solid;
+    border-top-color:    var(--win-white);
+    border-left-color:   var(--win-white);
+    border-right-color:  var(--win-dark);
+    border-bottom-color: var(--win-dark);
+}
+
+.window__titlebar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 28px;
+    padding: 0 4px;
+    background: linear-gradient(to right, var(--win-navy), var(--win-navy-end));
+    cursor: move;
+    flex-shrink: 0;
+}
+
+.window__titlebar-icon {
+    height: 18px;
+    width: 18px;
+    object-fit: contain;
+    flex-shrink: 0;
+    user-select: None;
+}
+
+.window__titlebar-title {
+    flex: 1;
+    color: var(--win-text);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: default;
+    user-select: None;
+}
+
+.window__controls {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.window__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background-color: var(--win-silver);
+    cursor: pointer;
+
+    border: 2px solid;
+    border-top-color:    var(--win-white);
+    border-left-color:   var(--win-white);
+    border-right-color:  var(--win-black);
+    border-bottom-color: var(--win-black);
+}
+
+.window__btn img {
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+}
+
+.window__btn:hover {
+    filter: brightness(0.9);
+}
+
+.window__btn:active {
+    border-top-color:    var(--win-black);
+    border-left-color:   var(--win-black);
+    border-right-color:  var(--win-white);
+    border-bottom-color: var(--win-white);
+}
+
+.window__content {
+    flex: 1;
+    background-color: var(--win-content);
+    overflow: auto;
+    margin: 4px;
+
+    border: 2px solid;
+    border-top-color:    var(--win-dark);
+    border-left-color:   var(--win-dark);
+    border-right-color:  var(--win-white);
+    border-bottom-color: var(--win-white);
+}

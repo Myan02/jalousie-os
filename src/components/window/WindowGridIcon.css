@@ -1,0 +1,13 @@
+.window-icon-grid {
+    position: relative;
+    padding: 4px;
+}
+
+.window-icon-grid__empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--win-dark);
+    font-size: 0.85rem;
+}
