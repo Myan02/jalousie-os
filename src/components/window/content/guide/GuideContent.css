@@ -1,0 +1,48 @@
+.guide {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--win-text);
+    height: 100%;
+    overflow: hidden;
+}
+
+.guide__header {
+    height: 64px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.guide__body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.guide__body-table {
+    display: flex;
+    flex: 5 0;
+    min-height: 0;
+    min-width: 0;
+}
+
+.guide__body-content {
+    display: flex;
+    flex: 10 0;
+    min-width: 0;
+    background-color: var(--win-white);
+    align-items:flex-start;
+    justify-content: center;
+    padding: 8px;
+    overflow: scroll;
+
+    border: 1px solid;
+    border-top-color:    var(--win-black);
+    border-left-color:   var(--win-black);
+    border-right-color:  var(--win-white);
+    border-bottom-color: var(--win-white);
+}

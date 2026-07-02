@@ -1,7 +1,7 @@
-import RecycleContent from "./content/RecycleContent";
-import ComputerContent from "./content/ComputerContent";
-import DocumentsContent from "./content/DocumentsContent";
-import GuideContent from "./content/GuideContent";
+import RecycleContent from "./content/recycle/RecycleContent";
+import ComputerContent from "./content/computer/ComputerContent";
+import DocumentsContent from "./content/documents/DocumentsContent";
+import GuideContent from "./content/guide/GuideContent";
 
 const WindowContent = ({ windowId }: { windowId: string }) => {
     switch (windowId) {

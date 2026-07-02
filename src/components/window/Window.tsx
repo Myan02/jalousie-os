@@ -71,10 +71,10 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                         <img src="./src/assets/icons/close-icon.png" alt="close" />
                     </button>
                 </div>
+            </div>
 
-                <div className="window__content">
-                    <WindowContent windowId={win.id} />
-                </div>
+            <div className="window__content">
+                <WindowContent windowId={win.id} />
             </div>
         </div>
     );
