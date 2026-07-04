@@ -25,6 +25,8 @@
     border-left-color:   var(--win-dark);
     border-right-color:  var(--win-white);
     border-bottom-color: var(--win-white);
+
+    transform: translate(1px, 1px); /* Slightly shift the tab to simulate a similar win98 click */
 }
 
 

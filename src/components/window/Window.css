@@ -83,6 +83,9 @@
     border-left-color:   var(--win-black);
     border-right-color:  var(--win-white);
     border-bottom-color: var(--win-white);
+
+    transform: translate(1px, 1px);
+
 }
 
 .window__content {
