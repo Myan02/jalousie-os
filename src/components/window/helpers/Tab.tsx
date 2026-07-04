@@ -1,4 +1,4 @@
-import "./WindowTab.css";
+import "./Tab.css";
 
 type props = {
     label: string;

@@ -1,4 +1,4 @@
-import WindowTab from "../../helpers/WindowTab";
+import WindowTab from "../../helpers/Tab";
 import Divider from "../../helpers/Divider";
 import "./GuideContent.css";
 
@@ -16,7 +16,6 @@ const GuideContent = () => (
 
         <div className="guide__body">
             <div className="guide__body-table">
-                <p>this is the table</p>
             </div>
 
             <div className="guide__body-content">

@@ -28,6 +28,21 @@
     flex: 5 0;
     min-height: 0;
     min-width: 0;
+    margin: 16px;
+
+    border: 2px solid;
+    border-top-color:    var(--win-black);
+    border-left-color:   var(--win-black);
+    border-right-color:  var(--win-white);
+    border-bottom-color: var(--win-white);
+
+    outline: 8px solid;
+    outline-color: var(--win-text);
+
+    box-shadow: 0 -2px 0 8px var(--win-white),
+                2px 0 0 8px var(--win-black),
+                0 2px 0 8px var(--win-black),
+                -2px 0 0 8px var(--win-white);
 }
 
 .guide__body-content {
