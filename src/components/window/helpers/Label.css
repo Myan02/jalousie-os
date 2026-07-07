@@ -1,0 +1,36 @@
+.WinLabel {
+    font-family: "MS Sans Serif", sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    user-select: none;
+}
+
+.WinLabel__img {
+    height: 20px;
+    pointer-events: none;
+}
+
+.WinLabel__text {
+    margin-left: 4px;
+    padding-left: 2px;
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.WinLabel__text:hover {
+    text-decoration: underline var(--win-navy);
+    color: var(--win-navy);
+    cursor: pointer;
+}
+
+.WinLabel__text:active {
+    text-decoration: underline var(--win-white);
+    color: var(--win-white);
+    background-color: var(--win-navy);
+}
+

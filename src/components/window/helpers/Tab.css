@@ -29,6 +29,13 @@
     transform: translate(1px, 1px); /* Slightly shift the tab to simulate a similar win98 click */
 }
 
+.tab:disabled {
+    padding: 2px;
+    margin-top: 2px;
+    border: none;
+    transform: none;
+    filter: grayscale(1.0);
+}
 
 .tab__img {
     width: 32px;

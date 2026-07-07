@@ -1,25 +1,54 @@
 import { useState } from "react";
 import WindowTab from "../../helpers/Tab";
 import Divider from "../../helpers/Divider";
+import Label from "../../helpers/Label";
 import "./GuideContent.css";
 
 const GuideContent = () => {
 
-    const [tab, setTab] = useState<string>("Content");
+    const [tab, setTab] = useState<string>("Content");          // tab keeps track of the current table tab (content, index, search)
+    const [sections, setSections] = useState<string[]>(["1"]);  // sections tracks the user click history and the last item is the one the user is currently seeing
+    const [curIndex, setCurIndex] = useState<number>(0);        // curIndex is where ther user is in the section click history
 
+    // Set the tab
     const handleTabClick = (newTab: string) => {
         if (newTab === tab) return;
 
         setTab(newTab);
     };
 
+    // Set the section to view
+    const handleNewSectionClick = (e: React.MouseEvent) => {
+        const curId = e.currentTarget.id;
+        if (curId == sections[curIndex]) return;    // User clicked on the section they are already viewing
+
+        // Reset history in case the user has clicked back arrow
+        const newsections = [...sections.slice(0, curIndex + 1), curId];
+        setSections(newsections);
+        setCurIndex((prev) => prev + 1);
+    };
+
+    // User clicks to go back in their history
+    const handleBackClick = () => {
+        if (curIndex == 0) return;
+
+        setCurIndex((prev) => prev - 1);
+    };
+
+    // User clicks to go forward in their history
+    const handleForwardClick = () => {
+        if (curIndex == sections.length - 1) return;
+
+        setCurIndex((prev) => prev + 1);
+    }
+
     return (
         <div className="guide">
             <div className="guide__header">
                 <WindowTab label="Hide" imageSrc="hide-icon.png" click={() => console.log("clicked")} />
-                <WindowTab label="Back" imageSrc="left-arrow-icon.png" click={() => console.log("clicked")} />
-                <WindowTab label="Forward" imageSrc="right-arrow-icon.png" click={() => console.log("clicked")} />
-                <WindowTab label="Options" imageSrc="options-icon.png" click={() => console.log("clicked")} />
+                <WindowTab label="Back" imageSrc="left-arrow-icon.png" disabled={Boolean(curIndex == 0)} click={handleBackClick} />
+                <WindowTab label="Forward" imageSrc="right-arrow-icon.png" disabled={Boolean(curIndex == sections.length - 1)} click={handleForwardClick} />
+                <WindowTab label="Options" imageSrc="options-icon.png" click={() => console.log(sections, curIndex)} />
                 <WindowTab label="Web Help" imageSrc="web-help-icon.png" click={() => console.log("clicked")} />
             </div>
 
@@ -32,17 +61,36 @@ const GuideContent = () => {
                         <button className={tab == "Index" ? "guide__body-top__btn guide__body-top__btn-selected" : "guide__body-top__btn"} onClick={() => handleTabClick("Index")}>Index</button>
                         <button className={tab == "Search" ? "guide__body-top__btn guide__body-top__btn-selected" : "guide__body-top__btn"} onClick={() => handleTabClick("Search")}>Search</button>
                     </div>
-                    <div className="guide__body-sections"></div>
+
+                    {tab == "Content" && <div className="guide__body-sections">
+                        <Label id="1" imageSrc="help-icon.png" label="Welcome to Help" click={handleNewSectionClick} />
+                        <Label id="2" imageSrc="copy-icon.png" label="Background" click={handleNewSectionClick} />
+                        <Label id="3" imageSrc="computer-icon.png" label="Exploring Your Online Desktop" click={handleNewSectionClick} />
+                        <Label id="4" imageSrc="guide-icon.png" label="Using Accessibility Features" click={handleNewSectionClick} />
+                        <Label id="5" imageSrc="guide-icon.png" label="Troubleshooting" click={handleNewSectionClick} />
+                        <Label id="6" imageSrc="help-icon.png" label="Infrequently Asked Questions" click={handleNewSectionClick} />
+                    </div>}
+
+                    {tab == "Index" && <div className="guide__body-sections">
+
+                    </div>}
+
+                    {tab == "Search" && <div className="guide__body-sections">
+
+                    </div>}
+
+
                 </div>
 
-
                 <div className="guide__body-content">
-
+                    {sections[curIndex] == "1" && <p>section 1</p>}
+                    {sections[curIndex] == "2" && <p>section 2</p>}
+                    {sections[curIndex] == "3" && <p>section 3</p>}
                 </div>
             </div>
         </div>
-);
+    );
 };
-    
-    
+
+
 export default GuideContent;

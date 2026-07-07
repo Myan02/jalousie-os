@@ -7,7 +7,7 @@
 }
 
 .guide__header {
-    height: 64px;
+    height: 60px;
     flex-shrink: 0;
     display: flex;
     flex-direction: row;
@@ -38,7 +38,7 @@
 
 .guide__body-top__btn {
     font-family: "MS Sans Serif", sans-serif;
-    border: none;
+    font-size: 0.8rem;
     background-color: var(--win-text);
     padding: 6px;
 
@@ -60,6 +60,7 @@
 .guide__body-sections {
     display: flex;
     flex: 12 0;
+    flex-direction: column;
     min-height: 0;
     min-width: 0;
     margin: 16px;
