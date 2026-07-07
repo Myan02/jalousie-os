@@ -2,6 +2,7 @@ import { useState } from "react";
 import WindowTab from "../../helpers/Tab";
 import Divider from "../../helpers/Divider";
 import Label from "../../helpers/Label";
+import Welcome from "./sections/Welcome";
 import "./GuideContent.css";
 
 const GuideContent = () => {
@@ -71,22 +72,21 @@ const GuideContent = () => {
                         <Label id="6" imageSrc="help-icon.png" label="Infrequently Asked Questions" click={handleNewSectionClick} />
                     </div>}
 
-                    {tab == "Index" && <div className="guide__body-sections">
+                    {tab == "Index" && <div className="guide__body-sections"></div>}
 
-                    </div>}
-
-                    {tab == "Search" && <div className="guide__body-sections">
-
-                    </div>}
-
+                    {tab == "Search" && <div className="guide__body-sections"></div>}
 
                 </div>
 
                 <div className="guide__body-content">
-                    {sections[curIndex] == "1" && <p>section 1</p>}
+                    {sections[curIndex] == "1" && <Welcome />}
                     {sections[curIndex] == "2" && <p>section 2</p>}
                     {sections[curIndex] == "3" && <p>section 3</p>}
+                    {sections[curIndex] == "4" && <p>section 4</p>}
+                    {sections[curIndex] == "5" && <p>section 5</p>}
+                    {sections[curIndex] == "6" && <p>section 6</p>}
                 </div>
+
             </div>
         </div>
     );

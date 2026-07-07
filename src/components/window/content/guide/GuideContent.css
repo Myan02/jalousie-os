@@ -31,7 +31,7 @@
 
 .guide__body-top {
     display: flex;
-    flex: 1 0;
+    flex-basis: 32px;
     margin-left: 6px;
     margin-top: 3px;
 }
@@ -83,11 +83,10 @@
 
 .guide__body-content {
     display: flex;
+    flex-direction: column;
     flex: 10 0;
-    min-width: 0;
     background-color: var(--win-white);
     align-items:flex-start;
-    justify-content: center;
     padding: 8px;
     overflow: scroll;
 

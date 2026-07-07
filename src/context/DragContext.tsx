@@ -66,7 +66,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             x: window.innerWidth / 2 - 300,
             y: window.innerHeight / 2 - 200,
             width: 600,
-            height: 400,
+            height: 500,
             zIndex: getNextZ(),
             minimized: false,
         }]);
