@@ -65,6 +65,7 @@
     min-width: 0;
     margin: 16px;
     margin-top: 8px;
+    overflow: scroll;
 
     border: 2px solid;
     border-top-color:    var(--win-black);
@@ -86,7 +87,7 @@
     flex-direction: column;
     flex: 10 0;
     background-color: var(--win-white);
-    align-items:flex-start;
+    align-items: flex-start;
     padding: 8px;
     overflow: scroll;
 

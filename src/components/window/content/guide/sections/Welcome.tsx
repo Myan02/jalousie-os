@@ -1,15 +1,17 @@
+import "./Welcome.css";
+
 const Welcome = () => {
     return (
         <>
-            <h1>Welcome to the Start Guide</h1>
+            <span className="Title">Welcome to the Start Guide</span>
 
-            <p>Use the sections and tabs on the left to explore this online operating system.</p>
+            <span className="Description">Use the sections and tabs on the left to explore this online operating system.</span>
 
-            <ul>
-                <li>Learn more about me.</li>
-                <li>Browse through a gallery of my work.</li>
-                <li>Find answers to your questions.</li>
-                <li>Discover easter eggs.</li>
+            <ul className="List">
+                <li className="Item">Learn more about me.</li>
+                <li className="Item">Browse through a gallery of my work.</li>
+                <li className="Item">Find answers to your questions.</li>
+                <li className="Item">Discover easter eggs.</li>
             </ul>
         </>
     );
