@@ -1,0 +1,24 @@
+.Accessibility__Title {
+    font-family: "MS Sans Serif Bold", sans-serif;
+    align-self: flex-start;
+    margin: 4px;
+    font-weight: 100;
+}
+
+.Accessibility__Description {
+    align-self: flex-start;
+    line-height: 24px;
+    margin: 4px;
+}
+
+
+.Accessibility__List {
+    margin-left: 6%;
+    line-height: 24px;
+}
+
+.Accessibility__Item {
+    margin-left: 4px;
+    margin-bottom: 4px;
+    line-height: 24px;
+}

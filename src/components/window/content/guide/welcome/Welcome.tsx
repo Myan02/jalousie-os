@@ -9,7 +9,7 @@ const Welcome = () => {
 
             <ul className="Welcome__List">
                 <li className="Welcome__Item">Learn more about me.</li>
-                <li className="Welcome__Item">Browse through a gallery of my work.</li>
+                <li className="Welcome__Item">Get info on using this operating system.</li>
                 <li className="Welcome__Item">Find answers to your questions.</li>
                 <li className="Welcome__Item">Discover easter eggs.</li>
             </ul>
