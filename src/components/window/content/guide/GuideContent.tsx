@@ -2,7 +2,9 @@ import { useState } from "react";
 import WindowTab from "../../helpers/Tab";
 import Divider from "../../helpers/Divider";
 import Label from "../../helpers/Label";
-import Welcome from "./sections/Welcome";
+import Welcome from "./welcome/Welcome";
+import Background from "./background/Background";
+import Explore from "./explore/Explore";
 import "./GuideContent.css";
 
 const GuideContent = () => {
@@ -77,6 +79,7 @@ const GuideContent = () => {
                             <Label id="4" imageSrc="guide-icon.png" label="Using Accessibility Features" click={handleNewSectionClick} />
                             <Label id="5" imageSrc="guide-icon.png" label="Troubleshooting" click={handleNewSectionClick} />
                             <Label id="6" imageSrc="help-icon.png" label="Infrequently Asked Questions" click={handleNewSectionClick} />
+                            <Label id="7" imageSrc="copy-icon.png" label="Credit and Inspirations" click={handleNewSectionClick} />
                         </div>}
 
                         {tab == "Index" && <div className="guide__body-sections"></div>}
@@ -87,15 +90,16 @@ const GuideContent = () => {
 
 
                 <div style={sections[curIndex] == "1"
-                    ? { backgroundImage: "url('./src/assets/backdrops/help-backdrop.png')", backgroundRepeat: "no-repeat", backgroundPosition: "left 25% 0" }
+                    ? { backgroundImage: "url('./src/assets/backdrops/help-backdrop.png')", backgroundRepeat: "no-repeat", backgroundPosition: "left top" }
                     : { backgroundImage: "none" }}
                     className="guide__body-content">
                     {sections[curIndex] == "1" && <Welcome />}
-                    {sections[curIndex] == "2" && <p>section 2</p>}
-                    {sections[curIndex] == "3" && <p>section 3</p>}
+                    {sections[curIndex] == "2" && <Background />}
+                    {sections[curIndex] == "3" && <Explore />}
                     {sections[curIndex] == "4" && <p>section 4</p>}
                     {sections[curIndex] == "5" && <p>section 5</p>}
                     {sections[curIndex] == "6" && <p>section 6</p>}
+                    {sections[curIndex] == "7" && <p>section 7</p>}
                 </div>
 
             </div>

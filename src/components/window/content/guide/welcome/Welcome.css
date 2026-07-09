@@ -1,4 +1,4 @@
-.Title {
+.Welcome__Title {
     margin-top: 128px;
     margin-left: 12%;
     margin-bottom: 12px;
@@ -7,17 +7,17 @@
 }
 
 
-.Description {
+.Welcome__Description {
     margin-left: 12%;
     margin-bottom: 12px;
     margin-right: 12%;
 }
 
-.List {
+.Welcome__List {
     margin-left: 12%;
 }
 
-.Item {
+.Welcome__Item {
     margin-left: 12px;
     margin-bottom: 12px;
 }

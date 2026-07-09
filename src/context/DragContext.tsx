@@ -33,7 +33,17 @@ const DragContext = createContext<DragContextType | undefined>(undefined);
 // Context implementation, wrap ANY icon with DragContext to make it draggable and with a window
 export const DragProvider = ({ children }: { children: ReactNode }) => {
     const [icons, setIcons] = useState<AppIcon[]>(DESKTOP_ICONS);   // Track the current icons
-    const [windows, setWindows] = useState<AppWindow[]>([]);        // Track the current windows
+    const [windows, setWindows] = useState<AppWindow[]>([{
+        id: "guideWindow",
+        title: "Start Guide",
+        windowSrc: "guide-icon.png",
+        x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
+        y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
+        width: window.innerWidth / 3,
+        height: window.innerHeight / 1.875,
+        zIndex: 1,
+        minimized: false,
+    }]);        // Track the current windows + add the guide on startup
     const [nextZ, setNextZ] = useState(10);                         // Global z index value
 
     // This function increments the global z index when called and returns it
@@ -63,10 +73,10 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             id: icon.windowId,
             title: icon.label,
             windowSrc: icon.iconSrc,
-            x: window.innerWidth / 2 - 300,
-            y: window.innerHeight / 2 - 200,
-            width: 600,     // default 600
-            height: 500,    // default 500
+            x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
+            y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
+            width: window.innerWidth / 3,
+            height: window.innerHeight / 1.875,
             zIndex: getNextZ(),
             minimized: false,
         }]);

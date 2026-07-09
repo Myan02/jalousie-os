@@ -1,9 +1,6 @@
 - window content
-    - fix the div
-    - add content to display 
     - add new icons and windows
 - make windows sizes scalable
-- automatically open guide when rendering site
 - fix taskbar start button
     - make a custom window thaty is not draggable
     - change the way it looks
