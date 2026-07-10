@@ -1,11 +1,12 @@
-import "./Background.css";
+import "./Sections.css";
 
 const Background = () => {
     return (
         <>
-            <span className="Background__Title">About Me and Background</span>
+            <span className="Section__Title">About Me and Background</span>
 
-            <span className="Background__Description">Hello! My name is Michael, I love to make things for people to interact with, experience, and enjoy.
+            <span className="Section__Description">
+                Hello! My name is Michael, I love to make things for people to interact with, experience, and enjoy.
                 I have many hobbies — too many to count — and I want to share them with the world. This site is exactly that, a fun way to get inspired
                 by seeing my awfully messy journey of learning and failing over the last 10 years.
 
@@ -19,7 +20,6 @@ const Background = () => {
 
                 I loved the draggable windows, sound effects, and animations.I was inspired to learn how she did it and make something of my own.
                 After over a year of development, Jalousie OS was born! It's just Windows98 but don't tell Microsoft...
-
             </span>
         </>
     );

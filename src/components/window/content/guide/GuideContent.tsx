@@ -3,11 +3,13 @@ import WindowTab from "../../helpers/Tab";
 import Divider from "../../helpers/Divider";
 import Label from "../../helpers/Label";
 import Welcome from "./welcome/Welcome";
-import Background from "./background/Background";
-import Explore from "./explore/Explore";
-import Accessibility from "./accessibility/Accessibility";
+import Background from "./sections/Background";
+import Explore from "./sections/Explore";
+import Accessibility from "./sections/Accessibility";
 
 import "./GuideContent.css";
+import Troubleshooting from "./sections/Troubleshooting";
+import Questions from "./sections/Questions";
 
 const GuideContent = () => {
 
@@ -99,8 +101,8 @@ const GuideContent = () => {
                     {sections[curIndex] == "2" && <Background />}
                     {sections[curIndex] == "3" && <Explore />}
                     {sections[curIndex] == "4" && <Accessibility />}
-                    {sections[curIndex] == "5" && <p>section 5</p>}
-                    {sections[curIndex] == "6" && <p>section 6</p>}
+                    {sections[curIndex] == "5" && <Troubleshooting />}
+                    {sections[curIndex] == "6" && <Questions />}
                     {sections[curIndex] == "7" && <p>section 7</p>}
                 </div>
 

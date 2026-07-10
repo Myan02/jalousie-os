@@ -10,7 +10,7 @@
     src: url("./assets/fonts/MS-Sans-Serif-Bold.ttf");
 }
 
-/* Reset styling */
+/* Reset base component styling */
 *, *::before, *::after {
     box-sizing: border-box; /* Keep elements from overflowing into parent containers */
     margin: 0;

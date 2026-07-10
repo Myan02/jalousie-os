@@ -1,23 +1,23 @@
-.Explore__Title {
+.Section__Title {
     font-family: "MS Sans Serif Bold", sans-serif;
     align-self: flex-start;
     margin: 4px;
     font-weight: 100;
 }
 
-.Explore__Description {
+.Section__Description {
     align-self: flex-start;
     line-height: 24px;
     margin: 4px;
 }
 
 
-.Explore__List {
+.Section__List {
     margin-left: 6%;
     line-height: 24px;
 }
 
-.Explore__Item {
+.Section__List-Item {
     margin-left: 4px;
     margin-bottom: 4px;
     line-height: 24px;
