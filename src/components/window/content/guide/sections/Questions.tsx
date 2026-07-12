@@ -39,9 +39,6 @@ const Questions = () => {
                     an online repository of Win98 icons (shoutout Alex Meub for this amazing resource),
                     or drew the pixel art myself! More on the credit for these sources in the next section.
                 </span>
-
-
-
             </ol>
         </>
     );

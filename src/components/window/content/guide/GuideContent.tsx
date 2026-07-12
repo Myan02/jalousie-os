@@ -6,6 +6,7 @@ import Welcome from "./welcome/Welcome";
 import Background from "./sections/Background";
 import Explore from "./sections/Explore";
 import Accessibility from "./sections/Accessibility";
+import Credits from "./sections/Credits";
 
 import "./GuideContent.css";
 import Troubleshooting from "./sections/Troubleshooting";
@@ -103,7 +104,7 @@ const GuideContent = () => {
                     {sections[curIndex] == "4" && <Accessibility />}
                     {sections[curIndex] == "5" && <Troubleshooting />}
                     {sections[curIndex] == "6" && <Questions />}
-                    {sections[curIndex] == "7" && <p>section 7</p>}
+                    {sections[curIndex] == "7" && <Credits />}
                 </div>
 
             </div>
