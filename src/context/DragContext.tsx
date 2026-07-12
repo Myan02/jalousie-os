@@ -34,7 +34,7 @@ type DragContextType = {
 };
 
 // Actual context declaration
-const DragContext = createContext<DragContextType | undefined>(undefined);
+const DragContext = createContext<DragContextType | null>(null);
 
 // Context implementation, again provide all components with the icons, windows, and their methods
 export const DragProvider = ({ children }: { children: ReactNode }) => {
@@ -63,9 +63,8 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 
     // Helpful to write the method like this when setting the global z state AND updating a window z value
     const getNextZ = () => {
-        const z = nextZ;
         setNextZ((prev) => prev + 1);
-        return z;
+        return nextZ;
     };
 
     // Move a icon by iconID to a new grid cell 
@@ -145,7 +144,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 // Custom hook to wrap components that are icons (draggable and with windows)
 export const useDragContext = () => {
     const context = useContext(DragContext);
-    if (!context) throw new Error("useDragContext must be in <DragProvider>");
+    if (context == null) throw new Error("Drag context is null...");
     return context;
 };
 

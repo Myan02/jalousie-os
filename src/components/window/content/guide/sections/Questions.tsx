@@ -20,11 +20,7 @@ const Questions = () => {
 
                 <li style={{ marginTop: "8px" }} className="Section__List-Item"><i>Did you make this with AI?</i></li>
                 <span className="Section__Description">
-                    Mostly no but in the big 2026, it's difficult avoiding it when programming. When looking up
-                    code snippets and examples, Google Gemini gets all up in your face. I also got some help
-                    when working on the draggable state of windows and icons with a local LLM. However, all design
-                    choices were made by me and all code was thoroughly examined to ensure proper style, etiquette,
-                    and scalability.
+                    No.
                 </span>
 
                 <li style={{ marginTop: "8px" }} className="Section__List-Item"><i>I'm looking at your source code, why do you have so many comments?</i></li>
