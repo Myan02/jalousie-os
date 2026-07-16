@@ -2,17 +2,18 @@ import "./Tab.css";
 
 type props = {
     label: string;
-    imageSrc: string;
+    imageSrc?: string;
     disabled?: boolean;
-    click: () => void;  // Set in parent component any desired funcionality
+    style?: object,
+    click?: () => void;  // Set in parent component any desired funcionality
 };
 
 // A wrapper for any clickable item in a window that has an image and a label
-const WindowTab = ({ label, imageSrc, disabled, click }: props) => {
+const WindowTab = ({ label, imageSrc, disabled, style, click }: props) => {
 
     return (
-        <button disabled={disabled} draggable="false" className="tab" onClick={click}>
-            <img className="tab__img" src={`./src/assets/icons/${imageSrc}`} alt={label} />
+        <button style={style} disabled={disabled} draggable="false" className="tab" onClick={click}>
+            {imageSrc && <img className="tab__img" src={`./src/assets/icons/${imageSrc}`} alt={label} />}
             <span className="tab__label">{label}</span>
         </button>
     );

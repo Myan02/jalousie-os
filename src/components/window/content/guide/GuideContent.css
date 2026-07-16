@@ -76,10 +76,10 @@
     outline: 8px solid;
     outline-color: var(--win-text);
 
-    box-shadow: 0 -2px 0 8px var(--win-white),
-                2px 0 0 8px var(--win-black),
-                0 2px 0 8px var(--win-black),
-                -2px 0 0 8px var(--win-white);
+    box-shadow: 0  -2px 0 8px var(--win-white),  /* Top */
+                2px 0   0 8px var(--win-black),   /* Right */
+                0   2px 0 8px var(--win-black),   /* Bottom */
+               -2px 0   0 8px var(--win-white);  /* Left */
 }
 
 .guide__body-content {

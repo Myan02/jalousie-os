@@ -16,3 +16,15 @@
     border-right-color: var(--win-white);
     border-bottom: 0px;
 }
+
+.thick {
+    margin: 3px 4px;
+    padding: 1px;
+    align-self: stretch;
+
+    border: 2px solid;
+    border-top-color:    var(--win-white);
+    border-left-color:   var(--win-white);
+    border-right-color:  var(--win-dark);
+    border-bottom-color: var(--win-dark);
+}

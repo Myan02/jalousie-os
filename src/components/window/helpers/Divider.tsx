@@ -1,16 +1,12 @@
 import "./Divider.css";
 
 type props = {
-    divType: "Horizontal" | "Vertical";
+    divType: "horizontal" | "vertical" | "thick";
 }
 
 const Divider = ({ divType }: props) => {
     return (
-        <>
-            {divType === "Horizontal"
-                ? <div className="divider horizontal" />
-                : <div className="divider vertical" />}
-        </>
+        <div className={`divider ${divType}`} />
     );
 };
 

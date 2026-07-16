@@ -17,7 +17,9 @@ const DESKTOP_ICONS: AppIcon[] = [
     { id: "recycleIcon", label: "Recycle Bin", iconSrc: "recycle-bin-icon.png", col: 0, row: 0, windowId: "recycleWindow", scope: "desktop", },
     { id: "computerIcon", label: "My Computer", iconSrc: "computer-icon.png", col: 0, row: 1, windowId: "computerWindow", scope: "desktop" },
     { id: "documentsIcon", label: "Documents", iconSrc: "document-icon.png", col: 0, row: 2, windowId: "documentsWindow", scope: "desktop" },
-    { id: "guideIcon", label: "Start Guide", iconSrc: "guide-icon.png", col: 0, row: 3, windowId: "guideWindow", scope: "desktop" }
+    { id: "guideIcon", label: "Start Guide", iconSrc: "guide-icon.png", col: 0, row: 3, windowId: "guideWindow", scope: "desktop" },
+
+    { id: "resumeIcon", label: "Resume", iconSrc: "guide-icon.png", col: 0, row: 0, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow" }
 ];
 
 // The shape of the context
@@ -51,7 +53,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         // Center of the window; get the top left corner of the window in the center of the browser and offset in by half of the size of the window
         x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
         y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
-        width: window.innerWidth / 3,
+        width: window.innerWidth / 1.5,
         height: window.innerHeight / 1.875,
 
         zIndex: 1,
@@ -92,7 +94,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             windowSrc: icon.iconSrc,
             x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
             y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
-            width: window.innerWidth / 3,
+            width: window.innerWidth / 1.5,
             height: window.innerHeight / 1.875,
             zIndex: getNextZ(),
             minimized: false,

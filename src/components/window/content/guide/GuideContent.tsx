@@ -66,7 +66,7 @@ const GuideContent = () => {
                 <WindowTab label="Web Help" imageSrc="web-help-icon.png" click={() => console.log("clicked")} />
             </div>
 
-            <Divider divType="Horizontal" />
+            <Divider divType="horizontal" />
 
             <div className="guide__body">
                 {!hidden &&
