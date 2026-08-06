@@ -53,7 +53,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         // Center of the window; get the top left corner of the window in the center of the browser and offset in by half of the size of the window
         x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
         y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
-        width: window.innerWidth / 1.5,
+        width: window.innerWidth / 3,
         height: window.innerHeight / 1.875,
 
         zIndex: 1,
@@ -94,7 +94,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             windowSrc: icon.iconSrc,
             x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
             y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
-            width: window.innerWidth / 1.5,
+            width: window.innerWidth / 3,
             height: window.innerHeight / 1.875,
             zIndex: getNextZ(),
             minimized: false,
