@@ -33,6 +33,7 @@ type DragContextType = {
     minimizeWindow: (windowId: string) => void;
     focusWindow: (windowId: string) => void;
     moveWindow: (windowId: string, newX: number, newY: number) => void;
+    scaleWindow: (windowId: string, newWidth: number, newHeight: number, newScaleState?: "maximized" | "minimized" | "neutral") => void;
 };
 
 // Actual context declaration
@@ -57,7 +58,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         height: window.innerHeight / 1.875,
 
         zIndex: 1,
-        minimized: false,
+        scaleState: "neutral",
     }]);
 
     // Global z index value for all windows
@@ -97,7 +98,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             width: window.innerWidth / 3,
             height: window.innerHeight / 1.875,
             zIndex: getNextZ(),
-            minimized: false,
+            scaleState: "neutral",
         }]);
     };
 
@@ -109,14 +110,15 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
     // Set the minimized state of a window to the value inverse
     const minimizeWindow = (windowId: string) => {
         setWindows((prev) =>
-            prev.map((w) => w.id === windowId ? { ...w, minimized: !w.minimized } : w)
+            prev.map((w) => w.id === windowId ? { ...w, scaleState: "minimized" } : w)
         );
+        console.log(windows)
     };
 
     // Update the z value of the window and set minimized to false
     const focusWindow = (windowId: string) => {
         setWindows((prev) =>
-            prev.map((w) => w.id === windowId ? { ...w, zIndex: getNextZ(), minimized: false } : w)
+            prev.map((w) => w.id === windowId ? { ...w, zIndex: getNextZ(), scaleState: "neutral" } : w)
         );
     };
 
@@ -125,6 +127,20 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         setWindows((prev) =>
             prev.map((w) => w.id === windowId ? { ...w, x: newX, y: newY } : w)
         );
+    };
+
+    // Change window size based on a new width and/or height
+    const scaleWindow = (windowId: string, newWidth: number, newHeight: number, newScaleState?: "maximized" | "minimized" | "neutral") => {
+        if (newScaleState) {
+            setWindows((prev) =>
+                prev.map((w) => w.id === windowId ? { ...w, width: newWidth, height: newHeight - 32, scaleState: newScaleState } : w)
+            );
+        } else {
+            setWindows((prev) =>
+                prev.map((w) => w.id === windowId ? { ...w, width: newWidth, height: newHeight - 32 } : w)
+            );
+        }
+
     };
 
     return (
@@ -136,7 +152,8 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             closeWindow,
             minimizeWindow,
             focusWindow,
-            moveWindow
+            moveWindow,
+            scaleWindow
         }}>
             {children}
         </DragContext.Provider>

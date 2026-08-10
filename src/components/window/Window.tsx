@@ -5,11 +5,43 @@ import WindowContent from "./WindowContent";
 import "./Window.css";
 
 const Window = ({ window: win }: { window: AppWindow }) => {
-    const { closeWindow, minimizeWindow, focusWindow, moveWindow } = useDragContext();
+    const { closeWindow, minimizeWindow, focusWindow, moveWindow, scaleWindow } = useDragContext();
     const dragOffset = useRef({ x: 0, y: 0 });  // Keep track of mouse location in relation to window title position
+    const windowCornerPosition = useRef({ x: 0, y: 0 });    // Keep track of 
 
+    const handleScaleDrag = (e: React.MouseEvent) => {
+        focusWindow(win.id);
+        e.preventDefault();
+        windowCornerPosition.current = { x: win.x + win.width, y: win.y + win.height }
+
+        const onMove = (e: MouseEvent) => {
+            const newWidth = Math.max(window.innerWidth / 6, e.clientX - win.x);
+            const newHeight = Math.max(window.innerHeight / 3, e.clientY - win.y + 32);
+
+            document.body.style.cursor = "nwse-resize";
+            scaleWindow(win.id, newWidth, newHeight);
+        }
+
+        const onUp = () => {
+            document.body.style.cursor = "default";
+            document.removeEventListener("mousemove", onMove);
+            document.removeEventListener("mouseup", onUp);
+        };
+
+
+        if (
+            (e.clientX <= windowCornerPosition.current.x && e.clientX >= windowCornerPosition.current.x - 24) &&
+            (e.clientY <= windowCornerPosition.current.y && e.clientY >= windowCornerPosition.current.y - 24)
+        ) {
+            document.addEventListener("mousemove", onMove);
+            document.addEventListener("mouseup", onUp);
+        }
+    };
+
+    // Move window when title is dragged
     const handleTitleMouseDown = (e: React.MouseEvent) => {
         focusWindow(win.id);
+        e.preventDefault();
         dragOffset.current = { x: e.clientX - win.x, y: e.clientY - win.y };
 
         const onMove = (e: MouseEvent) => {
@@ -36,7 +68,18 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         document.addEventListener("mouseup", onUp);
     };
 
-    if (win.minimized) return null;
+    // Update window scale when maximize button is clicked
+    const handleScaleButtonClicked = () => {
+        if (win.scaleState === "neutral") {
+            moveWindow(win.id, 0, 0);
+            scaleWindow(win.id, window.innerWidth, window.innerHeight, "maximized");
+        } else {
+            moveWindow(win.id, (window.innerWidth / 2) - ((window.innerWidth / 3) / 2), (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2));
+            scaleWindow(win.id, window.innerWidth / 3, window.innerHeight / 1.875, "neutral");
+        }
+    };
+
+    if (win.scaleState === "minimized") return null;
 
     return (
         <div
@@ -48,10 +91,23 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 height: win.height,
                 zIndex: win.zIndex
             }}
-            onMouseDown={() => focusWindow(win.id)}
+            onMouseDown={handleScaleDrag}
+            onMouseMove={(e) => {
+                windowCornerPosition.current = { x: win.x + win.width, y: win.y + win.height }
+
+                if (
+                    (e.clientX <= windowCornerPosition.current.x && e.clientX >= windowCornerPosition.current.x - 24) &&
+                    (e.clientY <= windowCornerPosition.current.y && e.clientY >= windowCornerPosition.current.y - 24)
+                ) {
+                    document.body.style.cursor = "nwse-resize";
+                } else {
+                    document.body.style.cursor = "default";
+                }
+            }}
+            onMouseLeave={() => document.body.style.cursor = "default"}
         >
             <div className="window__titlebar" onMouseDown={handleTitleMouseDown}>
-                <img draggable="false" className="window__titlebar-icon" src={`./src/assets/icons/${win.windowSrc}`} alt={win.title} />
+                <img className="window__titlebar-icon" src={`./src/assets/icons/${win.windowSrc}`} alt={win.title} />
                 <span className="window__titlebar-title">{win.title}</span>
 
                 <div className="window__controls">
@@ -61,6 +117,15 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                         onClick={() => minimizeWindow(win.id)}
                     >
                         <img src="./src/assets/icons/minimize-icon.png" alt="minimize" />
+                    </button>
+
+                    {/* Update window icon to maximize */}
+                    <button
+                        className="window__btn window__btn--minimize"
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onClick={() => handleScaleButtonClicked()}
+                    >
+                        <img src="./src/assets/icons/minimize-icon.png" alt="maximize" />
                     </button>
 
                     <button
