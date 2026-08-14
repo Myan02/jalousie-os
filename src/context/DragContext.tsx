@@ -52,9 +52,9 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         windowSrc: "guide-icon.png",
 
         // Center of the window; get the top left corner of the window in the center of the browser and offset in by half of the size of the window
-        x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
+        x: (window.innerWidth / 2) - ((window.innerWidth / 2.5) / 2),
         y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
-        width: window.innerWidth / 3,
+        width: window.innerWidth / 2.5,
         height: window.innerHeight / 1.875,
 
         zIndex: 1,

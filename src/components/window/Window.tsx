@@ -11,7 +11,6 @@ const Window = ({ window: win }: { window: AppWindow }) => {
 
     const handleScaleDrag = (e: React.MouseEvent) => {
         focusWindow(win.id);
-        e.preventDefault();
         windowCornerPosition.current = { x: win.x + win.width, y: win.y + win.height }
 
         const onMove = (e: MouseEvent) => {
@@ -41,10 +40,10 @@ const Window = ({ window: win }: { window: AppWindow }) => {
     // Move window when title is dragged
     const handleTitleMouseDown = (e: React.MouseEvent) => {
         focusWindow(win.id);
-        e.preventDefault();
         dragOffset.current = { x: e.clientX - win.x, y: e.clientY - win.y };
 
         const onMove = (e: MouseEvent) => {
+            
             // Clamps the X position to the screen. remove clamp to give free movement.
             const newX = Math.max(0, Math.min(
                 window.innerWidth - win.width,
@@ -89,8 +88,11 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 top: win.y,
                 width: win.width,
                 height: win.height,
-                zIndex: win.zIndex
+                zIndex: win.zIndex,
+                userSelect: "none"
+                
             }}
+            onDragStart={e => e.preventDefault()}
             onMouseDown={handleScaleDrag}
             onMouseMove={(e) => {
                 windowCornerPosition.current = { x: win.x + win.width, y: win.y + win.height }
@@ -113,7 +115,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 <div className="window__controls">
                     <button
                         className="window__btn window__btn--minimize"
-                        onMouseDown={(e) => e.stopPropagation()}
+                        onMouseDown={e => e.stopPropagation()}
                         onClick={() => minimizeWindow(win.id)}
                     >
                         <img src="./src/assets/icons/minimize-icon.png" alt="minimize" />
@@ -122,15 +124,15 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                     {/* Update window icon to maximize */}
                     <button
                         className="window__btn window__btn--minimize"
-                        onMouseDown={(e) => e.stopPropagation()}
+                        onMouseDown={e => e.stopPropagation()}
                         onClick={() => handleScaleButtonClicked()}
                     >
-                        <img src="./src/assets/icons/minimize-icon.png" alt="maximize" />
+                        <img src="./src/assets/icons/maximize-icon.png" alt="maximize" />
                     </button>
 
                     <button
                         className="window__btn window__btn--close"
-                        onMouseDown={(e) => e.stopPropagation()}
+                        onMouseDown={e => e.stopPropagation()}
                         onClick={() => closeWindow(win.id)}
                     >
                         <img src="./src/assets/icons/close-icon.png" alt="close" />

@@ -16,7 +16,7 @@
 .WinLabel__text {
     margin-left: 4px;
     padding-left: 2px;
-    font-size: 0.8rem;
+    font-size: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
