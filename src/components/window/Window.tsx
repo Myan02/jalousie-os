@@ -14,11 +14,11 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         windowCornerPosition.current = { x: win.x + win.width, y: win.y + win.height }
 
         const onMove = (e: MouseEvent) => {
-            const newWidth = Math.max(window.innerWidth / 6, e.clientX - win.x);
+            const newWidth = Math.max(window.innerHeight / 2, e.clientX - win.x);
             const newHeight = Math.max(window.innerHeight / 3, e.clientY - win.y + 32);
 
             document.body.style.cursor = "nwse-resize";
-            scaleWindow(win.id, newWidth, newHeight);
+            scaleWindow(win.id, newWidth, newHeight, "neutral");
         }
 
         const onUp = () => {
@@ -69,16 +69,26 @@ const Window = ({ window: win }: { window: AppWindow }) => {
 
     // Update window scale when maximize button is clicked
     const handleScaleButtonClicked = () => {
+        let x, y, newWidth, newHeight;
+
         if (win.scaleState === "neutral") {
-            moveWindow(win.id, 0, 0);
-            scaleWindow(win.id, window.innerWidth, window.innerHeight, "maximized");
+            x = 0;
+            y = 0
+            newWidth = window.innerWidth;
+            newHeight = window.innerHeight;
+            
         } else {
-            moveWindow(win.id, (window.innerWidth / 2) - ((window.innerWidth / 3) / 2), (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2));
-            scaleWindow(win.id, window.innerWidth / 3, window.innerHeight / 1.875, "neutral");
+            x = (window.innerWidth / 2) - ((window.innerWidth / 3) / 2);
+            y = (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2);
+            newWidth = window.innerWidth / 3;
+            newHeight = window.innerHeight / 1.875;
         }
+
+        moveWindow(win.id, x, y);
+        scaleWindow(win.id, newWidth, newHeight, win.scaleState === "maximized" ? "neutral" : "maximized");
     };
 
-    if (win.scaleState === "minimized") return null;
+    if (win.minimized) return null;
 
     return (
         <div

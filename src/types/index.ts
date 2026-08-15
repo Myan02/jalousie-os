@@ -27,6 +27,8 @@ export type AppWindow = {
     y: number;          // Initial Y pos
     width: number;      // Initial window width
     height: number;     // Initial window height
+
     zIndex: number;     // Higher Z-index shows up over other windows
-    scaleState: "minimized" | "maximized" | "neutral"; 
+    minimized: boolean;
+    scaleState: "maximized" | "neutral"; 
 };

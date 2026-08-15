@@ -33,7 +33,7 @@ type DragContextType = {
     minimizeWindow: (windowId: string) => void;
     focusWindow: (windowId: string) => void;
     moveWindow: (windowId: string, newX: number, newY: number) => void;
-    scaleWindow: (windowId: string, newWidth: number, newHeight: number, newScaleState?: "maximized" | "minimized" | "neutral") => void;
+    scaleWindow: (windowId: string, newWidth: number, newHeight: number, newScaleState?: "maximized" | "neutral") => void;
 };
 
 // Actual context declaration
@@ -58,6 +58,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         height: window.innerHeight / 1.875,
 
         zIndex: 1,
+        minimized: false,
         scaleState: "neutral",
     }]);
 
@@ -98,6 +99,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             width: window.innerWidth / 3,
             height: window.innerHeight / 1.875,
             zIndex: getNextZ(),
+            minimized: false,
             scaleState: "neutral",
         }]);
     };
@@ -110,15 +112,14 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
     // Set the minimized state of a window to the value inverse
     const minimizeWindow = (windowId: string) => {
         setWindows((prev) =>
-            prev.map((w) => w.id === windowId ? { ...w, scaleState: "minimized" } : w)
+            prev.map((w) => w.id === windowId ? { ...w, minimized: true } : w)
         );
-        console.log(windows)
     };
 
     // Update the z value of the window and set minimized to false
     const focusWindow = (windowId: string) => {
         setWindows((prev) =>
-            prev.map((w) => w.id === windowId ? { ...w, zIndex: getNextZ(), scaleState: "neutral" } : w)
+            prev.map((w) => w.id === windowId ? { ...w, zIndex: getNextZ(), minimized: false } : w)
         );
     };
 
@@ -130,7 +131,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
     };
 
     // Change window size based on a new width and/or height
-    const scaleWindow = (windowId: string, newWidth: number, newHeight: number, newScaleState?: "maximized" | "minimized" | "neutral") => {
+    const scaleWindow = (windowId: string, newWidth: number, newHeight: number, newScaleState?: "maximized" | "neutral") => {
         if (newScaleState) {
             setWindows((prev) =>
                 prev.map((w) => w.id === windowId ? { ...w, width: newWidth, height: newHeight - 32, scaleState: newScaleState } : w)
