@@ -47,9 +47,9 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 
     // Track the current windows + add the guide on startup
     const [windows, setWindows] = useState<AppWindow[]>([{
-        id: "guideWindow",
-        title: "Start Guide",
-        windowSrc: "guide-icon.png",
+        id: "documentsWindow",
+        title: "Documents",
+        windowSrc: "document-icon.png",
 
         // Center of the window; get the top left corner of the window in the center of the browser and offset in by half of the size of the window
         x: (window.innerWidth / 2) - ((window.innerWidth / 2.5) / 2),
@@ -130,7 +130,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         );
     };
 
-    // Change window size based on a new width and/or height
+    // Change window size based on a new width and height
     const scaleWindow = (windowId: string, newWidth: number, newHeight: number, newScaleState?: "maximized" | "neutral") => {
         if (newScaleState) {
             setWindows((prev) =>

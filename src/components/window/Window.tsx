@@ -7,34 +7,65 @@ import "./Window.css";
 const Window = ({ window: win }: { window: AppWindow }) => {
     const { closeWindow, minimizeWindow, focusWindow, moveWindow, scaleWindow } = useDragContext();
     const dragOffset = useRef({ x: 0, y: 0 });  // Keep track of mouse location in relation to window title position
-    const windowCornerPosition = useRef({ x: 0, y: 0 });    // Keep track of 
+    const windowBorderPosition = useRef({
+        "top-left": { x: 0, y: 0 },
+        "top-right": { x: 0, y: 0 },
+        "bottom-left": { x: 0, y: 0 },
+        "bottom-right": {x: 0, y: 0}
+    });    // Used for scaling
+     
 
     const handleScaleDrag = (e: React.MouseEvent) => {
         focusWindow(win.id);
-        windowCornerPosition.current = { x: win.x + win.width, y: win.y + win.height }
+        let newWidth: number, newHeight: number;
+        let pos: "corner" | "right" | "bottom";
+
+        windowBorderPosition.current = { 
+            "top-left": { x: win.x, y: win.y },
+            "top-right": { x: win.x + win.width, y: win.y },
+            "bottom-left": { x: win.x, y: win.y + win.height },
+            "bottom-right": { x: win.x + win.width, y: win.y + win.height }
+        }
 
         const onMove = (e: MouseEvent) => {
-            const newWidth = Math.max(window.innerHeight / 2, e.clientX - win.x);
-            const newHeight = Math.max(window.innerHeight / 3, e.clientY - win.y + 32);
+            newWidth = Math.max(window.innerHeight / 2, e.clientX - win.x);
+            newHeight = Math.max(window.innerHeight / 3, e.clientY - win.y + 32);
 
-            document.body.style.cursor = "nwse-resize";
+            if (pos == "bottom") {
+                document.body.style.cursor = "ns-resize";
+                newWidth = win.width;
+            } else if (pos == "right") {
+                document.body.style.cursor = "ew-resize";
+                newHeight = win.height + 32;
+            } else {
+                document.body.style.cursor = "nwse-resize";
+            }
+
             scaleWindow(win.id, newWidth, newHeight, "neutral");
         }
 
         const onUp = () => {
             document.body.style.cursor = "default";
+
             document.removeEventListener("mousemove", onMove);
             document.removeEventListener("mouseup", onUp);
         };
 
-
-        if (
-            (e.clientX <= windowCornerPosition.current.x && e.clientX >= windowCornerPosition.current.x - 24) &&
-            (e.clientY <= windowCornerPosition.current.y && e.clientY >= windowCornerPosition.current.y - 24)
+        if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - 24) ||
+            (e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24)
         ) {
+            if (e.clientX <= windowBorderPosition.current["bottom-right"].x - 24) {
+                pos = "bottom";
+            } else if (e.clientY <= windowBorderPosition.current["bottom-right"].y - 24) {
+                pos = "right";
+            } else {
+                pos = "corner";
+            }
+
             document.addEventListener("mousemove", onMove);
             document.addEventListener("mouseup", onUp);
         }
+
     };
 
     // Move window when title is dragged
@@ -105,13 +136,26 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             onDragStart={e => e.preventDefault()}
             onMouseDown={handleScaleDrag}
             onMouseMove={(e) => {
-                windowCornerPosition.current = { x: win.x + win.width, y: win.y + win.height }
 
-                if (
-                    (e.clientX <= windowCornerPosition.current.x && e.clientX >= windowCornerPosition.current.x - 24) &&
-                    (e.clientY <= windowCornerPosition.current.y && e.clientY >= windowCornerPosition.current.y - 24)
+                windowBorderPosition.current = { 
+                    "top-left": { x: win.x, y: win.y },
+                    "top-right": { x: win.x + win.width, y: win.y },
+                    "bottom-left": { x: win.x, y: win.y + win.height },
+                    "bottom-right": { x: win.x + win.width, y: win.y + win.height }
+                }
+
+                // Update cursor based on location of user mouse 
+                // For scaling window
+                if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - 24) ||
+                    (e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24)
                 ) {
-                    document.body.style.cursor = "nwse-resize";
+                    if (e.clientX <= windowBorderPosition.current["bottom-right"].x - 24 && e.clientY >= windowBorderPosition.current["bottom-right"].y - 24) {
+                        document.body.style.cursor = "ns-resize";
+                    } else if (e.clientY <= windowBorderPosition.current["bottom-right"].y - 24 && e.clientX >= windowBorderPosition.current["bottom-right"].x - 24) {
+                        document.body.style.cursor = "ew-resize";
+                    } else {
+                        document.body.style.cursor = "nwse-resize";
+                    }
                 } else {
                     document.body.style.cursor = "default";
                 }

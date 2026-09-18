@@ -91,7 +91,7 @@
 .window__content {
     flex: 1;
     background-color: var(--win-content);
-    overflow: auto;
+    overflow: hidden;
     margin: 2px;
 
     border: 2px solid;

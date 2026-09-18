@@ -1,6 +1,5 @@
 - window content
     - add new icons and windows
-- make windows sizes scalable
 - fix taskbar start button
     - make a custom window thaty is not draggable
     - change the way it looks
