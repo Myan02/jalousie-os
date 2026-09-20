@@ -16,6 +16,8 @@ const Window = ({ window: win }: { window: AppWindow }) => {
      
 
     const handleScaleDrag = (e: React.MouseEvent) => {
+        e.stopPropagation();
+
         focusWindow(win.id);
         let newWidth: number, newHeight: number;
         let pos: "corner" | "right" | "bottom";
@@ -28,8 +30,11 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         }
 
         const onMove = (e: MouseEvent) => {
-            newWidth = Math.max(window.innerHeight / 2, e.clientX - win.x);
-            newHeight = Math.max(window.innerHeight / 3, e.clientY - win.y + 32);
+            const distToEdgeX = window.innerWidth - windowBorderPosition.current["top-left"].x;
+            const distToEdgeY = window.innerHeight - windowBorderPosition.current["top-left"].y;
+            
+            newWidth = Math.max(window.innerWidth / 3, Math.min(distToEdgeX, e.clientX - win.x));
+            newHeight = Math.max(window.innerHeight / 2, Math.min(distToEdgeY, e.clientY - win.y + 32));
 
             if (pos == "bottom") {
                 document.body.style.cursor = "ns-resize";
@@ -52,7 +57,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         };
 
         if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - 24) ||
-            (e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24)
+            ((e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24) && (e.clientY >= windowBorderPosition.current["top-right"].y + 28))
         ) {
             if (e.clientX <= windowBorderPosition.current["bottom-right"].x - 24) {
                 pos = "bottom";
@@ -74,7 +79,8 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         dragOffset.current = { x: e.clientX - win.x, y: e.clientY - win.y };
 
         const onMove = (e: MouseEvent) => {
-            
+            e.stopPropagation();
+
             // Clamps the X position to the screen. remove clamp to give free movement.
             const newX = Math.max(0, Math.min(
                 window.innerWidth - win.width,
@@ -131,7 +137,6 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 height: win.height,
                 zIndex: win.zIndex,
                 userSelect: "none"
-                
             }}
             onDragStart={e => e.preventDefault()}
             onMouseDown={handleScaleDrag}
@@ -147,7 +152,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 // Update cursor based on location of user mouse 
                 // For scaling window
                 if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - 24) ||
-                    (e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24)
+                    ((e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24) && (e.clientY >= windowBorderPosition.current["top-right"].y + 28))
                 ) {
                     if (e.clientX <= windowBorderPosition.current["bottom-right"].x - 24 && e.clientY >= windowBorderPosition.current["bottom-right"].y - 24) {
                         document.body.style.cursor = "ns-resize";
@@ -162,7 +167,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             }}
             onMouseLeave={() => document.body.style.cursor = "default"}
         >
-            <div className="window__titlebar" onMouseDown={handleTitleMouseDown}>
+            <div className="window__titlebar" onMouseDown={handleTitleMouseDown} onDoubleClick={handleScaleButtonClicked}>
                 <img className="window__titlebar-icon" src={`./src/assets/icons/${win.windowSrc}`} alt={win.title} />
                 <span className="window__titlebar-title">{win.title}</span>
 
