@@ -52,7 +52,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         windowSrc: "document-icon.png",
 
         // Center of the window; get the top left corner of the window in the center of the browser and offset in by half of the size of the window
-        x: (window.innerWidth / 2) - ((window.innerWidth / 2.5) / 2),
+        x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
         y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
         width: window.innerWidth / 3,
         height: window.innerHeight / 1.875,
@@ -89,13 +89,17 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             return;
         };
 
+        // Use the number of open windows to determine new window offset so windows don't open on top of eachother
+        const numOpenWindows: number = windows.length;
+        const WIN_POS_OFFSET: number = 20;
+
         // add the window to the open window state
         setWindows((prev) => [...prev, {
             id: icon.windowId,
             title: icon.label,
             windowSrc: icon.iconSrc,
-            x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
-            y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
+            x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2) + (numOpenWindows * WIN_POS_OFFSET),
+            y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2) + (numOpenWindows * WIN_POS_OFFSET),
             width: window.innerWidth / 3,
             height: window.innerHeight / 1.875,
             zIndex: getNextZ(),
@@ -141,7 +145,6 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
                 prev.map((w) => w.id === windowId ? { ...w, width: newWidth, height: newHeight - 32 } : w)
             );
         }
-
     };
 
     return (
