@@ -18,9 +18,13 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         "top-left": { x: 0, y: 0 },
         "top-right": { x: 0, y: 0 },
         "bottom-left": { x: 0, y: 0 },
-        "bottom-right": {x: 0, y: 0}
+        "bottom-right": { x: 0, y: 0 }
     });    // Keep track of the positions of all 4 corners of a window for easy referencing
-     
+
+    const TASKBAR_HEIGHT: number = 32;
+    const SCROLL_BUFFER: number = 24;       // Wiggle room user has when they want to scroll
+    const TITLE_BAR_WIDTH: number = 28;     // Window title size
+
 
     /**
      * Handles the scaling of windows when users grab the right/bottom edges or bottom-right corner
@@ -34,7 +38,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         let newWidth: number, newHeight: number;
         let pos: "corner" | "right" | "bottom";
 
-        windowBorderPosition.current = { 
+        windowBorderPosition.current = {
             "top-left": { x: win.x, y: win.y },
             "top-right": { x: win.x + win.width, y: win.y },
             "bottom-left": { x: win.x, y: win.y + win.height },
@@ -47,21 +51,19 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         const onMove = (e: MouseEvent) => {
             const distToEdgeX = window.innerWidth - windowBorderPosition.current["top-left"].x;
             const distToEdgeY = window.innerHeight - windowBorderPosition.current["top-left"].y;
-            
+
             newWidth = Math.max(window.innerWidth / 3, Math.min(distToEdgeX, e.clientX - win.x));
-            newHeight = Math.max(window.innerHeight / 2, Math.min(distToEdgeY, e.clientY - win.y + 32));
+            newHeight = Math.max(window.innerHeight / 2, Math.min(distToEdgeY, e.clientY - win.y + TASKBAR_HEIGHT));
 
             if (pos == "bottom") {
                 document.body.style.cursor = "ns-resize";
                 newWidth = win.width;
             } else if (pos == "right") {
                 document.body.style.cursor = "ew-resize";
-                newHeight = win.height + 32;
+                newHeight = win.height + TASKBAR_HEIGHT;
             } else {
                 document.body.style.cursor = "nwse-resize";
             }
-
-            scaleWindow(win.id, newWidth, newHeight, "neutral");
         }
 
         /**
@@ -69,6 +71,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
          */
         const onUp = () => {
             document.body.style.cursor = "default";
+            scaleWindow(win.id, newWidth, newHeight, "neutral");
 
             document.removeEventListener("mousemove", onMove);
             document.removeEventListener("mouseup", onUp);
@@ -77,12 +80,12 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         /**
          * Event listener check: These checks make sure the user's mouse is in the right position for dragging
          */
-        if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - 24) ||
-            ((e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24) && (e.clientY >= windowBorderPosition.current["top-right"].y + 28))
+        if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - SCROLL_BUFFER) ||
+            ((e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - SCROLL_BUFFER) && (e.clientY >= windowBorderPosition.current["top-right"].y + TITLE_BAR_WIDTH))
         ) {
-            if (e.clientX <= windowBorderPosition.current["bottom-right"].x - 24) {
+            if (e.clientX <= windowBorderPosition.current["bottom-right"].x - SCROLL_BUFFER) {
                 pos = "bottom";
-            } else if (e.clientY <= windowBorderPosition.current["bottom-right"].y - 24) {
+            } else if (e.clientY <= windowBorderPosition.current["bottom-right"].y - SCROLL_BUFFER) {
                 pos = "right";
             } else {
                 pos = "corner";
@@ -110,7 +113,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
 
             // clamps the Y position to the screen
             const newY = Math.max(0, Math.min(
-                window.innerHeight - win.height - 32,
+                window.innerHeight - win.height - TASKBAR_HEIGHT,
                 e.clientY - dragOffset.current.y
             ));
 
@@ -125,7 +128,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         document.addEventListener("mouseup", onUp);
     };
 
-    // Update window scale when maximize button is clicked
+    // Update window scale when user clicks to maximize window
     const handleScaleButtonClicked = () => {
         let x, y, newWidth, newHeight;
 
@@ -134,7 +137,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             y = 0
             newWidth = window.innerWidth;
             newHeight = window.innerHeight;
-            
+
         } else {
             x = (window.innerWidth / 2) - ((window.innerWidth / 3) / 2);
             y = (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2);
@@ -163,7 +166,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             onMouseDown={handleScaleDrag}
             onMouseMove={(e) => {
 
-                windowBorderPosition.current = { 
+                windowBorderPosition.current = {
                     "top-left": { x: win.x, y: win.y },
                     "top-right": { x: win.x + win.width, y: win.y },
                     "bottom-left": { x: win.x, y: win.y + win.height },
@@ -172,12 +175,12 @@ const Window = ({ window: win }: { window: AppWindow }) => {
 
                 // Update cursor based on location of user mouse 
                 // For scaling window
-                if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - 24) ||
-                    ((e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24) && (e.clientY >= windowBorderPosition.current["top-right"].y + 28))
+                if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - SCROLL_BUFFER) ||
+                    ((e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - SCROLL_BUFFER) && (e.clientY >= windowBorderPosition.current["top-right"].y + TITLE_BAR_WIDTH))
                 ) {
-                    if (e.clientX <= windowBorderPosition.current["bottom-right"].x - 24 && e.clientY >= windowBorderPosition.current["bottom-right"].y - 24) {
+                    if (e.clientX <= windowBorderPosition.current["bottom-right"].x - SCROLL_BUFFER && e.clientY >= windowBorderPosition.current["bottom-right"].y - SCROLL_BUFFER) {
                         document.body.style.cursor = "ns-resize";
-                    } else if (e.clientY <= windowBorderPosition.current["bottom-right"].y - 24 && e.clientX >= windowBorderPosition.current["bottom-right"].x - 24) {
+                    } else if (e.clientY <= windowBorderPosition.current["bottom-right"].y - SCROLL_BUFFER && e.clientX >= windowBorderPosition.current["bottom-right"].x - SCROLL_BUFFER) {
                         document.body.style.cursor = "ew-resize";
                     } else {
                         document.body.style.cursor = "nwse-resize";
