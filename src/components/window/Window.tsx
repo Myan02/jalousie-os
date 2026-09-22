@@ -1,9 +1,16 @@
 import { useRef } from "react";
 import { useDragContext } from "../../context/DragContext";
-import type { AppWindow } from "../../types";
+import type { AppWindow } from "../../types/Types";
 import WindowContent from "./WindowContent";
 import "./Window.css";
 
+/**
+ * Handles the instantiation of window components
+ * Check DragContext.tsx for more information on window methods used
+ * 
+ * @param AppWindow: check Types.ts for more information. Contains window id, position, size, etc.
+ * @returns Window React component
+ */
 const Window = ({ window: win }: { window: AppWindow }) => {
     const { closeWindow, minimizeWindow, focusWindow, moveWindow, scaleWindow } = useDragContext();
     const dragOffset = useRef({ x: 0, y: 0 });  // Keep track of mouse location in relation to window title position
@@ -12,13 +19,18 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         "top-right": { x: 0, y: 0 },
         "bottom-left": { x: 0, y: 0 },
         "bottom-right": {x: 0, y: 0}
-    });    // Used for scaling
+    });    // Keep track of the positions of all 4 corners of a window for easy referencing
      
 
+    /**
+     * Handles the scaling of windows when users grab the right/bottom edges or bottom-right corner
+     * 
+     * @param e: mouse event, listens on mouse move
+     */
     const handleScaleDrag = (e: React.MouseEvent) => {
         e.stopPropagation();
-
         focusWindow(win.id);
+
         let newWidth: number, newHeight: number;
         let pos: "corner" | "right" | "bottom";
 
@@ -29,6 +41,9 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             "bottom-right": { x: win.x + win.width, y: win.y + win.height }
         }
 
+        /**
+         * Event listener, updates on move when the mouse is held down
+         */
         const onMove = (e: MouseEvent) => {
             const distToEdgeX = window.innerWidth - windowBorderPosition.current["top-left"].x;
             const distToEdgeY = window.innerHeight - windowBorderPosition.current["top-left"].y;
@@ -49,6 +64,9 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             scaleWindow(win.id, newWidth, newHeight, "neutral");
         }
 
+        /**
+         * Event listener, called when mouse is released
+         */
         const onUp = () => {
             document.body.style.cursor = "default";
 
@@ -56,6 +74,9 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             document.removeEventListener("mouseup", onUp);
         };
 
+        /**
+         * Event listener check: These checks make sure the user's mouse is in the right position for dragging
+         */
         if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - 24) ||
             ((e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - 24) && (e.clientY >= windowBorderPosition.current["top-right"].y + 28))
         ) {

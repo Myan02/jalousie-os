@@ -8,7 +8,7 @@ import {
     useState,
     type ReactNode,
 } from "react";
-import type { AppIcon, AppWindow } from "../types";
+import type { AppIcon, AppWindow } from "../types/Types";
 
 // These are all of the desktop icons
 // Add them here if you need to scale the project with more desktop icons

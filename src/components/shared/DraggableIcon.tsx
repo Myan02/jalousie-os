@@ -1,5 +1,5 @@
 import { useDragContext } from "../../context/DragContext";
-import type { AppIcon } from "../../types";
+import type { AppIcon } from "../../types/Types";
 import "./DraggableIcon.css";
 
 // Sizes of each cell, change the size
