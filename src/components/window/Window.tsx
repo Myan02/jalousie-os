@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useDragContext } from "../../context/DragContext";
 import type { AppWindow } from "../../types/Types";
 import WindowContent from "./WindowContent";
@@ -20,11 +20,12 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         "bottom-left": { x: 0, y: 0 },
         "bottom-right": { x: 0, y: 0 }
     });    // Keep track of the positions of all 4 corners of a window for easy referencing
+    const dragRef = useRef<HTMLDivElement>(null);
+    const [isDragging, setIsDragging] = useState<Boolean>(false);
 
     const TASKBAR_HEIGHT: number = 32;
     const SCROLL_BUFFER: number = 24;       // Wiggle room user has when they want to scroll
     const TITLE_BAR_WIDTH: number = 28;     // Window title size
-
 
     /**
      * Handles the scaling of windows when users grab the right/bottom edges or bottom-right corner
@@ -35,7 +36,8 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         e.stopPropagation();
         focusWindow(win.id);
 
-        let newWidth: number, newHeight: number;
+        let newWidth: number;
+        let newHeight: number;
         let pos: "corner" | "right" | "bottom";
 
         windowBorderPosition.current = {
@@ -49,11 +51,13 @@ const Window = ({ window: win }: { window: AppWindow }) => {
          * Event listener, updates on move when the mouse is held down
          */
         const onMove = (e: MouseEvent) => {
+            setIsDragging(true);
+
             const distToEdgeX = window.innerWidth - windowBorderPosition.current["top-left"].x;
             const distToEdgeY = window.innerHeight - windowBorderPosition.current["top-left"].y;
 
             newWidth = Math.max(window.innerWidth / 3, Math.min(distToEdgeX, e.clientX - win.x));
-            newHeight = Math.max(window.innerHeight / 2, Math.min(distToEdgeY, e.clientY - win.y + TASKBAR_HEIGHT));
+            newHeight = Math.max(window.innerHeight / 1.875, Math.min(distToEdgeY, e.clientY - win.y + TASKBAR_HEIGHT));
 
             if (pos == "bottom") {
                 document.body.style.cursor = "ns-resize";
@@ -64,14 +68,29 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             } else {
                 document.body.style.cursor = "nwse-resize";
             }
+
+            // Update drag border 
+            if (dragRef.current) {
+                const dragStyle = dragRef.current.style
+                dragStyle.outline = "2px dotted #FF0000";
+                dragStyle.border = "2px dotted #FF0000";
+
+                dragStyle.minWidth = `${newWidth}px`;
+                dragStyle.minHeight = `${newHeight - TASKBAR_HEIGHT}px`;
+            }
         }
 
         /**
          * Event listener, called when mouse is released
          */
         const onUp = () => {
-            document.body.style.cursor = "default";
-            scaleWindow(win.id, newWidth, newHeight, "neutral");
+            setIsDragging(false);
+
+            // Only update scale if the values actually updated from mousemove
+            if (newHeight || newWidth) {
+                document.body.style.cursor = "default";
+                scaleWindow(win.id, newWidth, newHeight, "neutral");
+            }
 
             document.removeEventListener("mousemove", onMove);
             document.removeEventListener("mouseup", onUp);
@@ -94,14 +113,20 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             document.addEventListener("mousemove", onMove);
             document.addEventListener("mouseup", onUp);
         }
-
     };
 
-    // Move window when title is dragged
+    /**
+     * Handles the movement of windows when a user drags the title bar
+     * 
+     * @param e : mouse event, listen on mouse move
+     */
     const handleTitleMouseDown = (e: React.MouseEvent) => {
         focusWindow(win.id);
-        dragOffset.current = { x: e.clientX - win.x, y: e.clientY - win.y };
+        dragOffset.current = { x: e.clientX - win.x, y: e.clientY - win.y };    // Sets the top left point as the reference point to move from
 
+        /**
+         * Event listener, called when user holds mouse down over title bar
+         */
         const onMove = (e: MouseEvent) => {
             e.stopPropagation();
 
@@ -119,16 +144,23 @@ const Window = ({ window: win }: { window: AppWindow }) => {
 
             moveWindow(win.id, newX, newY);
         };
+
+        /**
+         * Event listener, removes drag move listener when user lets go of mouse
+         */
         const onUp = () => {
             document.removeEventListener("mousemove", onMove);
             document.removeEventListener("mouseup", onUp);
         };
 
+        // Add event listener when user clicks on title bar
         document.addEventListener("mousemove", onMove);
         document.addEventListener("mouseup", onUp);
     };
 
-    // Update window scale when user clicks to maximize window
+    /**
+     * Maximizes window when scale button or title bar is clicked
+     */
     const handleScaleButtonClicked = () => {
         let x, y, newWidth, newHeight;
 
@@ -226,6 +258,17 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             <div className="window__content">
                 <WindowContent windowId={win.id} />
             </div>
+
+            {/* Show drag border when scaling window*/}
+            {isDragging &&
+                <div
+                    ref={dragRef}
+                    className="Drag__Border"
+                    style={{
+                        position: "fixed",
+                    }}>
+                </div>
+            }
         </div>
     );
 };
