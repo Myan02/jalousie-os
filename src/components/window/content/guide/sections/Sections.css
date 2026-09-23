@@ -1,24 +1,30 @@
 .Section__Title {
     font-family: "MS Sans Serif Bold", sans-serif;
-    align-self: flex-start;
-    margin: 4px;
+    align-self: center;
+    font-size: 1.5rem;
+    margin: 15px 20px 20px 20px;
     font-weight: 100;
 }
 
 .Section__Description {
-    align-self: flex-start;
+    display: block;
+    align-self: center;
     line-height: 24px;
-    margin: 4px;
+    margin: 5px 20px 20px 20px;
+    font-size: 1.35rem;
 }
 
-
 .Section__List {
-    margin-left: 6%;
+    display: block;
+    align-self: center;
     line-height: 24px;
+    list-style-position: inside;
 }
 
 .Section__List-Item {
-    margin-left: 4px;
+    display: list-item;
+    margin-left: 20px;
     margin-bottom: 4px;
     line-height: 24px;
+    font-size: 1.25rem;
 }

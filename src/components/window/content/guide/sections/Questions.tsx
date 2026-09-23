@@ -18,16 +18,12 @@ const Questions = () => {
                     in my heart. I love the feel of Windows 98; back when people had a passion for creating.
                 </span>
 
-                <li style={{ marginTop: "8px" }} className="Section__List-Item"><i>Did you make this with AI?</i></li>
-                <span className="Section__Description">
-                    No.
-                </span>
-
                 <li style={{ marginTop: "8px" }} className="Section__List-Item"><i>I'm looking at your source code, why do you have so many comments?</i></li>
                 <span className="Section__Description">
                     I wrote a bunch of comments since they help me remember the choices I make years down the line.
                     Also it might be helpful for people trying to figure out my sweaty code. Don't do this in production lol.
                 </span>
+
 
                 <li style={{ marginTop: "8px" }} className="Section__List-Item"><i>Where did you get these epic graphics?</i></li>
                 <span className="Section__Description">
