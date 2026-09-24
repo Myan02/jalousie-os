@@ -15,10 +15,6 @@ const Troubleshooting = () => {
                 <li className="Section__List-Item">Restart the page.</li>
                 <li className="Section__List-Item">That's it, just restart the page hehe.</li>
             </ul>
-
-            <span className="Section__Description">
-                Thank you :3
-            </span>
         </>
     );
 };

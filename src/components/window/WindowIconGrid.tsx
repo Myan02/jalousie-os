@@ -3,21 +3,32 @@ import DraggableIcon, { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../shared/Drag
 import { useRef, useEffect, useState } from "react";
 import "./WindowGridIcon.css";
 
-const WindowIconGrid = ({ parentWindowId }: { parentWindowId: string }) => {
+interface props {
+    parentWindowId: string;
+    parentWidth: number;
+    parentHeight: number;
+}
+
+const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) => {
     const { icons } = useDragContext();
 
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const [maxCols, setMaxCols] = useState(5);
-    const [maxRows, setMaxRows] = useState(4);
+    const maxCols = Math.floor(parentWidth / GRID_CELL_WIDTH);
+    const maxRows = Math.floor(parentHeight / GRID_CELL_HEIGHT);
 
-    useEffect(() => {
-        if (!containerRef.current) return;
+    // const [maxCols, setMaxCols] = useState(10);
+    // const [maxRows, setMaxRows] = useState(10);
 
-        const { width, height } = containerRef.current.getBoundingClientRect();
-        setMaxCols(Math.floor(width / GRID_CELL_WIDTH));
-        setMaxRows(Math.floor(height / GRID_CELL_HEIGHT));
-    }, []);
+    // useEffect(() => {
+    //     if (!containerRef.current) return;
+
+    //     const { width, height } = containerRef.current.getBoundingClientRect();
+    //     setMaxCols(Math.floor(width / GRID_CELL_WIDTH));
+    //     setMaxRows(Math.floor(height / GRID_CELL_HEIGHT));
+
+    //     console.log(maxCols, maxRows);
+    // }, []);
 
     const windowIcons = icons.filter((icon) =>
         icon.scope === "window" && icon.parentWindowId === parentWindowId
@@ -26,7 +37,8 @@ const WindowIconGrid = ({ parentWindowId }: { parentWindowId: string }) => {
     return (
         <div
             className="window-icon-grid"
-            style={{ position: "relative", width: maxCols * GRID_CELL_WIDTH, height: maxRows * GRID_CELL_HEIGHT }}
+            ref={containerRef}
+            onDragStart={e => e.stopPropagation()}
         >
             {windowIcons.length === 0
                 ? <p className="window-icon-grid__empty">This folder is empty</p>

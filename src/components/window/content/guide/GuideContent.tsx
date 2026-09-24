@@ -15,7 +15,7 @@ import Questions from "./sections/Questions";
 const GuideContent = () => {
 
     const [tab, setTab] = useState<string>("Content");          // tab keeps track of the current table tab (content, index, search)
-    const [hidden, setHidden] = useState<boolean>(false);
+    const [hidden, setHidden] = useState<boolean>(true);
     const [sections, setSections] = useState<string[]>(["1"]);  // sections tracks the user click history and the last item is the one the user is currently seeing
     const [curIndex, setCurIndex] = useState<number>(0);        // curIndex is where ther user is in the section click history
 
@@ -94,8 +94,9 @@ const GuideContent = () => {
                 }
 
                 <div style={sections[curIndex] == "1"
-                    ? { backgroundImage: "url('./src/assets/backdrops/help-backdrop.png')", 
-                        backgroundRepeat: "no-repeat", 
+                    ? {
+                        backgroundImage: "url('./src/assets/backdrops/help-backdrop.png')",
+                        backgroundRepeat: "no-repeat",
                         backgroundPosition: "left top",
                     }
                     : { backgroundImage: "none" }}

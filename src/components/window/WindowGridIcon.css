@@ -1,6 +1,9 @@
 .window-icon-grid {
     position: relative;
+    width: 100%;
+    height: 100%; /* 32 px is the height of the taskbar */
     padding: 4px;
+    overflow: hidden;
 }
 
 .window-icon-grid__empty {

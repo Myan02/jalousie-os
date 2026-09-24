@@ -5,7 +5,11 @@ const Welcome = () => {
         <>
             <span className="Welcome__Title">Welcome to the Start Guide</span>
 
-            <span className="Welcome__Description">Use the sections and tabs on the left to explore this online operating system.</span>
+            <span className="Welcome__Description">
+                Click the <b>Show</b> tab on the top left portion of the window
+                to access this guide's sections.<br />Use the sections and tabs on the left to explore this online
+                operating system.
+            </span>
 
             <ul className="Welcome__List">
                 <li className="Welcome__Item">Learn more about me.</li>
