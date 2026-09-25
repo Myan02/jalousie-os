@@ -73,10 +73,22 @@
                 -1px  1px   0 1px var(--win-black);   /* Left */
 }
 
+.documents__body-summary {
+    display: flex;
+    flex-flow: column;
+    flex: 1 0 128px;
+    overflow: hidden;
+}
+
+.documents__body-summary__color-lines {
+    display: flex;
+    flex-direction: row;
+}
 
 .documents__body-icons {
-    width: 100%;
-    height: 100%;
+    display: flex;
+    flex: 6;
+    padding: 12px;
 }
 
 /* Footer */
