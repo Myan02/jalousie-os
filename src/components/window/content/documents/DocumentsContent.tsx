@@ -1,4 +1,5 @@
 import { useDragContext } from "../../../../context/DragContext";
+import { useRef } from "react";
 import WindowIconGrid from "../../WindowIconGrid";
 import Tab from "../../helpers/Tab";
 // import Label from "../../helpers/Label";
@@ -7,6 +8,7 @@ import "./DocumentsContent.css";
 
 const DocumentsContent = () => {
     const { windows, selectedIcon } = useDragContext();
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const dimensions = windows.filter(win => win.id === "documentsWindow");
     const width = dimensions[0].width;
@@ -46,7 +48,7 @@ const DocumentsContent = () => {
                 </div>
             </div>
 
-            <div className="documents__body">
+            <div className="documents__body" ref={contentRef}>
                 <div className="documents__body-summary">
                     <img style={{ maxWidth: "48px", margin: "24px 0 24px 24px" }} src="./src/assets/icons/document-icon.png" alt="Documents Image" />
                     <h1 style={{ margin: "0 0 12px 24px" }}>My Documents </h1>
@@ -66,7 +68,7 @@ const DocumentsContent = () => {
                     <WindowIconGrid
                         parentWindowId="documentsWindow"
                         parentWidth={width}
-                        parentHeight={height}
+                        parentHeight={contentRef.current ? contentRef.current.clientHeight : height}
                     />
                 </div>
             </div>

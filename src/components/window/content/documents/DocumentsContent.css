@@ -12,7 +12,6 @@
 /* Headers */
 .documents__header {
     background-color: var(--win-text);
-    flex: 0;
 
     display: flex;
     flex-direction: column;
@@ -76,8 +75,8 @@
 .documents__body-summary {
     display: flex;
     flex-flow: column;
-    flex: 1 0 128px;
-    overflow: hidden;
+    flex: 1 0 150px;
+    overflow: scroll;
 }
 
 .documents__body-summary__color-lines {
@@ -87,8 +86,9 @@
 
 .documents__body-icons {
     display: flex;
-    flex: 6;
+    flex: 6 0 0;
     padding: 12px;
+    overflow: scroll;
 }
 
 /* Footer */

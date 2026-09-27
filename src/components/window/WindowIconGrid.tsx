@@ -14,8 +14,13 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
 
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const maxCols = Math.floor(parentWidth / GRID_CELL_WIDTH);
+    // The left side of the expression calculates the size of the "summary" width based on its flex property
+    // the right side of the expression just adds half the width of an icon to add a little padding
+    const CONTENT_SUMMARY_OFFSET = ((parentWidth - 150) * (1 / 7) + 150) + (GRID_CELL_WIDTH / 2);
+
+    const maxCols = Math.floor((parentWidth - CONTENT_SUMMARY_OFFSET) / GRID_CELL_WIDTH);
     const maxRows = Math.floor(parentHeight / GRID_CELL_HEIGHT);
+
 
     const windowIcons = icons.filter((icon) =>
         icon.scope === "window" && icon.parentWindowId === parentWindowId
