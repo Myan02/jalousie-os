@@ -20,7 +20,7 @@ const DESKTOP_ICONS: AppIcon[] = [
     { id: "guideIcon", label: "Start Guide", iconSrc: "guide-icon.png", col: 0, row: 3, windowId: "guideWindow", scope: "desktop" },
 
     { id: "resumeIcon", label: "Resume", iconSrc: "guide-icon.png", col: 0, row: 0, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow" },
-    { id: "resumIcon", label: "Resume", iconSrc: "guide-icon.png", col: 1, row: 1, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow" }
+    { id: "computeIcon", label: "My Computer", iconSrc: "computer-icon.png", col: 0, row: 1, windowId: "computerWindow", scope: "window", parentWindowId: "documentsWindow" }
 
 ];
 

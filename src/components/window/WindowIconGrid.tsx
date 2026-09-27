@@ -1,7 +1,9 @@
 import { useDragContext } from "../../context/DragContext";
 import DraggableIcon, { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../shared/DraggableIcon";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import "./WindowGridIcon.css";
+
+const FIRST_ROW: number = 0;
 
 interface props {
     parentWindowId: string;
@@ -10,8 +12,7 @@ interface props {
 }
 
 const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) => {
-    const { icons, selectIcon } = useDragContext();
-
+    const { icons, selectIcon, moveIcon } = useDragContext();
     const containerRef = useRef<HTMLDivElement>(null);
 
     // The left side of the expression calculates the size of the "summary" width based on its flex property
@@ -21,10 +22,14 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
     const maxCols = Math.floor((parentWidth - CONTENT_SUMMARY_OFFSET) / GRID_CELL_WIDTH);
     const maxRows = Math.floor(parentHeight / GRID_CELL_HEIGHT);
 
-
     const windowIcons = icons.filter((icon) =>
         icon.scope === "window" && icon.parentWindowId === parentWindowId
-    );
+    ).map((icon, index) => (icon.col >= maxCols || icon.row >= maxRows) ? { ...icon, col: index, row: FIRST_ROW } : icon);
+
+    // Reset the position of icons upon rerender
+    useEffect(() => {
+        windowIcons.forEach((icon, index) => moveIcon(icon.id, index, FIRST_ROW));
+    }, [containerRef])
 
     /**
      * Unselect Icon when clicking outside of an icon in the grid space
