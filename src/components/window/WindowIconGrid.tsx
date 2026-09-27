@@ -10,7 +10,7 @@ interface props {
 }
 
 const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) => {
-    const { icons } = useDragContext();
+    const { icons, selectIcon } = useDragContext();
 
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -21,10 +21,24 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
         icon.scope === "window" && icon.parentWindowId === parentWindowId
     );
 
+    /**
+     * Unselect Icon when clicking outside of an icon in the grid space
+     * 
+     * @param e : click event
+     */
+    const handleGridClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+
+        if (e.target === containerRef.current) {
+            selectIcon(undefined);
+        }
+    }
+
     return (
         <div
             className="window-icon-grid"
             ref={containerRef}
+            onClick={handleGridClick}
             onDragStart={e => e.stopPropagation()}
         >
             {windowIcons.length === 0

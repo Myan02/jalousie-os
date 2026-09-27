@@ -6,7 +6,7 @@ import Divider from "../../helpers/Divider";
 import "./DocumentsContent.css";
 
 const DocumentsContent = () => {
-    const { windows } = useDragContext();
+    const { windows, selectedIcon } = useDragContext();
 
     const dimensions = windows.filter(win => win.id === "documentsWindow");
     const width = dimensions[0].width;
@@ -56,6 +56,10 @@ const DocumentsContent = () => {
                         <span style={{ border: "1px solid #00ff00", width: "100%" }} />
                         <span style={{ border: "1px solid #00ffff", width: "100%" }} />
                     </div>
+                    {selectedIcon?.parentWindowId === "documentsWindow" && <div> {
+                        selectedIcon.id
+                    }
+                    </div>}
                 </div>
 
                 <div className="documents__body-icons" >
@@ -65,10 +69,7 @@ const DocumentsContent = () => {
                         parentHeight={height}
                     />
                 </div>
-
             </div>
-
-
 
             <div className="documents__footer">
 

@@ -19,6 +19,11 @@
     outline: 2px dotted rgba(0, 0, 128, 0.25);
 }
 
+.draggable-icon:focus {
+    background-color: rgba(0, 81, 255, 0.15);
+    outline: 2px dotted rgba(0, 0, 128, 0.25);
+}
+
 .draggable-icon__img {
     width: 36px;
     height: 36px;

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useDragContext } from "../../context/DragContext";
 import type { AppIcon } from "../../types/Types";
 import "./DraggableIcon.css";
@@ -13,7 +14,23 @@ type Props = {
 };
 
 const DraggableIcon = ({ icon, maxCols, maxRows }: Props) => {
-    const { icons, openWindow, moveIcon } = useDragContext();
+    const { icons, openWindow, moveIcon, selectIcon } = useDragContext();
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+
+        // Set selected icon to undefined when a click does not contain the icon div
+        const handleOutsideClick = (e: MouseEvent) => {
+            if (ref.current && e.target !== ref.current) {
+                selectIcon(undefined);
+            }
+        }
+
+        document.addEventListener("mousedown", handleOutsideClick);
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        }
+    }, [ref]);
 
     const style: React.CSSProperties = {
         position: "absolute",
@@ -49,10 +66,13 @@ const DraggableIcon = ({ icon, maxCols, maxRows }: Props) => {
     return (
         <div
             className="draggable-icon"
+            ref={ref}
             style={style}
             draggable
             onDragEnd={handleDragEnd}
+            onClick={() => selectIcon(icon.id)}
             onDoubleClick={() => openWindow(icon.id)}
+            tabIndex={0}
         >
             <img
                 className="draggable-icon__img"

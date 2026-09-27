@@ -28,8 +28,10 @@ const DESKTOP_ICONS: AppIcon[] = [
 type DragContextType = {
     icons: AppIcon[];
     windows: AppWindow[];
+    selectedIcon: AppIcon | undefined;
 
     moveIcon: (iconId: string, newCol: number, newRow: number) => void;
+    selectIcon: (iconId: string | undefined) => void;
     openWindow: (iconId: string) => void;
     closeWindow: (windowId: string) => void;
     minimizeWindow: (windowId: string) => void;
@@ -46,6 +48,9 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 
     // Track the current icons
     const [icons, setIcons] = useState<AppIcon[]>(DESKTOP_ICONS);
+
+    // Track the icon that the user single clicked on
+    const [selectedIcon, setSelectedIcon] = useState<AppIcon | undefined>(undefined);
 
     // Track the current windows + add the guide on startup
     const [windows, setWindows] = useState<AppWindow[]>([{
@@ -79,6 +84,17 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             prev.map((icon) => icon.id === iconId ? { ...icon, col: newCol, row: newRow } : icon)
         );
     };
+
+    // Set the selected icon or set to undefined if the user clicked somewhere else
+    const selectIcon = (iconId: string | undefined) => {
+        if (iconId === undefined) {
+            setSelectedIcon(undefined);
+            return;
+        }
+
+        const icon = icons.find(i => i.id === iconId);
+        setSelectedIcon(icon);
+    }
 
     // Open a window when an icon is double clicked
     const openWindow = (iconId: string) => {
@@ -153,7 +169,9 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         <DragContext.Provider value={{
             icons,
             windows,
+            selectedIcon,
             moveIcon,
+            selectIcon,
             openWindow,
             closeWindow,
             minimizeWindow,
