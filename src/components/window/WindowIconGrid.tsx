@@ -22,14 +22,50 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
     const maxCols = Math.floor((parentWidth - CONTENT_SUMMARY_OFFSET) / GRID_CELL_WIDTH);
     const maxRows = Math.floor(parentHeight / GRID_CELL_HEIGHT);
 
-    const windowIcons = icons.filter((icon) =>
+    // Grab the proper window icons and reset their positions on window scale
+    let windowIcons = icons.filter((icon) =>
         icon.scope === "window" && icon.parentWindowId === parentWindowId
-    ).map((icon, index) => (icon.col >= maxCols || icon.row >= maxRows) ? { ...icon, col: index, row: FIRST_ROW } : icon);
+    ).reduce((acc: any[], icon) => {
+
+        // Icons are out of window bounds
+        if (icon.row >= maxRows || icon.col >= maxCols) {
+
+            // Convert icon positions to set items for quick lookups
+            const occupiedPositions = new Set(
+                acc.map((i: any) => `${i.row}, ${i.col}`)
+            );
+
+            let newRow = 0;
+            let newCol = 0;
+            let found = false;
+
+            // Iterate over the CURRENT window size
+            for (newRow = 0; newRow < maxRows && !found; newRow++) {
+                for (newCol = 0; newCol < maxCols && !found; newCol++) {
+                    const posKey = `${newRow}, ${newCol}`;
+
+                    // Empty spot found, push icon with new row and col
+                    if (!occupiedPositions.has(posKey)) {
+                        acc.push({ ...icon, row: newRow, col: newCol });
+                        occupiedPositions.add(posKey);
+                        found = true;
+                    }
+                }
+            }
+        }
+
+        // Icons are IN bounds, do not modify 
+        else {
+            acc.push(icon);
+        }
+
+        return acc;
+    }, []);
 
     // Reset the position of icons upon rerender
     useEffect(() => {
         windowIcons.forEach((icon, index) => moveIcon(icon.id, index, FIRST_ROW));
-    }, [containerRef])
+    }, [containerRef]);
 
     /**
      * Unselect Icon when clicking outside of an icon in the grid space
