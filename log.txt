@@ -1,5 +1,7 @@
 - window content
-    - add new icons and windows
+    - add new icons 
+    - make the summary show the icon and a brief summary of it when clicked
+    - keep track of clicked icons and use the back and forward arrows to go between them
 - fix taskbar start button
     - make a custom window thaty is not draggable
     - change the way it looks

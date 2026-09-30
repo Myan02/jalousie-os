@@ -2,6 +2,7 @@ import { useDragContext } from "../../context/DragContext";
 import DraggableIcon, { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../shared/DraggableIcon";
 import { useRef, useEffect } from "react";
 import "./WindowGridIcon.css";
+import type { AppIcon } from "../../types/Types";
 
 const FIRST_ROW: number = 0;
 
@@ -15,24 +16,20 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
     const { icons, selectIcon, moveIcon } = useDragContext();
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // The left side of the expression calculates the size of the "summary" width based on its flex property
-    // the right side of the expression just adds half the width of an icon to add a little padding
-    const CONTENT_SUMMARY_OFFSET = ((parentWidth - 150) * (1 / 7) + 150) + (GRID_CELL_WIDTH / 2);
-
-    const maxCols = Math.floor((parentWidth - CONTENT_SUMMARY_OFFSET) / GRID_CELL_WIDTH);
+    const maxCols = Math.floor(parentWidth / GRID_CELL_WIDTH);
     const maxRows = Math.floor(parentHeight / GRID_CELL_HEIGHT);
 
     // Grab the proper window icons and reset their positions on window scale
     let windowIcons = icons.filter((icon) =>
         icon.scope === "window" && icon.parentWindowId === parentWindowId
-    ).reduce((acc: any[], icon) => {
+    ).reduce((acc: AppIcon[], icon) => {
 
         // Icons are out of window bounds
-        if (icon.row >= maxRows || icon.col >= maxCols) {
+        if (icon.col >= maxCols || icon.row >= maxRows) {
 
             // Convert icon positions to set items for quick lookups
             const occupiedPositions = new Set(
-                acc.map((i: any) => `${i.row}, ${i.col}`)
+                acc.map((i: AppIcon) => `${i.row}, ${i.col}`)
             );
 
             let newRow = 0;

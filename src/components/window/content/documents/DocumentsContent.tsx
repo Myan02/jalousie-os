@@ -1,18 +1,23 @@
 import { useDragContext } from "../../../../context/DragContext";
-import { useRef } from "react";
 import WindowIconGrid from "../../WindowIconGrid";
 import Tab from "../../helpers/Tab";
 // import Label from "../../helpers/Label";
 import Divider from "../../helpers/Divider";
 import "./DocumentsContent.css";
+import { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../../../shared/DraggableIcon";
+
 
 const DocumentsContent = () => {
     const { windows, selectedIcon } = useDragContext();
-    const contentRef = useRef<HTMLDivElement>(null);
 
     const dimensions = windows.filter(win => win.id === "documentsWindow");
     const width = dimensions[0].width;
     const height = dimensions[0].height;
+
+    // The left side of the expression calculates the size of the "summary" width based on its flex property
+    // the right side of the expression just adds half the width of an icon to add a little padding
+    const CONTENT_SUMMARY_WIDTH_OFFSET = ((width - 150) * (1 / 7) + 150) + (GRID_CELL_WIDTH / 2);
+    const CONTENT_HEADER_HEIGHT_OFFSET = (height * (1 / 5)) + (GRID_CELL_HEIGHT / 2);
 
     return (
         <div className="documents">
@@ -48,7 +53,7 @@ const DocumentsContent = () => {
                 </div>
             </div>
 
-            <div className="documents__body" ref={contentRef}>
+            <div className="documents__body">
                 <div className="documents__body-summary">
                     <img style={{ maxWidth: "48px", margin: "24px 0 24px 24px" }} src="./src/assets/icons/document-icon.png" alt="Documents Image" />
                     <h1 style={{ margin: "0 0 12px 24px" }}>My Documents </h1>
@@ -67,8 +72,8 @@ const DocumentsContent = () => {
                 <div className="documents__body-icons" >
                     <WindowIconGrid
                         parentWindowId="documentsWindow"
-                        parentWidth={width}
-                        parentHeight={contentRef.current ? contentRef.current.clientHeight : height}
+                        parentWidth={width - CONTENT_SUMMARY_WIDTH_OFFSET}
+                        parentHeight={height - CONTENT_HEADER_HEIGHT_OFFSET}
                     />
                 </div>
             </div>
