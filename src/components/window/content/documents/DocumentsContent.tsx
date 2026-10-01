@@ -10,14 +10,37 @@ import { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../../../shared/DraggableIcon
 const DocumentsContent = () => {
     const { windows, selectedIcon } = useDragContext();
 
-    const dimensions = windows.filter(win => win.id === "documentsWindow");
-    const width = dimensions[0].width;
-    const height = dimensions[0].height;
+    const window = windows.filter(win => win.id === "documentsWindow");
+    const width = window[0].width;
+    const height = window[0].height;
 
     // The left side of the expression calculates the size of the "summary" width based on its flex property
     // the right side of the expression just adds half the width of an icon to add a little padding
     const CONTENT_SUMMARY_WIDTH_OFFSET = ((width - 150) * (1 / 7) + 150) + (GRID_CELL_WIDTH / 2);
     const CONTENT_HEADER_HEIGHT_OFFSET = (height * (1 / 5)) + (GRID_CELL_HEIGHT / 2);
+
+    // Reduce this function to accumulate an array
+    // Array will hold the following objects based on whether they
+    //      are shown or now depending on the width of the window
+    let tabs: { label: string, imageSrc: string, disabled: boolean, show: boolean }[] = [
+        { label: "Back", imageSrc: "left-arrow-icon.png", disabled: true, show: true },
+        { label: "Forward", imageSrc: "right-arrow-icon.png", disabled: true, show: true },
+        { label: "Up", imageSrc: "up-folder-icon.png", disabled: false, show: true },
+        { label: "Cut", imageSrc: "cut-icon.png", disabled: false, show: true },
+        { label: "Copy", imageSrc: "copy-icon.png", disabled: false, show: true },
+        { label: "Paste", imageSrc: "paste-icon.png", disabled: false, show: true },
+        { label: "Delete", imageSrc: "delete-icon.png", disabled: false, show: true },
+        { label: "Properties", imageSrc: "properties-icon.png", disabled: false, show: true },
+        { label: "Views", imageSrc: "views-icon.png", disabled: false, show: true }
+    ].reduce((acc: { label: string, imageSrc: string, disabled: boolean, show: boolean }[], tab, index) => {
+
+        if (width < (64 * (index + 1)) + 40) {
+            tab.show = false;
+        }
+
+        acc.push(tab);
+        return acc;
+    }, []);
 
     return (
         <div className="documents">
@@ -37,18 +60,10 @@ const DocumentsContent = () => {
                 <div className="documents__header-tabs__container">
                     <Divider divType="thick" />
                     <div className="documents__header-tabs">
-                        <Tab style={{ marginLeft: "4px" }} label="Back" imageSrc="left-arrow-icon.png" disabled />
-                        <Tab label="Forward" imageSrc="right-arrow-icon.png" disabled />
-                        <Tab label="Up" imageSrc="up-folder-icon.png" />
-                        <Divider divType="vertical" />
-                        <Tab label="Cut" imageSrc="cut-icon.png" />
-                        <Tab label="Copy" imageSrc="copy-icon.png" />
-                        <Tab label="Paste" imageSrc="paste-icon.png" />
-                        <Divider divType="vertical" />
-                        <Tab label="Delete" imageSrc="delete-icon.png" />
-                        <Tab label="Properties" imageSrc="properties-icon.png" />
-                        <Divider divType="vertical" />
-                        <Tab label="Views" imageSrc="views-icon.png" />
+                        <span style={{ margin: "4px" }}></span>
+                        {tabs.map((tab, index) => {
+                            return tab.show === true && <Tab key={index} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} />
+                        })}
                     </div>
                 </div>
             </div>

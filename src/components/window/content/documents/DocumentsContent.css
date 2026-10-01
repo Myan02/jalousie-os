@@ -45,7 +45,7 @@
 }
 
 .documents__header-tabs {
-    flex: 8;
+    flex: 1;
     display: flex;
     flex-direction: row;
     padding: 2px;
