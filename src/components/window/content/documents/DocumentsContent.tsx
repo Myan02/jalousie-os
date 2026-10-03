@@ -1,10 +1,10 @@
 import { useDragContext } from "../../../../context/DragContext";
 import WindowIconGrid from "../../WindowIconGrid";
 import Tab from "../../helpers/Tab";
-// import Label from "../../helpers/Label";
 import Divider from "../../helpers/Divider";
-import "./DocumentsContent.css";
+import Dropdown from "../../helpers/Dropdown";
 import { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../../../shared/DraggableIcon";
+import "./DocumentsContent.css";
 
 
 const DocumentsContent = () => {
@@ -42,6 +42,8 @@ const DocumentsContent = () => {
         return acc;
     }, []);
 
+    const hiddenTabs = tabs.filter((tab) => !tab.show);
+
     return (
         <div className="documents">
             <div className="documents__header">
@@ -64,6 +66,11 @@ const DocumentsContent = () => {
                         {tabs.map((tab, index) => {
                             return tab.show === true && <Tab key={index} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} />
                         })}
+                        {hiddenTabs.length > 0 && <Dropdown>
+                            {hiddenTabs.map((tab) => {
+                                return <h1>{tab.label}</h1>
+                            })}
+                        </Dropdown>}
                     </div>
                 </div>
             </div>
