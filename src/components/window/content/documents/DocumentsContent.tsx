@@ -5,10 +5,14 @@ import Divider from "../../helpers/Divider";
 import Dropdown from "../../helpers/Dropdown";
 import { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../../../shared/DraggableIcon";
 import "./DocumentsContent.css";
+import { Fragment } from "react/jsx-runtime";
+import { useState } from "react";
+import Label from "../../helpers/Label";
 
 
 const DocumentsContent = () => {
     const { windows, selectedIcon } = useDragContext();
+    const [dropdown, setDropdown] = useState<string | null>(null);
 
     const window = windows.filter(win => win.id === "documentsWindow");
     const width = window[0].width;
@@ -34,7 +38,7 @@ const DocumentsContent = () => {
         { label: "Views", imageSrc: "views-icon.png", disabled: false, show: true }
     ].reduce((acc: { label: string, imageSrc: string, disabled: boolean, show: boolean }[], tab, index) => {
 
-        if (width < (64 * (index + 1)) + 40) {
+        if (width < (64 * (index + 1)) + 85) {
             tab.show = false;
         }
 
@@ -63,14 +67,34 @@ const DocumentsContent = () => {
                     <Divider divType="thick" />
                     <div className="documents__header-tabs">
                         <span style={{ margin: "4px" }}></span>
+
                         {tabs.map((tab, index) => {
-                            return tab.show === true && <Tab key={index} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} />
+                            return tab.show && (index % 3 === 2 ? 
+                                <Fragment key={index}>
+                                    <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} /> 
+                                    <Divider key={-index} divType="vertical" />
+                                </ Fragment> :
+                                <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} />
+                            )
                         })}
-                        {hiddenTabs.length > 0 && <Dropdown>
-                            {hiddenTabs.map((tab) => {
-                                return <h1>{tab.label}</h1>
-                            })}
-                        </Dropdown>}
+
+                        {
+                            hiddenTabs.length > 0 &&
+                            <Tab 
+                                label=">>" 
+                                style={{ maxWidth: "24px", alignItems: "flex-start", marginLeft: "auto", fontWeight: "bold" }} 
+                                click={() => setDropdown("main")}
+                            />
+                        }
+
+                        {
+                            dropdown === "main" && <Dropdown>
+                                    {hiddenTabs.map((tab) => {
+                                        return <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} style={{ flex: "0 0 24px", flexDirection: "row", justifyContent: "flex-start", zIndex: "999" }}/>
+                                    })}
+                                </ Dropdown>
+                        }
+
                     </div>
                 </div>
             </div>

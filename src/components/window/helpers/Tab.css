@@ -41,13 +41,13 @@
 .tab__img {
     width: 32px;
     height: 32px;
+    margin: 4px;
     object-fit: contain;
     image-rendering: pixelated;
     pointer-events: none;
 }
 
 .tab__label {
-    margin-top: 2px;
     font-size: 0.8rem;
     overflow: hidden;
     text-overflow: ellipsis;

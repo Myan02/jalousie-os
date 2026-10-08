@@ -1,5 +1,17 @@
 .Dropdown {
-    position: absolute;
     display: flex;
     flex-direction: column;
+
+    position: absolute;
+    right: 0;
+    top: 135px;
+
+    padding: 2px;
+    background-color: var(--win-text);
+
+    border: 2px solid;
+    border-top-color:    var(--win-white);
+    border-left-color:   var(--win-white);
+    border-right-color:  var(--win-black);
+    border-bottom-color: var(--win-black);
 }
