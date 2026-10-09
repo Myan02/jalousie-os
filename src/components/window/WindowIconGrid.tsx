@@ -70,8 +70,6 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
      * @param e : click event
      */
     const handleGridClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-
         if (e.target === containerRef.current) {
             selectIcon(undefined);
         }

@@ -6,13 +6,22 @@ import Dropdown from "../../helpers/Dropdown";
 import { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../../../shared/DraggableIcon";
 import "./DocumentsContent.css";
 import { Fragment } from "react/jsx-runtime";
-import { useState } from "react";
-import Label from "../../helpers/Label";
+import { useState, useEffect } from "react";
 
 
 const DocumentsContent = () => {
     const { windows, selectedIcon } = useDragContext();
     const [dropdown, setDropdown] = useState<string | null>(null);
+
+    useEffect(() => {
+        const handleClick = () => {
+            setDropdown(null);
+        };
+
+        document.addEventListener("click", handleClick);
+
+        return () => document.removeEventListener("click", handleClick);
+    }, []);
 
     const window = windows.filter(win => win.id === "documentsWindow");
     const width = window[0].width;
@@ -69,9 +78,9 @@ const DocumentsContent = () => {
                         <span style={{ margin: "4px" }}></span>
 
                         {tabs.map((tab, index) => {
-                            return tab.show && (index % 3 === 2 ? 
+                            return tab.show && (index % 3 === 2 ?
                                 <Fragment key={index}>
-                                    <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} /> 
+                                    <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} />
                                     <Divider key={-index} divType="vertical" />
                                 </ Fragment> :
                                 <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} />
@@ -80,19 +89,22 @@ const DocumentsContent = () => {
 
                         {
                             hiddenTabs.length > 0 &&
-                            <Tab 
-                                label=">>" 
-                                style={{ maxWidth: "24px", alignItems: "flex-start", marginLeft: "auto", fontWeight: "bold" }} 
-                                click={() => setDropdown("main")}
+                            <Tab
+                                label=">"
+                                style={{ maxWidth: "24px", marginLeft: "auto", fontSize: "2px" }}
+                                click={(e: React.MouseEvent) => {
+                                    e.stopPropagation();
+                                    dropdown === null ? setDropdown("main") : setDropdown(null);
+                                }}
                             />
                         }
 
                         {
                             dropdown === "main" && <Dropdown>
-                                    {hiddenTabs.map((tab) => {
-                                        return <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} style={{ flex: "0 0 24px", flexDirection: "row", justifyContent: "flex-start", zIndex: "999" }}/>
-                                    })}
-                                </ Dropdown>
+                                {hiddenTabs.map((tab) => {
+                                    return <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} style={{ flex: "0 0 24px", flexDirection: "row", justifyContent: "flex-start", zIndex: "999" }} />
+                                })}
+                            </ Dropdown>
                         }
 
                     </div>

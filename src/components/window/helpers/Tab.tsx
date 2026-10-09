@@ -5,7 +5,7 @@ type props = {
     imageSrc?: string;
     disabled?: boolean;
     style?: object,
-    click?: () => void;  // Set in parent component any desired funcionality
+    click?: (e: React.MouseEvent) => void;  // Set in parent component any desired funcionality
 };
 
 // A wrapper for any clickable item in a window that has an image and a label
