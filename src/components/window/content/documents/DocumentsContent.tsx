@@ -121,10 +121,15 @@ const DocumentsContent = () => {
                         <span style={{ border: "1px solid #00ff00", width: "100%" }} />
                         <span style={{ border: "1px solid #00ffff", width: "100%" }} />
                     </div>
-                    {selectedIcon?.parentWindowId === "documentsWindow" && <div> {
-                        selectedIcon.id
-                    }
-                    </div>}
+                    <div style={{ margin: "12px 0 0 24px" }}>
+                        {selectedIcon?.parentWindowId === "documentsWindow"
+                            ? <p> {
+                                selectedIcon.label
+                            }
+                            </p>
+                            : <p>Select an item to view its description</p>
+                        }
+                    </div>
                 </div>
 
                 <div className="documents__body-icons" >

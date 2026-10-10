@@ -19,9 +19,7 @@ const DESKTOP_ICONS: AppIcon[] = [
     { id: "documentsIcon", label: "Documents", iconSrc: "document-icon.png", col: 0, row: 2, windowId: "documentsWindow", scope: "desktop" },
     { id: "guideIcon", label: "Start Guide", iconSrc: "guide-icon.png", col: 0, row: 3, windowId: "guideWindow", scope: "desktop" },
 
-    { id: "resumeIcon", label: "Resume", iconSrc: "guide-icon.png", col: 0, row: 0, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow" },
-    { id: "computeIcon", label: "My Computer", iconSrc: "computer-icon.png", col: 0, row: 1, windowId: "computerWindow", scope: "window", parentWindowId: "documentsWindow" },
-    { id: "recyclIcon", label: "Recycle Bin", iconSrc: "recycle-bin-icon.png", col: 0, row: 2, windowId: "recycleWindow", scope: "window", parentWindowId: "documentsWindow" }
+    { id: "resumeIcon", label: "resume.pdf", iconSrc: "file-icon.png", col: 0, row: 0, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow" },
 ];
 
 // The shape of the context
@@ -54,9 +52,9 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 
     // Track the current windows + add the guide on startup
     const [windows, setWindows] = useState<AppWindow[]>([{
-        id: "guideWindow",
-        title: "Guide",
-        windowSrc: "guide-icon.png",
+        id: "documentsWindow",
+        title: "Documents",
+        windowSrc: "document-icon.png",
 
         // Center of the window; get the top left corner of the window in the center of the browser and offset in by half of the size of the window
         x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
