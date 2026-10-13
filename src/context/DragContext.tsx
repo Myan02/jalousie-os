@@ -14,12 +14,12 @@ import type { AppIcon, AppWindow } from "../types/Types";
 // Add them here if you need to scale the project with more desktop icons
 // Note: Change scope to "Window" if the app exists IN a window... freaky
 const DESKTOP_ICONS: AppIcon[] = [
-    { id: "recycleIcon", label: "Recycle Bin", iconSrc: "recycle-bin-icon.png", col: 0, row: 0, windowId: "recycleWindow", scope: "desktop", },
-    { id: "computerIcon", label: "My Computer", iconSrc: "computer-icon.png", col: 0, row: 1, windowId: "computerWindow", scope: "desktop" },
-    { id: "documentsIcon", label: "Documents", iconSrc: "document-icon.png", col: 0, row: 2, windowId: "documentsWindow", scope: "desktop" },
-    { id: "guideIcon", label: "Start Guide", iconSrc: "guide-icon.png", col: 0, row: 3, windowId: "guideWindow", scope: "desktop" },
+    { id: "recycleIcon", label: "Recycle Bin", iconSrc: "recycle-bin-icon.png", col: 0, row: 0, windowId: "recycleWindow", scope: "desktop", copies: 0 },
+    { id: "computerIcon", label: "My Computer", iconSrc: "computer-icon.png", col: 0, row: 1, windowId: "computerWindow", scope: "desktop", copies: 0 },
+    { id: "documentsIcon", label: "Documents", iconSrc: "document-icon.png", col: 0, row: 2, windowId: "documentsWindow", scope: "desktop", copies: 0 },
+    { id: "guideIcon", label: "Start Guide", iconSrc: "guide-icon.png", col: 0, row: 3, windowId: "guideWindow", scope: "desktop", copies: 0 },
 
-    { id: "resumeIcon", label: "resume.pdf", iconSrc: "file-icon.png", col: 0, row: 0, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow" },
+    { id: "resumeIcon", label: "resume.pdf", iconSrc: "file-icon.png", col: 0, row: 0, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
 ];
 
 // The shape of the context
@@ -30,6 +30,9 @@ type DragContextType = {
 
     moveIcon: (iconId: string, newCol: number, newRow: number) => void;
     selectIcon: (iconId: string | undefined) => void;
+    createIcon: (icon: AppIcon) => AppIcon;
+    deleteIcon: (iconId: string) => void;
+
     openWindow: (iconId: string) => void;
     closeWindow: (windowId: string) => void;
     minimizeWindow: (windowId: string) => void;
@@ -92,7 +95,51 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 
         const icon = icons.find(i => i.id === iconId);
         setSelectedIcon(icon);
-    }
+    };
+
+    // Add an icon to the array of icons
+    const createIcon = (icon: AppIcon) => {
+        const baseId = icon.id.replace(/_\d+$/, "");
+        const nextCopyNumber = icon.copies + 1;
+        const newIconId = `${baseId}_${nextCopyNumber}`;
+
+        const newIcon: AppIcon = {
+            ...icon,
+            id: newIconId,
+            copies: nextCopyNumber,
+        };
+
+        setIcons((prev) => {
+            const updatedIcons = prev.map((item) => {
+                const isSameIconFamily = item.id === baseId || item.id.startsWith(`${baseId}_`);
+
+                if (!isSameIconFamily) {
+                    return item;
+                }
+
+                return {
+                    ...item,
+                    copies: Math.max(item.copies, nextCopyNumber),
+                };
+            });
+
+            return [...updatedIcons, newIcon];
+        });
+
+
+
+        return newIcon;
+    };
+
+    // Remove an icon from the array of icons
+    const deleteIcon = (iconId: string) => {
+        const icon = icons.find((i) => i.id === iconId);
+
+        if (icon) {
+            const newIcons = icons.filter((i) => i.id !== iconId);
+            setIcons(newIcons);
+        }
+    };
 
     // Open a window when an icon is double clicked
     const openWindow = (iconId: string) => {
@@ -170,6 +217,8 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             selectedIcon,
             moveIcon,
             selectIcon,
+            createIcon,
+            deleteIcon,
             openWindow,
             closeWindow,
             minimizeWindow,

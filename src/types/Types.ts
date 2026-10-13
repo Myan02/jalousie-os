@@ -16,6 +16,7 @@ export type AppIcon = {
     windowId: string;               // Basically a foreign ID key for the Window, connects app icons to the window they open
     scope: "desktop" | "window";    // Desktop: icon lives on the desktop; Window: icon is in a window
     parentWindowId?: string;        // Optional: only required if icon lives in a window
+    copies: number;                 // Keep track of the total number of copies of this icon
 };
 
 export type AppWindow = {

@@ -7,11 +7,20 @@ import { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../../../shared/DraggableIcon
 import "./DocumentsContent.css";
 import { Fragment } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
+import type { AppIcon } from "../../../../types/Types";
 
+type tabButton = {
+    label: string;
+    imageSrc: string;
+    disabled: boolean;
+    show: boolean;
+    onClick: () => void;
+};
 
 const DocumentsContent = () => {
-    const { windows, selectedIcon } = useDragContext();
+    const { windows, selectedIcon, selectIcon, createIcon, deleteIcon } = useDragContext();
     const [dropdown, setDropdown] = useState<string | null>(null);
+    const [copyBuffer, setCopyBuffer] = useState<{ icon: AppIcon, cutFlag: boolean } | null>(null);
 
     useEffect(() => {
         const handleClick = () => {
@@ -22,6 +31,40 @@ const DocumentsContent = () => {
 
         return () => document.removeEventListener("click", handleClick);
     }, []);
+
+    const handleCut = () => {
+        if (selectedIcon) {
+            setCopyBuffer({ icon: selectedIcon, cutFlag: true });
+        }
+    };
+
+    const handleCopy = () => {
+        if (selectedIcon) {
+            setCopyBuffer({ icon: selectedIcon, cutFlag: false });
+        }
+    };
+
+    const handlePaste = () => {
+        if (copyBuffer && copyBuffer.icon.parentWindowId === "documentsWindow") {
+            const newIcon = createIcon(copyBuffer.icon);
+            const bufferId = copyBuffer.icon.id;
+
+            if (copyBuffer.cutFlag) {
+                deleteIcon(bufferId);
+            }
+
+            selectIcon(newIcon.id);
+            setCopyBuffer({ icon: newIcon, cutFlag: false });
+        }
+    };
+
+    const handleDelete = () => {
+        if (selectedIcon && selectedIcon.parentWindowId === "documentsWindow") {
+            deleteIcon(selectedIcon.id);
+            selectIcon(undefined);
+            setCopyBuffer(null);
+        }
+    };
 
     const window = windows.filter(win => win.id === "documentsWindow");
     const width = window[0].width;
@@ -35,17 +78,17 @@ const DocumentsContent = () => {
     // Reduce this function to accumulate an array
     // Array will hold the following objects based on whether they
     //      are shown or now depending on the width of the window
-    let tabs: { label: string, imageSrc: string, disabled: boolean, show: boolean }[] = [
-        { label: "Back", imageSrc: "left-arrow-icon.png", disabled: true, show: true },
-        { label: "Forward", imageSrc: "right-arrow-icon.png", disabled: true, show: true },
-        { label: "Up", imageSrc: "up-folder-icon.png", disabled: false, show: true },
-        { label: "Cut", imageSrc: "cut-icon.png", disabled: false, show: true },
-        { label: "Copy", imageSrc: "copy-icon.png", disabled: false, show: true },
-        { label: "Paste", imageSrc: "paste-icon.png", disabled: false, show: true },
-        { label: "Delete", imageSrc: "delete-icon.png", disabled: false, show: true },
-        { label: "Properties", imageSrc: "properties-icon.png", disabled: false, show: true },
-        { label: "Views", imageSrc: "views-icon.png", disabled: false, show: true }
-    ].reduce((acc: { label: string, imageSrc: string, disabled: boolean, show: boolean }[], tab, index) => {
+    let tabs: tabButton[] = [
+        { label: "Back", imageSrc: "left-arrow-icon.png", disabled: true, show: true, onClick: () => { } },
+        { label: "Forward", imageSrc: "right-arrow-icon.png", disabled: true, show: true, onClick: () => { } },
+        { label: "Up", imageSrc: "up-folder-icon.png", disabled: false, show: true, onClick: () => { } },
+        { label: "Cut", imageSrc: "cut-icon.png", disabled: false, show: true, onClick: handleCut },
+        { label: "Copy", imageSrc: "copy-icon.png", disabled: false, show: true, onClick: handleCopy },
+        { label: "Paste", imageSrc: "paste-icon.png", disabled: false, show: true, onClick: handlePaste },
+        { label: "Delete", imageSrc: "delete-icon.png", disabled: false, show: true, onClick: handleDelete },
+        { label: "Properties", imageSrc: "properties-icon.png", disabled: false, show: true, onClick: () => { } },
+        { label: "Views", imageSrc: "views-icon.png", disabled: false, show: true, onClick: () => { } }
+    ].reduce((acc: tabButton[], tab, index) => {
 
         if (width < (64 * (index + 1)) + 85) {
             tab.show = false;
@@ -80,10 +123,10 @@ const DocumentsContent = () => {
                         {tabs.map((tab, index) => {
                             return tab.show && (index % 3 === 2 ?
                                 <Fragment key={index}>
-                                    <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} />
+                                    <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} click={tab.onClick} />
                                     <Divider key={-index} divType="vertical" />
                                 </ Fragment> :
-                                <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} />
+                                <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} disabled={tab.disabled} click={tab.onClick} />
                             )
                         })}
 
@@ -102,7 +145,7 @@ const DocumentsContent = () => {
                         {
                             dropdown === "main" && <Dropdown>
                                 {hiddenTabs.map((tab) => {
-                                    return <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} style={{ flex: "0 0 24px", flexDirection: "row", justifyContent: "flex-start", zIndex: "999" }} />
+                                    return <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} click={tab.onClick} style={{ flex: "0 0 24px", flexDirection: "row", justifyContent: "flex-start", zIndex: "999" }} />
                                 })}
                             </ Dropdown>
                         }
