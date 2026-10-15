@@ -8,6 +8,7 @@ import {
     useState,
     type ReactNode,
 } from "react";
+import { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../components/shared/DraggableIcon";
 import type { AppIcon, AppWindow } from "../types/Types";
 
 // These are all of the desktop icons
@@ -103,30 +104,64 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         const nextCopyNumber = icon.copies + 1;
         const newIconId = `${baseId}_${nextCopyNumber}`;
 
+        const parentWindowId = icon.parentWindowId ?? icon.windowId;
+        const parentWin = windows.find((win) => win.id === parentWindowId);
+        const maxCols = parentWin ? Math.floor(parentWin.width / GRID_CELL_WIDTH) : 1;
+        const maxRows = parentWin ? Math.floor(parentWin.height / GRID_CELL_HEIGHT) : 1;
+
+        const occupiedPositions = new Set(
+            icons
+                .filter((item) =>
+                    item.windowId === icon.windowId &&
+                    item.parentWindowId === icon.parentWindowId &&
+                    item.scope === icon.scope
+                )
+                .map((item) => `${item.row},${item.col}`)
+        );
+
+        let newRow = 0;
+        let newCol = 0;
+        let foundEmptySlot = false;
+
+        for (let row = 0; row < maxRows; row++) {
+            for (let col = 0; col < maxCols; col++) {
+                const positionKey = `${row},${col}`;
+
+                if (!occupiedPositions.has(positionKey)) {
+                    newRow = row;
+                    newCol = col;
+                    foundEmptySlot = true;
+                    break;
+                }
+            }
+
+            if (foundEmptySlot) {
+                break;
+            }
+        }
+
+        const updatedIcons = icons.map((item) => {
+            const isSameIconFamily = item.id === baseId || item.id.startsWith(`${baseId}_`);
+
+            if (!isSameIconFamily) {
+                return item;
+            }
+
+            return {
+                ...item,
+                copies: Math.max(item.copies, nextCopyNumber),
+            };
+        });
+
         const newIcon: AppIcon = {
             ...icon,
             id: newIconId,
             copies: nextCopyNumber,
+            row: newRow,
+            col: newCol,
         };
 
-        setIcons((prev) => {
-            const updatedIcons = prev.map((item) => {
-                const isSameIconFamily = item.id === baseId || item.id.startsWith(`${baseId}_`);
-
-                if (!isSameIconFamily) {
-                    return item;
-                }
-
-                return {
-                    ...item,
-                    copies: Math.max(item.copies, nextCopyNumber),
-                };
-            });
-
-            return [...updatedIcons, newIcon];
-        });
-
-
+        setIcons([...updatedIcons, newIcon]);
 
         return newIcon;
     };
