@@ -7,6 +7,7 @@
 export type AppIcon = {
     id: string;         
     label: string;
+    description: string;
     iconSrc: string;    // Find icon in src/assets
 
     // Grid position on the desktop

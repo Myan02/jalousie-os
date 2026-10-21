@@ -10,25 +10,7 @@ import {
 } from "react";
 import { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../components/shared/DraggableIcon";
 import type { AppIcon, AppWindow } from "../types/Types";
-
-// These are all of the desktop icons
-// Add them here if you need to scale the project with more desktop icons
-// Note: Change scope to "Window" if the app exists IN a window... freaky
-const DESKTOP_ICONS: AppIcon[] = [
-    { id: "recycleIcon", label: "Recycle Bin", iconSrc: "recycle-bin-icon.png", col: 0, row: 0, windowId: "recycleWindow", scope: "desktop", copies: 0 },
-    { id: "computerIcon", label: "My Computer", iconSrc: "computer-icon.png", col: 0, row: 1, windowId: "computerWindow", scope: "desktop", copies: 0 },
-    { id: "documentsIcon", label: "Documents", iconSrc: "document-icon.png", col: 0, row: 2, windowId: "documentsWindow", scope: "desktop", copies: 0 },
-    { id: "guideIcon", label: "Start Guide", iconSrc: "guide-icon.png", col: 0, row: 3, windowId: "guideWindow", scope: "desktop", copies: 0 },
-
-    { id: "resumeIcon", label: "resume.pdf", iconSrc: "file-icon.png", col: 0, row: 0, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "ceramicsFolderIcon", label: "ceramics", iconSrc: "document-icon.png", col: 1, row: 0, windowId: "ceramicsWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "prototypingFolderIcon", label: "prototypes", iconSrc: "document-icon.png", col: 2, row: 0, windowId: "prototypeWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "cdPlayerFolderIcon", label: "cd-player", iconSrc: "document-icon.png", col: 3, row: 0, windowId: "cdPlayerWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "screenPrintingIcon", label: "screen printing", iconSrc: "document-icon.png", col: 4, row: 0, windowId: "screenPrintingWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "feltPaintingIcon", label: "felt Painting", iconSrc: "document-icon.png", col: 5, row: 0, windowId: "feltPaintingWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    
-
-];
+import DESKTOP_ICONS from "./Icons";
 
 // The shape of the context
 type DragContextType = {

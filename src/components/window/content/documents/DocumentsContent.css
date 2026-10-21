@@ -57,6 +57,7 @@
 .documents__body {
     display: flex;
     flex-direction: row;
+    overflow: hidden;
 
     background-color: var(--win-white);
     flex: 8;
@@ -89,7 +90,6 @@
     display: flex;
     flex: 6 0 0;
     padding: 12px;
-    overflow: scroll;
 }
 
 /* Footer */
