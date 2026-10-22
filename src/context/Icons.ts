@@ -9,12 +9,12 @@ const DESKTOP_ICONS: AppIcon[] = [
     { id: "guideIcon", label: "Start Guide", description: "", iconSrc: "guide-icon.png", col: 0, row: 3, windowId: "guideWindow", scope: "desktop", copies: 0 },
 
     { id: "resumeIcon", label: "resume.pdf", description: "A copy of my current resume.", iconSrc: "file-icon.png", col: 0, row: 0, windowId: "resumeWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "ceramicsFolderIcon", label: "ceramics", description: "Directory containing my ceramics prototyping, programming, and creations.", iconSrc: "document-icon.png", col: 1, row: 0, windowId: "ceramicsWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "prototypingFolderIcon", label: "prototypes", description: "Directory containing activity development and old prototypes.", iconSrc: "document-icon.png", col: 2, row: 0, windowId: "prototypeWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "cdPlayerFolderIcon", label: "cd-player", description: "Directory containing the build process for a home made cd player.", iconSrc: "document-icon.png", col: 3, row: 0, windowId: "cdPlayerWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "screenPrintingIcon", label: "screen printing", description: "Directory containing my screen prints.", iconSrc: "document-icon.png", col: 4, row: 0, windowId: "screenPrintingWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "feltPaintingIcon", label: "felt painting", description: "Directory containing my felt needle paintings.", iconSrc: "document-icon.png", col: 5, row: 0, windowId: "feltPaintingWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
-    { id: "lowQualityDogsIcon", label: "low-quality-dogs.html", description: "My web app for sharing pet pictures! Note: this icon will open in a new tab.", iconSrc: "manny-favicon.png", col: 6, row: 0, windowId: "feltPaintingWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
+    { id: "ceramicsIcon", label: "ceramics", description: "Ceramics creations including custom glazes and maker firings.", iconSrc: "document-icon.png", col: 1, row: 0, windowId: "ceramicsWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
+    { id: "workshopsIcon", label: "workshops", description: "Workshop and program ideas, testing, development, and operations.", iconSrc: "document-icon.png", col: 2, row: 0, windowId: "workshopsWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
+    { id: "cdPlayerIcon", label: "cd-player", description: "Custom CD player processes.", iconSrc: "document-icon.png", col: 3, row: 0, windowId: "cdPlayerWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
+    { id: "lowQualityDogsIcon", label: "low-quality-dogs.html", description: "My web app for sharing pet pictures! Note: this icon will open in a new tab.", iconSrc: "manny-favicon.png", col: 4, row: 0, windowId: "lowQualityDogsIcon", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
+    { id: "subwayFilesIcon", label: "NYC subway files", description: "Download 3D files of subway station parts I built in Blender.", iconSrc: "document-icon.png", col: 5, row: 0, windowId: "subwayFilesWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
+
 
 ];
 
