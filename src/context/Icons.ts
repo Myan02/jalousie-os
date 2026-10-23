@@ -15,7 +15,6 @@ const DESKTOP_ICONS: AppIcon[] = [
     { id: "lowQualityDogsIcon", label: "low-quality-dogs.html", description: "My web app for sharing pet pictures! Note: this icon will open in a new tab.", iconSrc: "manny-favicon.png", col: 4, row: 0, windowId: "lowQualityDogsIcon", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
     { id: "subwayFilesIcon", label: "NYC subway files", description: "Download 3D files of subway station parts I built in Blender.", iconSrc: "document-icon.png", col: 5, row: 0, windowId: "subwayFilesWindow", scope: "window", parentWindowId: "documentsWindow", copies: 0 },
 
-
 ];
 
 export default DESKTOP_ICONS;

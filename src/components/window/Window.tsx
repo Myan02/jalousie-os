@@ -24,7 +24,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
     const [isDragging, setIsDragging] = useState<Boolean>(false);
 
     const TASKBAR_HEIGHT: number = 32;
-    const SCROLL_BUFFER: number = 24;       // Wiggle room user has when they want to scroll
+    const SCROLL_BUFFER: number = 12;       // Wiggle room user has when they want to scroll
     const TITLE_BAR_WIDTH: number = 28;     // Window title size
 
     /**
