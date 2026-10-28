@@ -51,9 +51,11 @@ const PhotoCarousel = ({ windowId, images }: Props) => {
             </div>
 
             <div className="carousel__footer">
-                <button onClick={handlePrev}>Prev</button>
-                <h3><i>{images[currentImage].description}</i></h3>
-                <button onClick={handleNext}>Next</button>
+                <button className="carousel__footer__button" onClick={handlePrev}>Prev</button>
+                <Divider divType="vertical" />
+                <h4 className="carousel__footer__description"><i>{images[currentImage].description}</i></h4>
+                <Divider divType="vertical" />
+                <button className="carousel__footer__button" onClick={handleNext}>Next</button>
             </div>
 
         </div>

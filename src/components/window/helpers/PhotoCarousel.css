@@ -3,7 +3,7 @@
     background-color: var(--win-text);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     height: 100%;
     width: auto;
     padding: 4px;
@@ -39,10 +39,18 @@
     padding: 2px;
 }
 
+@keyframes backgroundSlide {
+    from {background-position: 0% 0%;}
+    to   {background-position: 100% -100%;}
+}
+
 
 /* Body */
 .carousel__body {
-    background-color: var(--win-silver);
+    background-color: var(--win-white);
+    background-image: url("../../../assets/backdrops/window-backdrop.png");
+    animation: backgroundSlide 45s linear infinite;
+
     display: flex;
     flex: 12;
     justify-content: center;
@@ -60,42 +68,63 @@
 }
 
 .carousel__body-image {
-    display: flex;
-    justify-self: center;
+    padding: 4px;
+    background-color: var(--win-white);
+    align-self: center;
+    max-height: 90%;
+    width: auto;
+
+    border: 2px solid;
+    border-color: var(--win-black);
 }
 
-
-/* 
-.documents__body-summary {
-    display: flex;
-    flex-flow: column;
-    flex: 1 0 150px;
-    overflow: scroll;
-}
-
-.documents__body-summary__color-lines {
-    display: flex;
-    flex-direction: row;
-}
-
-.documents__body-icons {
-    display: flex;
-    flex: 6 0 0;
-    padding: 12px;
-} */
 
 /* Footer */
 .carousel__footer {
     background-color: var(--win-silver);
     display: flex;
-    flex: 0 0 24px;
+    flex: 1 0 12px;
     flex-direction: row;
     justify-content: space-between;
-
 
     border: 2px solid;
     border-top-color:    var(--win-dark);
     border-left-color:   var(--win-dark);
     border-right-color:  var(--win-white);
     border-bottom-color: var(--win-white);
+}
+
+.carousel__footer__description {
+    display: flex;
+    align-items: center;
+}
+
+.carousel__footer__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px 8px 2px 8px;
+    padding: 2px;
+    background-color: var(--win-silver);
+    cursor: pointer;
+
+    border: 2px solid;
+    border-top-color:    var(--win-white);
+    border-left-color:   var(--win-white);
+    border-right-color:  var(--win-black);
+    border-bottom-color: var(--win-black);
+}
+
+
+.carousel__footer__button:hover {
+    filter: brightness(0.9);
+}
+
+.carousel__footer__button:active {
+    border-top-color:    var(--win-black);
+    border-left-color:   var(--win-black);
+    border-right-color:  var(--win-white);
+    border-bottom-color: var(--win-white);
+
+    transform: translate(1px, 1px);
 }
