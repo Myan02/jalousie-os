@@ -34,6 +34,29 @@ const PhotoCarousel = ({ windowId, media }: Props) => {
     };
 
     const displayMedia = media.map((m) => {
+
+        if (m.extension === ".glb") {
+            // @ts-ignore
+            return (<model-viewer
+                key={m.id}
+                className="carousel__body-media"
+                src={m.src}
+                alt={m.description}
+                loading="auto"
+                touch-action
+                auto-rotate
+                camera-controls
+                auto-rotate-delay="0"
+                rotation-per-second="-20deg"
+                style={{
+                    width: "90%",
+                    height: curWindow ? curWindow?.height - 124 : "100%",
+                    backgroundColor: "var(--win-silver)"
+                }}
+            >    {/* @ts-ignore */}
+            </model-viewer>)
+        }
+
         if (m.extension === ".mp4") {
             return <video
                 className="carousel__body-media"
@@ -66,12 +89,7 @@ const PhotoCarousel = ({ windowId, media }: Props) => {
             <div className="carousel__header">
                 <div className="documents__header-dropdowns">
                     <Divider divType="thick" />
-                    <Tab style={{ flex: "0 0 42px", marginLeft: "4px" }} label="File" />
-                    <Tab style={{ flex: "0 0 48px" }} label="Edit" />
-                    <Tab style={{ flex: "0 0 48px" }} label="View" />
-                    <Tab style={{ flex: "0 0 36px" }} label="Go" />
-                    <Tab style={{ flex: "0 0 72px" }} label="Favorites" />
-                    <Tab style={{ flex: "0 0 48px" }} label="Help" />
+                    <Tab style={{ flex: "0 0 72px", marginLeft: "4px" }} label="Download" click={() => handleDownload(currentMedia)} />
                 </div>
             </div>
 

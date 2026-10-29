@@ -6,6 +6,7 @@ import ResumeContent from "./content/resume/ResumeContent";
 import CeramicsContent from "./content/ceramics/CeramicsContent";
 import WorkshopsContent from "./content/workshops/WorkshopsContent";
 import CDPlayerContent from "./content/cd-player/CDPlayerContent";
+import SubwayFilesContent from "./content/subway-files/SubwayFilesContent";
 
 const WindowContent = ({ windowId }: { windowId: string }) => {
     switch (windowId) {
@@ -20,8 +21,8 @@ const WindowContent = ({ windowId }: { windowId: string }) => {
         case "ceramicsWindow": return <CeramicsContent />;
         case "workshopsWindow": return <WorkshopsContent />;
         case "cdPlayerWindow": return <CDPlayerContent />;
-        case "lowQualityDogsIcon": return "";
-        case "subwayFilesIcon": return "";
+        case "lowQualityDogsWindow": return "";
+        case "subwayFilesWindow": return <SubwayFilesContent />;
 
         default: return <p>Unknown Window: {windowId}</p>;
     }

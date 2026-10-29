@@ -83,7 +83,7 @@
 .carousel__footer {
     background-color: var(--win-silver);
     display: flex;
-    flex: 1 0 12px;
+    flex: 0 0 12px;
     flex-direction: row;
     justify-content: space-between;
 
@@ -103,7 +103,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 2px 8px 2px 8px;
+    margin: 4px;
     padding: 2px;
     background-color: var(--win-silver);
     cursor: pointer;
