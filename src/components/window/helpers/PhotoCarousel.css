@@ -67,7 +67,7 @@
                 -1px  1px   0 1px var(--win-black);   /* Left */
 }
 
-.carousel__body-image {
+.carousel__body-media {
     padding: 4px;
     background-color: var(--win-white);
     align-self: center;

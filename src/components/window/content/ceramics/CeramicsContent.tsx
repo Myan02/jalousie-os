@@ -1,22 +1,22 @@
 import PhotoCarousel from "../../helpers/PhotoCarousel";
 
 const CeramicsContent = () => {
-
     const img_base = "/src/assets/content/ceramics/"
-    const image_modules = import.meta.glob(`/src/assets/content/ceramics/*.jpg`, { eager: true });
+    const image_modules = import.meta.glob(`/src/assets/content/ceramics/*`, { eager: true });
 
-    const displayImages = Object.entries(image_modules).map(([path], index) => {
-        const fileName = path.split('/').pop()?.replace(/\.[^/.]+$/, "");
+    const displayMedia = Object.entries(image_modules).map(([path], index) => {
+        const file = path.split('/').pop();
+
+        const fileName = file?.replace(/\.[^/.]+$/, "");
+        const extension = file?.replace(String(fileName), "")
 
         return {
-            id: index, src: `${img_base}${fileName}.jpg`, description: fileName
+            id: index, src: `${img_base}${fileName}${extension}`, extension: extension, description: fileName
         }
     })
 
     return (
-        <>
-            <PhotoCarousel windowId="ceramicsWindow" images={displayImages} />
-        </>
+        <PhotoCarousel windowId="ceramicsWindow" media={displayMedia} />
     );
 };
 

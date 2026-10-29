@@ -4,6 +4,8 @@ import DocumentsContent from "./content/documents/DocumentsContent";
 import GuideContent from "./content/guide/GuideContent";
 import ResumeContent from "./content/resume/ResumeContent";
 import CeramicsContent from "./content/ceramics/CeramicsContent";
+import WorkshopsContent from "./content/workshops/WorkshopsContent";
+import CDPlayerContent from "./content/cd-player/CDPlayerContent";
 
 const WindowContent = ({ windowId }: { windowId: string }) => {
     switch (windowId) {
@@ -16,8 +18,8 @@ const WindowContent = ({ windowId }: { windowId: string }) => {
         /* Window Icon Content */
         case "resumeWindow": return <ResumeContent />;
         case "ceramicsWindow": return <CeramicsContent />;
-        case "workshopsWindow": return "";
-        case "cdPlayerWindow": return "";
+        case "workshopsWindow": return <WorkshopsContent />;
+        case "cdPlayerWindow": return <CDPlayerContent />;
         case "lowQualityDogsIcon": return "";
         case "subwayFilesIcon": return "";
 

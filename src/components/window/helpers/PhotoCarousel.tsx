@@ -6,30 +6,59 @@ import "./PhotoCarousel.css";
 
 interface Props {
     windowId: string,
-    images: { id: number, src: string | undefined, description: string | undefined }[]
+    media: { id: number, src: string | undefined, extension: string | undefined, description: string | undefined }[]
 };
 
-const PhotoCarousel = ({ windowId, images }: Props) => {
+const PhotoCarousel = ({ windowId, media }: Props) => {
     const { windows } = useDragContext();
-    const [currentImage, setCurrentImage] = useState<number>(10);
+    const [currentMedia, setCurrentMedia] = useState<number>(0);
 
-    const curWindow = windows.find((w) => w.id === windowId)
+    const curWindow = windows.find((w) => w.id === windowId);
 
     const handleNext = () => {
-        setCurrentImage((prev) => prev === images.length - 1 ? 0 : prev + 1);
-    }
+        setCurrentMedia((prev) => prev === media.length - 1 ? 0 : prev + 1);
+    };
 
     const handlePrev = () => {
-        setCurrentImage((prev) => prev === 0 ? images.length - 1 : prev - 1)
-    }
+        setCurrentMedia((prev) => prev === 0 ? media.length - 1 : prev - 1)
+    };
 
-    const displayImages = images.map((image) => {
+    const handleDownload = (m: number) => {
+        const link = document.createElement('a');
+        link.href = String(media[m].src);
+        link.download = String(media[m].description);
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const displayMedia = media.map((m) => {
+        if (m.extension === ".mp4") {
+            return <video
+                className="carousel__body-media"
+                controls
+                muted
+                key={m.id}
+                style={{
+                    width: "auto",
+                    height: curWindow ? curWindow?.height - 124 : "100%",
+                }}
+            >
+                <source src={m.src} type="video/mp4" />
+                Your browser does not support video.
+            </video>
+        }
+
         return <img
-            className="carousel__body-image"
+            className="carousel__body-media"
             style={{
                 width: "auto",
                 height: curWindow ? curWindow?.height - 124 : "100%",
-            }} key={image.id} src={image.src} alt={image.description} />
+            }}
+            key={m.id}
+            src={m.src}
+            alt={m.description} />
     });
 
     return (
@@ -47,13 +76,13 @@ const PhotoCarousel = ({ windowId, images }: Props) => {
             </div>
 
             <div className="carousel__body">
-                {displayImages[currentImage]}
+                {displayMedia[currentMedia]}
             </div>
 
             <div className="carousel__footer">
                 <button className="carousel__footer__button" onClick={handlePrev}>Prev</button>
                 <Divider divType="vertical" />
-                <h4 className="carousel__footer__description"><i>{images[currentImage].description}</i></h4>
+                <h4 className="carousel__footer__description"><i>{media[currentMedia].description}</i></h4>
                 <Divider divType="vertical" />
                 <button className="carousel__footer__button" onClick={handleNext}>Next</button>
             </div>
