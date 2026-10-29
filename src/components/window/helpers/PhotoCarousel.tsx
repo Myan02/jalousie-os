@@ -60,6 +60,7 @@ const PhotoCarousel = ({ windowId, media }: Props) => {
         if (m.extension === ".mp4") {
             return <video
                 className="carousel__body-media"
+                autoPlay
                 controls
                 muted
                 key={m.id}
