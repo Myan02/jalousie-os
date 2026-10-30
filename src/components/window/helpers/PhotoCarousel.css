@@ -71,8 +71,9 @@
     padding: 4px;
     background-color: var(--win-white);
     align-self: center;
-    max-height: 90%;
+    
     width: auto;
+    height: auto;
 
     border: 2px solid;
     border-color: var(--win-black);
@@ -83,7 +84,7 @@
 .carousel__footer {
     background-color: var(--win-silver);
     display: flex;
-    flex: 0 0 12px;
+    flex: 0 0 32px;
     flex-direction: row;
     justify-content: space-between;
 
@@ -97,6 +98,7 @@
 .carousel__footer__description {
     display: flex;
     align-items: center;
+    text-align: center;
 }
 
 .carousel__footer__button {
@@ -104,7 +106,7 @@
     align-items: center;
     justify-content: center;
     margin: 4px;
-    padding: 2px;
+    padding: 4px;
     background-color: var(--win-silver);
     cursor: pointer;
 

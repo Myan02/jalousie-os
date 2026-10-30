@@ -49,9 +49,9 @@ const PhotoCarousel = ({ windowId, media }: Props) => {
                 auto-rotate-delay="0"
                 rotation-per-second="-20deg"
                 style={{
+                    height: "90%",
                     width: "90%",
-                    height: curWindow ? curWindow?.height - 124 : "100%",
-                    backgroundColor: "var(--win-silver)"
+                    backgroundColor: "var(--win-silver)",
                 }}
             >    {/* @ts-ignore */}
             </model-viewer>)
@@ -65,8 +65,8 @@ const PhotoCarousel = ({ windowId, media }: Props) => {
                 muted
                 key={m.id}
                 style={{
-                    width: "auto",
-                    height: curWindow ? curWindow?.height - 124 : "100%",
+                    maxHeight: curWindow ? `calc(${curWindow.height - 124}px - 32px)` : "calc(100% - 32px)",
+                    maxWidth: curWindow ? `calc(${curWindow.width - 64}px - 32px)` : "calc(100% - 32px)",
                 }}
             >
                 <source src={m.src} type="video/mp4" />
@@ -77,8 +77,8 @@ const PhotoCarousel = ({ windowId, media }: Props) => {
         return <img
             className="carousel__body-media"
             style={{
-                width: "auto",
-                height: curWindow ? curWindow?.height - 124 : "100%",
+                maxHeight: curWindow ? `calc(${curWindow.height - 124}px - 32px)` : "calc(100% - 32px)",
+                maxWidth: curWindow ? `calc(${curWindow.width - 64}px - 32px)` : "calc(100% - 32px)",
             }}
             key={m.id}
             src={m.src}
