@@ -1,0 +1,77 @@
+.resume {
+    background-color: var(--win-text);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    height: 100%;
+    width: auto;
+    padding: 4px;
+}
+
+/* Headers */
+.resume__header {
+    background-color: var(--win-text);
+
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 32px;
+
+    border: 2px solid;
+    border-top-color:    var(--win-white);
+    border-left-color:   var(--win-white);
+    border-right-color:  var(--win-silver);
+    border-bottom-color: var(--win-silver);
+
+    box-shadow: 0  -1px 0 1px var(--win-silver),  /* Top */
+                1px 0   0 1px var(--win-white),   /* Right */
+                0   1px 0 1px var(--win-white),   /* Bottom */
+               -1px 0   0 1px var(--win-silver);  /* Left */
+}
+
+.resume__header-dropdowns {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    padding: 2px;
+}
+
+
+/* Body */
+.resume__body {
+    background-color: var(--win-white);
+
+    display: flex;
+    flex: 12;
+    justify-content: center;
+    overflow: hidden;
+
+    border: 1px solid;
+    border-top-color:    var(--win-black);
+    border-left-color:   var(--win-black);
+    border-right-color:  var(--win-silver);
+    border-bottom-color: var(--win-silver);
+
+    box-shadow: -1px -1px 0 1px var(--win-black),   /* Top */
+                 1px  0   0 1px var(--win-white),   /* Right */
+                 0    1px 0 1px var(--win-white),   /* Bottom */
+                -1px  1px   0 1px var(--win-black);   /* Left */
+}
+
+
+/* Footer */
+.resume__footer {
+    background-color: var(--win-silver);
+    display: flex;
+    flex: 0 0 24px;
+    flex-direction: row;
+    justify-content: space-between;
+
+    border: 2px solid;
+    border-top-color:    var(--win-dark);
+    border-left-color:   var(--win-dark);
+    border-right-color:  var(--win-white);
+    border-bottom-color: var(--win-white);
+}

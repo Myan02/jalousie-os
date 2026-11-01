@@ -82,7 +82,7 @@ const PhotoCarousel = ({ windowId, media }: Props) => {
             }}
             key={m.id}
             src={m.src}
-            alt={m.description}
+            alt={m.src}
         />
     });
 
