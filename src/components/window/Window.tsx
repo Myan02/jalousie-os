@@ -38,7 +38,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
      * 
      * @param e: mouse event, listens on mouse move
      */
-    const handleScaleDrag = (e: React.MouseEvent) => {
+    const handleScaleDrag = (e: React.PointerEvent) => {
         e.stopPropagation();
         focusWindow(win.id);
 
@@ -56,7 +56,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         /**
          * Event listener, updates on move when the mouse is held down
          */
-        const onMove = (e: MouseEvent) => {
+        const onMove = (e: PointerEvent) => {
             setIsDragging(true);
 
             const distToEdgeX = window.innerWidth - windowBorderPosition.current["top-left"].x;
@@ -98,8 +98,8 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 scaleWindow(win.id, newWidth, newHeight, "neutral");
             }
 
-            document.removeEventListener("mousemove", onMove);
-            document.removeEventListener("mouseup", onUp);
+            document.removeEventListener("pointermove", onMove);
+            document.removeEventListener("pointerup", onUp);
         };
 
         /**
@@ -116,8 +116,8 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 pos = "corner";
             }
 
-            document.addEventListener("mousemove", onMove);
-            document.addEventListener("mouseup", onUp);
+            document.addEventListener("pointermove", onMove);
+            document.addEventListener("pointerup", onUp);
         }
     };
 
@@ -126,14 +126,14 @@ const Window = ({ window: win }: { window: AppWindow }) => {
      * 
      * @param e : mouse event, listen on mouse move
      */
-    const handleTitleMouseDown = (e: React.MouseEvent) => {
+    const handleTitleMouseDown = (e: React.PointerEvent) => {
         focusWindow(win.id);
         dragOffset.current = { x: e.clientX - win.x, y: e.clientY - win.y };    /* Sets the top left point as the reference point to move from */
 
         /**
          * Event listener, called when user holds mouse down over title bar
          */
-        const onMove = (e: MouseEvent) => {
+        const onMove = (e: PointerEvent) => {
             e.stopPropagation();
 
             /* Clamps the X position to the screen. remove clamp to give free movement. */
@@ -155,13 +155,13 @@ const Window = ({ window: win }: { window: AppWindow }) => {
          * Event listener, removes drag move listener when user lets go of mouse
          */
         const onUp = () => {
-            document.removeEventListener("mousemove", onMove);
-            document.removeEventListener("mouseup", onUp);
+            document.removeEventListener("pointermove", onMove);
+            document.removeEventListener("pointerup", onUp);
         };
 
         /* Add event listener when user clicks on title bar */
-        document.addEventListener("mousemove", onMove);
-        document.addEventListener("mouseup", onUp);
+        document.addEventListener("pointermove", onMove);
+        document.addEventListener("pointerup", onUp);
     };
 
     /**
@@ -199,11 +199,12 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 width: win.width,
                 height: win.height,
                 zIndex: win.zIndex,
-                userSelect: "none"
+                userSelect: "none",
+                touchAction: 'none'
             }}
             onDragStart={e => e.preventDefault()}
-            onMouseDown={handleScaleDrag}
-            onMouseMove={(e) => {
+            onPointerDown={handleScaleDrag}
+            onPointerMove={(e) => {
 
                 windowBorderPosition.current = {
                     "top-left": { x: win.x, y: win.y },
@@ -230,7 +231,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             }}
             onMouseLeave={() => document.body.style.cursor = "default"}
         >
-            <div className="window__titlebar" onMouseDown={handleTitleMouseDown} onDoubleClick={handleScaleButtonClicked}>
+            <div className="window__titlebar" onPointerDown={handleTitleMouseDown} onDoubleClick={handleScaleButtonClicked}>
                 <img className="window__titlebar-icon" src={`./src/assets/icons/${win.windowSrc}`} alt={win.title} />
                 <span className="window__titlebar-title">{win.title}</span>
 

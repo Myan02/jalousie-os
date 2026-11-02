@@ -45,9 +45,9 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 
     // Track the current windows + add the guide on startup
     const [windows, setWindows] = useState<AppWindow[]>([{
-        id: "documentsWindow",
-        title: "Documents",
-        windowSrc: "document-icon.png",
+        id: "guideWindow",
+        title: "Start Guide",
+        windowSrc: "guide-icon.png",
 
         // Center of the window; get the top left corner of the window in the center of the browser and offset in by half of the size of the window
         x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),

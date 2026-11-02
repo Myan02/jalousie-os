@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDragContext } from "../../context/DragContext";
+import startupSound from "../../assets/audio/startup-sound.mp3"
 import "./Taskbar.css";
 
 const Taskbar = () => {
     const { windows, focusWindow } = useDragContext();
     const [time, setTime] = useState(new Date());
 
+    const startupSoundObject = new Audio(startupSound);
+    startupSoundObject.volume = 0.25;
+
     useEffect(() => {
+        startupSoundObject.play();
         const interval = setInterval(() => setTime(new Date()), 1000);
         return () => clearInterval(interval);
     }, []);
