@@ -1,3 +1,4 @@
+/* Grid styling if icons present */
 .window-icon-grid {
     position: relative;
     width: 100%;
@@ -6,6 +7,7 @@
     overflow: hidden;
 }
 
+/* Grid styling if grid has no displayable icons */
 .window-icon-grid__empty {
     position: absolute;
     top: 50%;

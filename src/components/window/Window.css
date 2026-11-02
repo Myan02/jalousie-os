@@ -1,3 +1,4 @@
+/* Main Window Scaling */
 .window {
     position: fixed;
     display: flex;
@@ -13,6 +14,7 @@
     border-bottom-color: var(--win-dark);
 }
 
+/* Titlebar */
 .window__titlebar {
     display: flex;
     align-items: center;
@@ -87,6 +89,7 @@
     transform: translate(1px, 1px);
 }
 
+/* Window Content */
 .window__content {
     flex: 1;
     background-color: var(--win-content);

@@ -1,3 +1,4 @@
+/* Main Label Style  */
 .WinLabel {
     font-family: "MS Sans Serif", sans-serif;
     display: flex;
@@ -8,11 +9,13 @@
     user-select: none;
 }
 
+/* Optional image */
 .WinLabel__img {
     height: 20px;
     pointer-events: none;
 }
 
+/* Text */
 .WinLabel__text {
     margin-left: 4px;
     padding-left: 2px;

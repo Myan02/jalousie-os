@@ -1,3 +1,14 @@
+/**
+ * TL;DR a canvas component that displays any icons
+ * 
+ * Use this component to create a canvas that will take any icons and display them 
+ * in a grid pattern. Must provide parent window and size to get the number of 
+ * allowable icon rows and cols.
+ * 
+ * Use the icon type and parent window id to filter out specific icons you
+ * would like to display.
+ */
+
 import { useDragContext } from "../../context/DragContext";
 import DraggableIcon, { GRID_CELL_HEIGHT, GRID_CELL_WIDTH } from "../shared/DraggableIcon";
 import { useRef, useEffect } from "react";
@@ -7,27 +18,28 @@ import type { AppIcon } from "../../types/Types";
 const FIRST_ROW: number = 0;
 
 interface props {
-    parentWindowId: string;
+    parentWindowId: string;     /* Important: lets us filter specific icons to show */
     parentWidth: number;
     parentHeight: number;
 }
 
 const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) => {
     const { icons, selectIcon, moveIcon } = useDragContext();
-    const containerRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);  /* Keeps track of the grid size */
 
+    /* Max cols and rows changes based on parent window size */
     const maxCols = Math.floor(parentWidth / GRID_CELL_WIDTH);
     const maxRows = Math.floor(parentHeight / GRID_CELL_HEIGHT);
 
-    // Grab the proper window icons and reset their positions on window scale
+    /* Grab the proper window icons and reset their positions on window scale */
     let windowIcons = icons.filter((icon) =>
         icon.scope === "window" && icon.parentWindowId === parentWindowId
     ).reduce((acc: AppIcon[], icon) => {
 
-        // Icons are out of window bounds
+        /* Icons are out of window bounds */
         if (icon.col >= maxCols || icon.row >= maxRows) {
 
-            // Convert icon positions to set items for quick lookups
+            /* Convert icon positions to set items for quicker lookups */
             const occupiedPositions = new Set(
                 acc.map((i: AppIcon) => `${i.row}, ${i.col}`)
             );
@@ -36,12 +48,12 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
             let newCol = 0;
             let found = false;
 
-            // Iterate over the CURRENT window size
+            /* Iterate over the CURRENT window size */
             for (newRow = 0; newRow < maxRows && !found; newRow++) {
                 for (newCol = 0; newCol < maxCols && !found; newCol++) {
                     const posKey = `${newRow}, ${newCol}`;
 
-                    // Empty spot found, push icon with new row and col
+                    /* Empty spot found, push icon with new row and col */
                     if (!occupiedPositions.has(posKey)) {
                         acc.push({ ...icon, row: newRow, col: newCol });
                         occupiedPositions.add(posKey);
@@ -51,7 +63,7 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
             }
         }
 
-        // Icons are IN bounds, do not modify 
+        /* Icons are IN bounds, do not modify */
         else {
             acc.push(icon);
         }
@@ -59,7 +71,7 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
         return acc;
     }, []);
 
-    // Reset the position of icons upon rerender
+    /* Reset the position of icons upon rerender */
     useEffect(() => {
         windowIcons.forEach((icon, index) => moveIcon(icon.id, index, FIRST_ROW));
     }, [containerRef]);
@@ -67,7 +79,7 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
     /**
      * Unselect Icon when clicking outside of an icon in the grid space
      * 
-     * @param e : click event
+     * @param e : mouse click event
      */
     const handleGridClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (e.target === containerRef.current) {
@@ -90,7 +102,6 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
             }
         </div>
     );
-
 };
 
 export default WindowIconGrid;

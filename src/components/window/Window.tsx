@@ -1,3 +1,8 @@
+/**
+ * Create a window component that handles user dragging, scaling, maximizing, minimizing, 
+ * and closing. All icons render a window component when double clicked. 
+ */
+
 import { useRef, useState } from "react";
 import { useDragContext } from "../../context/DragContext";
 import type { AppWindow } from "../../types/Types";
@@ -13,19 +18,20 @@ import "./Window.css";
  */
 const Window = ({ window: win }: { window: AppWindow }) => {
     const { closeWindow, minimizeWindow, focusWindow, moveWindow, scaleWindow } = useDragContext();
-    const dragOffset = useRef({ x: 0, y: 0 });  // Keep track of mouse location in relation to window title position
+
+    const dragOffset = useRef({ x: 0, y: 0 });                      /* Keep track of mouse location in relation to window title position */
     const windowBorderPosition = useRef({
         "top-left": { x: 0, y: 0 },
         "top-right": { x: 0, y: 0 },
         "bottom-left": { x: 0, y: 0 },
         "bottom-right": { x: 0, y: 0 }
-    });    // Keep track of the positions of all 4 corners of a window for easy referencing
-    const dragRef = useRef<HTMLDivElement>(null);
-    const [isDragging, setIsDragging] = useState<Boolean>(false);
+    });                                                             /* Keep track of the positions of all 4 corners of a window for easy referencing */
+    const dragRef = useRef<HTMLDivElement>(null);                   /* Outer border reference; shows only when dragging */
+    const [isDragging, setIsDragging] = useState<Boolean>(false);   /* Dragging flag; True when dragging */
 
     const TASKBAR_HEIGHT: number = 32;
-    const SCROLL_BUFFER: number = 12;       // Wiggle room user has when they want to scroll
-    const TITLE_BAR_WIDTH: number = 28;     // Window title size
+    const SCROLL_BUFFER: number = 12;       /* Wiggle room user has when they want to scroll */
+    const TITLE_BAR_WIDTH: number = 28;     /* Window title size */
 
     /**
      * Handles the scaling of windows when users grab the right/bottom edges or bottom-right corner
@@ -69,7 +75,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 document.body.style.cursor = "nwse-resize";
             }
 
-            // Update drag border 
+            /* Update drag border  */
             if (dragRef.current) {
                 const dragStyle = dragRef.current.style
                 dragStyle.outline = "2px dotted #FF0000";
@@ -86,7 +92,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         const onUp = () => {
             setIsDragging(false);
 
-            // Only update scale if the values actually updated from mousemove
+            /* Only update scale if the values actually updated from mousemove */
             if (newHeight || newWidth) {
                 document.body.style.cursor = "default";
                 scaleWindow(win.id, newWidth, newHeight, "neutral");
@@ -122,7 +128,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
      */
     const handleTitleMouseDown = (e: React.MouseEvent) => {
         focusWindow(win.id);
-        dragOffset.current = { x: e.clientX - win.x, y: e.clientY - win.y };    // Sets the top left point as the reference point to move from
+        dragOffset.current = { x: e.clientX - win.x, y: e.clientY - win.y };    /* Sets the top left point as the reference point to move from */
 
         /**
          * Event listener, called when user holds mouse down over title bar
@@ -130,13 +136,13 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         const onMove = (e: MouseEvent) => {
             e.stopPropagation();
 
-            // Clamps the X position to the screen. remove clamp to give free movement.
+            /* Clamps the X position to the screen. remove clamp to give free movement. */
             const newX = Math.max(0, Math.min(
                 window.innerWidth - win.width,
                 e.clientX - dragOffset.current.x
             ));
 
-            // clamps the Y position to the screen
+            /* clamps the Y position to the screen */
             const newY = Math.max(0, Math.min(
                 window.innerHeight - win.height - TASKBAR_HEIGHT,
                 e.clientY - dragOffset.current.y
@@ -153,7 +159,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             document.removeEventListener("mouseup", onUp);
         };
 
-        // Add event listener when user clicks on title bar
+        /* Add event listener when user clicks on title bar */
         document.addEventListener("mousemove", onMove);
         document.addEventListener("mouseup", onUp);
     };
@@ -181,6 +187,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
         scaleWindow(win.id, newWidth, newHeight, win.scaleState === "maximized" ? "neutral" : "maximized");
     };
 
+    /* Do not show window if minimized is toggled */
     if (win.minimized) return null;
 
     return (
@@ -205,8 +212,8 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                     "bottom-right": { x: win.x + win.width, y: win.y + win.height }
                 }
 
-                // Update cursor based on location of user mouse 
-                // For scaling window
+                /* Update cursor based on location of user mouse  */
+                /* For scaling window */
                 if ((e.clientY <= windowBorderPosition.current["bottom-left"].y && e.clientY >= windowBorderPosition.current["bottom-left"].y - SCROLL_BUFFER) ||
                     ((e.clientX <= windowBorderPosition.current["top-right"].x && e.clientX >= windowBorderPosition.current["top-right"].x - SCROLL_BUFFER) && (e.clientY >= windowBorderPosition.current["top-right"].y + TITLE_BAR_WIDTH))
                 ) {

@@ -1,3 +1,12 @@
+/**
+ * Label helper component. A label is a div with a label. 
+ * It can have an image or a distinct style. It can even have a custom click function
+ * if needed.
+ * 
+ * Separate from Tab.tsx purely based on purpose and styling. Refer to GuideContent.tsx 
+ * for an example.
+ */
+
 import "./Label.css";
 
 type props = {

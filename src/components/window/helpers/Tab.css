@@ -1,3 +1,4 @@
+/* Main Tab Style */
 .tab {
     font-family: "MS Sans Serif", sans-serif;
     background-color: var(--win-text);
@@ -38,6 +39,7 @@
     filter: grayscale(1.0);
 }
 
+/* Image */
 .tab__img {
     width: 32px;
     height: 32px;
@@ -47,6 +49,7 @@
     pointer-events: none;
 }
 
+/* Label */
 .tab__label {
     font-size: 0.8rem;
     overflow: hidden;

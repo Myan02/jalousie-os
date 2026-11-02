@@ -1,5 +1,5 @@
 import { useState } from "react";
-import WindowTab from "../../helpers/Tab";
+import Tab from "../../helpers/Tab";
 import Divider from "../../helpers/Divider";
 import Label from "../../helpers/Label";
 import Welcome from "./welcome/Welcome";
@@ -59,11 +59,11 @@ const GuideContent = () => {
     return (
         <div className="guide">
             <div className="guide__header">
-                <WindowTab label={hidden ? "Show" : "Hide"} imageSrc={hidden ? "show-icon.png" : "hide-icon.png"} click={handleHideClick} />
-                <WindowTab label="Back" imageSrc="left-arrow-icon.png" disabled={Boolean(curIndex == 0)} click={handleBackClick} />
-                <WindowTab label="Forward" imageSrc="right-arrow-icon.png" disabled={Boolean(curIndex == sections.length - 1)} click={handleForwardClick} />
-                <WindowTab label="Options" imageSrc="options-icon.png" click={() => console.log(sections, curIndex)} />
-                <WindowTab label="Web Help" imageSrc="web-help-icon.png" click={() => console.log("clicked")} />
+                <Tab label={hidden ? "Show" : "Hide"} imageSrc={hidden ? "show-icon.png" : "hide-icon.png"} click={handleHideClick} />
+                <Tab label="Back" imageSrc="left-arrow-icon.png" disabled={Boolean(curIndex == 0)} click={handleBackClick} />
+                <Tab label="Forward" imageSrc="right-arrow-icon.png" disabled={Boolean(curIndex == sections.length - 1)} click={handleForwardClick} />
+                <Tab label="Options" imageSrc="options-icon.png" click={() => console.log(sections, curIndex)} />
+                <Tab label="Web Help" imageSrc="web-help-icon.png" click={() => console.log("clicked")} />
             </div>
 
             <Divider divType="horizontal" />

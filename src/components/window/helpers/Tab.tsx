@@ -1,3 +1,12 @@
+/**
+ * Tab helper component. A tab is a button with a label. 
+ * It can have an image or a distinct style. It can even have a custom click function
+ * if needed.
+ * 
+ * Separate from Label.tsx purely based on purpose and styling. Refer to GuideContent.tsx 
+ * for an example.
+ */
+
 import "./Tab.css";
 
 type props = {
@@ -5,11 +14,10 @@ type props = {
     imageSrc?: string;
     disabled?: boolean;
     style?: object,
-    click?: (e: React.MouseEvent) => void;  // Set in parent component any desired funcionality
+    click?: (e: React.MouseEvent) => void;  /* Set in parent component any desired funcionality */
 };
 
-// A wrapper for any clickable item in a window that has an image and a label
-const WindowTab = ({ label, imageSrc, disabled, style, click }: props) => {
+const Tab = ({ label, imageSrc, disabled, style, click }: props) => {
 
     return (
         <button style={style} disabled={disabled} draggable="false" className="tab" onClick={click}>
@@ -19,4 +27,4 @@ const WindowTab = ({ label, imageSrc, disabled, style, click }: props) => {
     );
 };
 
-export default WindowTab;
+export default Tab;

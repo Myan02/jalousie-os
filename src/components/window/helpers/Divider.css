@@ -1,8 +1,10 @@
+/* Main Divider Style */
 .divider {
     margin: 2px;
     border: 1px solid;
 }
 
+/* For horizontal dividing in parents with column flex directions */
 .horizontal {
     border-top-color: var(--win-dark);
     border-left: 0px;
@@ -10,6 +12,7 @@
     border-bottom-color: var(--win-white);
 }
 
+/* For vertical dividing in parents with horizontal flex directions */
 .vertical {
     border-top: 0px;
     border-left-color: var(--win-dark);
@@ -17,6 +20,7 @@
     border-bottom: 0px;
 }
 
+/* Thicker divider for parents with horizontal flex directions */
 .thick {
     margin: 3px 4px;
     padding: 1px;

@@ -1,3 +1,12 @@
+/**
+ * TL;DR Return the matching window component based on the parent who rendered this component
+ * 
+ * Every window component needs has basic features (dragging, scaling, title, etc) and 
+ * unique content. Depending on the window that is rendered, a different component will be
+ * returned. This component chooses what is displayed on each window based on the 
+ * matching switch statement. Desktop icons are on the top, window icons are on the bottom.
+ */
+
 import RecycleContent from "./content/recycle/RecycleContent";
 import ComputerContent from "./content/computer/ComputerContent";
 import DocumentsContent from "./content/documents/DocumentsContent";
@@ -25,6 +34,7 @@ const WindowContent = ({ windowId }: { windowId: string }) => {
         case "lowQualityDogsWindow": return <DogsContent />;
         case "subwayFilesWindow": return <SubwayFilesContent />;
 
+        /* Default option if no window component is fine */
         default: return <p>Unknown Window: {windowId}</p>;
     }
 };
