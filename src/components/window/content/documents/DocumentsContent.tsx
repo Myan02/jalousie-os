@@ -53,6 +53,11 @@ const DocumentsContent = () => {
                 deleteIcon(bufferId);
             }
 
+            // No more space for an icon
+            if (!newIcon) {
+                return;
+            }
+
             selectIcon(newIcon.id);
             setCopyBuffer({ icon: newIcon, cutFlag: false });
         }

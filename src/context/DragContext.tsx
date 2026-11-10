@@ -20,7 +20,7 @@ type DragContextType = {
 
     moveIcon: (iconId: string, newCol: number, newRow: number) => void;
     selectIcon: (iconId: string | undefined) => void;
-    createIcon: (icon: AppIcon) => AppIcon;
+    createIcon: (icon: AppIcon) => AppIcon | null;
     deleteIcon: (iconId: string) => void;
 
     openWindow: (iconId: string) => void;
@@ -95,13 +95,15 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 
         const parentWindowId = icon.parentWindowId ?? icon.windowId;
         const parentWin = windows.find((win) => win.id === parentWindowId);
-        const maxCols = parentWin ? Math.floor(parentWin.width / GRID_CELL_WIDTH) : 1;
-        const maxRows = parentWin ? Math.floor(parentWin.height / GRID_CELL_HEIGHT) : 1;
+
+        const CONTENT_SUMMARY_WIDTH_OFFSET = parentWin ? ((parentWin.width - 150) * (1 / 7) + 150) + (GRID_CELL_WIDTH / 2) : 0;
+        const CONTENT_HEADER_HEIGHT_OFFSET = parentWin ? (parentWin.height * (1 / 5)) + (GRID_CELL_HEIGHT / 2) : 0;
+        const maxCols = parentWin ? Math.floor((parentWin.width - CONTENT_SUMMARY_WIDTH_OFFSET) / GRID_CELL_WIDTH) : 1;
+        const maxRows = parentWin ? Math.floor((parentWin.height - CONTENT_HEADER_HEIGHT_OFFSET) / GRID_CELL_HEIGHT) : 1;
 
         const occupiedPositions = new Set(
             icons
                 .filter((item) =>
-                    item.windowId === icon.windowId &&
                     item.parentWindowId === icon.parentWindowId &&
                     item.scope === icon.scope
                 )
@@ -127,6 +129,10 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             if (foundEmptySlot) {
                 break;
             }
+        }
+
+        if (!foundEmptySlot) {
+            return null;
         }
 
         const updatedIcons = icons.map((item) => {

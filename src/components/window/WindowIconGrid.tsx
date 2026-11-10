@@ -30,46 +30,33 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
     /* Max cols and rows changes based on parent window size */
     const maxCols = Math.floor(parentWidth / GRID_CELL_WIDTH);
     const maxRows = Math.floor(parentHeight / GRID_CELL_HEIGHT);
+    let curRow = 1; // Start at the second row when updating locations
+    let curCol = 0
 
     /* Grab the proper window icons and reset their positions on window scale */
     let windowIcons = icons.filter((icon) =>
         icon.scope === "window" && icon.parentWindowId === parentWindowId
-    ).reduce((acc: AppIcon[], icon) => {
+    )
+        .reduce((acc: AppIcon[], icon) => {
 
-        /* Icons are out of window bounds */
-        if (icon.col >= maxCols || icon.row >= maxRows) {
-
-            /* Convert icon positions to set items for quicker lookups */
-            const occupiedPositions = new Set(
-                acc.map((i: AppIcon) => `${i.row}, ${i.col}`)
-            );
-
-            let newRow = 0;
-            let newCol = 0;
-            let found = false;
-
-            /* Iterate over the CURRENT window size */
-            for (newRow = 0; newRow < maxRows && !found; newRow++) {
-                for (newCol = 0; newCol < maxCols && !found; newCol++) {
-                    const posKey = `${newRow}, ${newCol}`;
-
-                    /* Empty spot found, push icon with new row and col */
-                    if (!occupiedPositions.has(posKey)) {
-                        acc.push({ ...icon, row: newRow, col: newCol });
-                        occupiedPositions.add(posKey);
-                        found = true;
-                    }
+            /* Icons are OUT of bounds */
+            if (icon.col >= maxCols) {
+                if (curCol >= maxCols) {
+                    curCol = 0
+                    curRow += 1
                 }
+
+                acc.push({ ...icon, row: curRow, col: curCol })
+                curCol += 1
             }
-        }
 
-        /* Icons are IN bounds, do not modify */
-        else {
-            acc.push(icon);
-        }
+            /* Icons are IN bounds, do not modify */
+            else {
+                acc.push(icon);
+            }
 
-        return acc;
-    }, []);
+            return acc;
+        }, []);
 
     /* Reset the position of icons upon rerender */
     useEffect(() => {

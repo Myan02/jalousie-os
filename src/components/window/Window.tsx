@@ -200,7 +200,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                 height: win.height,
                 zIndex: win.zIndex,
                 userSelect: "none",
-                touchAction: 'none'
+                touchAction: "none"
             }}
             onDragStart={e => e.preventDefault()}
             onPointerDown={handleScaleDrag}

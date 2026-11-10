@@ -8,7 +8,7 @@ export const GRID_CELL_WIDTH = 80;
 export const GRID_CELL_HEIGHT = 90;
 
 type Props = {
-    icon: AppIcon;
+    icon: AppIcon & { displayCol?: number; displayRow?: number };
     maxCols: number;
     maxRows: number;
 };
@@ -17,30 +17,33 @@ const DraggableIcon = ({ icon, maxCols, maxRows }: Props) => {
     const { icons, openWindow, moveIcon, selectIcon } = useDragContext();
     const ref = useRef<HTMLDivElement>(null);
 
+    const left = typeof icon.displayCol === "number" ? icon.displayCol : icon.col;
+    const top = typeof icon.displayRow === "number" ? icon.displayRow : icon.row;
+
+    const style: React.CSSProperties = {
+        position: "absolute",
+        left: left * GRID_CELL_WIDTH,
+        top: top * GRID_CELL_HEIGHT,
+        width: GRID_CELL_WIDTH,
+        height: GRID_CELL_HEIGHT,
+    };
+
     useEffect(() => {
 
         // Set selected icon to undefined when a click does not contain the icon div
         const handleOutsideClick = (e: MouseEvent) => {
-            if (ref.current && e.target !== ref.current) {
+            const target = e.target as HTMLDivElement;
+
+            if (ref.current && target.className !== ref.current.className) {
                 selectIcon(undefined);
             }
         }
 
-        document.addEventListener("mousedown", handleOutsideClick);
+        document.addEventListener("click", handleOutsideClick);
         return () => {
-            document.removeEventListener("mousedown", handleOutsideClick);
+            document.removeEventListener("click", handleOutsideClick);
         }
     }, [ref]);
-
-    const style: React.CSSProperties = {
-        position: "absolute",
-        left: icon.col * GRID_CELL_WIDTH,   // Beginning pixel position of the column
-        top: icon.row * GRID_CELL_HEIGHT,   // Beginning pixel position of the row
-
-        // Icon size
-        width: GRID_CELL_WIDTH,
-        height: GRID_CELL_HEIGHT,
-    };
 
     // Handle icon movement when user drops the icon
     const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
