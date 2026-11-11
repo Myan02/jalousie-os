@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useDragContext } from "../../context/DragContext";
 import type { AppIcon } from "../../types/Types";
 import "./DraggableIcon.css";
@@ -28,23 +28,6 @@ const DraggableIcon = ({ icon, maxCols, maxRows }: Props) => {
         height: GRID_CELL_HEIGHT,
     };
 
-    useEffect(() => {
-
-        // Set selected icon to undefined when a click does not contain the icon div
-        const handleOutsideClick = (e: MouseEvent) => {
-            const target = e.target as HTMLDivElement;
-
-            if (ref.current && target.className !== ref.current.className) {
-                selectIcon(undefined);
-            }
-        }
-
-        document.addEventListener("click", handleOutsideClick);
-        return () => {
-            document.removeEventListener("click", handleOutsideClick);
-        }
-    }, [ref]);
-
     // Handle icon movement when user drops the icon
     const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
 
@@ -69,6 +52,7 @@ const DraggableIcon = ({ icon, maxCols, maxRows }: Props) => {
     return (
         <div
             className="draggable-icon"
+            data-icon-id={icon.id}
             ref={ref}
             style={style}
             draggable

@@ -18,19 +18,56 @@ type tabButton = {
 };
 
 const DocumentsContent = () => {
-    const { windows, selectedIcon, selectIcon, createIcon, deleteIcon } = useDragContext();
+    const { icons, windows, selectedIcon, selectIcon, createIcon, deleteIcon } = useDragContext();
+
     const [dropdown, setDropdown] = useState<string | null>(null);
     const [copyBuffer, setCopyBuffer] = useState<{ icon: AppIcon, cutFlag: boolean } | null>(null);
 
+    const [selectedHistory, setSelectedHistory] = useState<AppIcon[]>([]);
+    const [selectedHistoryIndex, setSelectedHistoryIndex] = useState<number>(0);
+
     useEffect(() => {
-        const handleClick = () => {
+        const handleOutsideClick = () => {
             setDropdown(null);
         };
 
-        document.addEventListener("click", handleClick);
+        const handleIconClick = (e: PointerEvent) => {
+            const target = e.target as HTMLDivElement;
+            const iconElement = target.closest(".draggable-icon")
 
-        return () => document.removeEventListener("click", handleClick);
-    }, []);
+            if (!iconElement) {
+                return;
+            }
+
+            const iconId = iconElement.getAttribute("data-icon-id")
+            if (!iconId) {
+                return
+            }
+
+            const icon = icons.find((i) => i.id === iconId);
+
+            if (!icon) {
+                return;
+            }
+
+            if (icon.parentWindowId === "documentsWindow") {
+                console.log(selectedHistory)
+                setSelectedHistory((prev) => {
+                    const nextHistory = prev.slice(0, selectedHistoryIndex);
+                    return [...nextHistory, icon];
+                });
+                setSelectedHistoryIndex((prev) => prev + 1);
+            }
+        };
+
+        document.addEventListener("click", handleOutsideClick);
+        document.addEventListener("click", handleIconClick);
+
+        return () => {
+            document.removeEventListener("click", handleOutsideClick);
+            document.removeEventListener("click", handleIconClick);
+        };
+    }, [icons, selectedHistoryIndex]);
 
     const handleCut = () => {
         if (selectedIcon) {
@@ -71,6 +108,30 @@ const DocumentsContent = () => {
         }
     };
 
+    const handleBack = () => {
+        if (!selectedIcon) {
+            selectIcon(selectedHistory[selectedHistoryIndex - 1]?.id)
+            return;
+        }
+
+        let newIndex = Math.max(0, selectedHistoryIndex - 1)
+        selectIcon(selectedHistory[newIndex - 1]?.id);
+        setSelectedHistoryIndex(newIndex);
+        console.log(selectedHistoryIndex);
+    };
+
+    const handleForward = () => {
+        let newIndex = Math.min(selectedHistory.length, selectedHistoryIndex + 1);
+
+        if (newIndex == selectedHistory.length) {
+            newIndex -= 1;
+        }
+
+        selectIcon(selectedHistory[newIndex]?.id);
+        setSelectedHistoryIndex(newIndex);
+        console.log(selectedHistoryIndex);
+    };
+
     const window = windows.filter(win => win.id === "documentsWindow");
     const width = window[0].width;
     const height = window[0].height;
@@ -84,8 +145,8 @@ const DocumentsContent = () => {
     // Array will hold the following objects based on whether they
     //      are shown or now depending on the width of the window
     let tabs: tabButton[] = [
-        { label: "Back", imageSrc: "left-arrow-icon.png", disabled: true, show: true, onClick: () => { } },
-        { label: "Forward", imageSrc: "right-arrow-icon.png", disabled: true, show: true, onClick: () => { } },
+        { label: "Back", imageSrc: "left-arrow-icon.png", disabled: selectedHistoryIndex == 0, show: true, onClick: handleBack },
+        { label: "Forward", imageSrc: "right-arrow-icon.png", disabled: selectedHistoryIndex == selectedHistory.length, show: true, onClick: handleForward },
         { label: "Up", imageSrc: "up-folder-icon.png", disabled: false, show: true, onClick: () => { } },
         { label: "Cut", imageSrc: "cut-icon.png", disabled: false, show: true, onClick: handleCut },
         { label: "Copy", imageSrc: "copy-icon.png", disabled: false, show: true, onClick: handleCopy },

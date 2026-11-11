@@ -26,5 +26,4 @@ Desktop Fixes and Updates:
     - Fix paste so it pastes in the next open spot instead of on top (or on top of the same icon)
     - Change delete to just move the icon to the recycle bin
     - get rid of properties and views (or change them to something else)
-    - Fix the issue where the icon isnt selected when clicking the dropdown
     - move resume.pdf to the My Computer icon
