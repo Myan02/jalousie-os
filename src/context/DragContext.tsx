@@ -166,7 +166,8 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         const icon = icons.find((i) => i.id === iconId);
 
         if (icon) {
-            const newIcons = icons.filter((i) => i.id !== iconId);
+            const newIcons = icons.map((i) => i.id === icon.id ? { ...i, parentWindowId: "recycleWindow" } : i)
+            // const newIcons = icons.filter((i) => i.id !== iconId);
             setIcons(newIcons);
         }
     };

@@ -1,5 +1,3 @@
-- window content
-    - keep track of clicked icons and use the back and forward arrows to go between them
 - fix taskbar start button
     - make a custom window thaty is not draggable
     - change the way it looks
@@ -7,6 +5,9 @@
 - add a volume slider for audio
     - add audio
 
+Taskbar updates and fixes:
+- Tabs:
+    - shrink them down or make it scrollable on mobile
 
 Desktop Fixes and Updates:
 - Overall
@@ -20,10 +21,8 @@ Desktop Fixes and Updates:
 - Window
     - Set a minimum width and height for windows in case they shrink too much from the window size
 - Documents
-    - Make back and forward work for selecting icons
-    - Change Up into open and it opens the icon in addition to a double click
+    - copy pasted icons do not scale properly and overlap
     - Fix cut to actually work properly
-    - Fix paste so it pastes in the next open spot instead of on top (or on top of the same icon)
     - Change delete to just move the icon to the recycle bin
     - get rid of properties and views (or change them to something else)
     - move resume.pdf to the My Computer icon
