@@ -24,7 +24,7 @@ const DocumentsContent = () => {
     const [copyBuffer, setCopyBuffer] = useState<{ icon: AppIcon, cutFlag: boolean } | null>(null);
 
     const [selectedHistory, setSelectedHistory] = useState<AppIcon[]>([]);
-    const [selectedHistoryIndex, setSelectedHistoryIndex] = useState<number>(0);
+    const [selectedHistoryIndex, setSelectedHistoryIndex] = useState<number>(-1);
 
     useEffect(() => {
         const handleOutsideClick = () => {
@@ -51,9 +51,9 @@ const DocumentsContent = () => {
             }
 
             if (icon.parentWindowId === "documentsWindow") {
-                console.log(selectedHistory)
+
                 setSelectedHistory((prev) => {
-                    const nextHistory = prev.slice(0, selectedHistoryIndex);
+                    const nextHistory = prev.slice(0, selectedHistoryIndex + 1);
                     return [...nextHistory, icon];
                 });
                 setSelectedHistoryIndex((prev) => prev + 1);
@@ -97,12 +97,16 @@ const DocumentsContent = () => {
 
             selectIcon(newIcon.id);
             setCopyBuffer({ icon: newIcon, cutFlag: false });
+            setSelectedHistoryIndex(-1);
+            setSelectedHistory([]);
         }
     };
 
     const handleDelete = () => {
         if (selectedIcon && selectedIcon.parentWindowId === "documentsWindow") {
             deleteIcon(selectedIcon.id);
+            setSelectedHistoryIndex(-1);
+            setSelectedHistory([]);
             selectIcon(undefined);
             setCopyBuffer(null);
         }
@@ -110,14 +114,13 @@ const DocumentsContent = () => {
 
     const handleBack = () => {
         if (!selectedIcon) {
-            selectIcon(selectedHistory[selectedHistoryIndex - 1]?.id)
+            selectIcon(selectedHistory[selectedHistoryIndex]?.id)
             return;
         }
 
-        let newIndex = Math.max(0, selectedHistoryIndex - 1)
-        selectIcon(selectedHistory[newIndex - 1]?.id);
+        let newIndex = Math.max(-1, selectedHistoryIndex - 1)
+        selectIcon(selectedHistory[newIndex]?.id);
         setSelectedHistoryIndex(newIndex);
-        console.log(selectedHistoryIndex);
     };
 
     const handleForward = () => {
@@ -129,7 +132,6 @@ const DocumentsContent = () => {
 
         selectIcon(selectedHistory[newIndex]?.id);
         setSelectedHistoryIndex(newIndex);
-        console.log(selectedHistoryIndex);
     };
 
     const window = windows.filter(win => win.id === "documentsWindow");
@@ -145,8 +147,8 @@ const DocumentsContent = () => {
     // Array will hold the following objects based on whether they
     //      are shown or now depending on the width of the window
     let tabs: tabButton[] = [
-        { label: "Back", imageSrc: "left-arrow-icon.png", disabled: selectedHistoryIndex == 0, show: true, onClick: handleBack },
-        { label: "Forward", imageSrc: "right-arrow-icon.png", disabled: selectedHistoryIndex == selectedHistory.length, show: true, onClick: handleForward },
+        { label: "Back", imageSrc: "left-arrow-icon.png", disabled: selectedHistoryIndex == -1, show: true, onClick: handleBack },
+        { label: "Forward", imageSrc: "right-arrow-icon.png", disabled: selectedHistoryIndex == selectedHistory.length - 1, show: true, onClick: handleForward },
         { label: "Up", imageSrc: "up-folder-icon.png", disabled: false, show: true, onClick: () => { } },
         { label: "Cut", imageSrc: "cut-icon.png", disabled: false, show: true, onClick: handleCut },
         { label: "Copy", imageSrc: "copy-icon.png", disabled: false, show: true, onClick: handleCopy },
