@@ -18,7 +18,7 @@ type tabButton = {
 };
 
 const DocumentsContent = () => {
-    const { icons, windows, selectedIcon, selectIcon, createIcon, deleteIcon } = useDragContext();
+    const { icons, windows, openWindow, selectedIcon, selectIcon, createIcon, deleteIcon } = useDragContext();
 
     const [dropdown, setDropdown] = useState<string | null>(null);
     const [copyBuffer, setCopyBuffer] = useState<{ icon: AppIcon, cutFlag: boolean } | null>(null);
@@ -51,6 +51,9 @@ const DocumentsContent = () => {
             }
 
             if (icon.parentWindowId === "documentsWindow") {
+                if (icon === selectedHistory[selectedHistory.length - 1]) {
+                    return;
+                }
 
                 setSelectedHistory((prev) => {
                     const nextHistory = prev.slice(0, selectedHistoryIndex + 1);
@@ -134,6 +137,12 @@ const DocumentsContent = () => {
         setSelectedHistoryIndex(newIndex);
     };
 
+    const handleUp = () => {
+        if (selectedIcon) {
+            openWindow(selectedIcon.id)
+        }
+    }
+
     const window = windows.filter(win => win.id === "documentsWindow");
     const width = window[0].width;
     const height = window[0].height;
@@ -149,7 +158,7 @@ const DocumentsContent = () => {
     let tabs: tabButton[] = [
         { label: "Back", imageSrc: "left-arrow-icon.png", disabled: selectedHistoryIndex == -1, show: true, onClick: handleBack },
         { label: "Forward", imageSrc: "right-arrow-icon.png", disabled: selectedHistoryIndex == selectedHistory.length - 1, show: true, onClick: handleForward },
-        { label: "Up", imageSrc: "up-folder-icon.png", disabled: false, show: true, onClick: () => { } },
+        { label: "Up", imageSrc: "up-folder-icon.png", disabled: selectedIcon?.parentWindowId !== "documentsWindow", show: true, onClick: handleUp },
         { label: "Cut", imageSrc: "cut-icon.png", disabled: false, show: true, onClick: handleCut },
         { label: "Copy", imageSrc: "copy-icon.png", disabled: false, show: true, onClick: handleCopy },
         { label: "Paste", imageSrc: "paste-icon.png", disabled: false, show: true, onClick: handlePaste },
