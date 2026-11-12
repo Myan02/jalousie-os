@@ -51,7 +51,7 @@ const DocumentsContent = () => {
             }
 
             if (icon.parentWindowId === "documentsWindow") {
-                if (icon === selectedHistory[selectedHistory.length - 1]) {
+                if (icon.label === selectedHistory[selectedHistory.length - 1]?.label) {
                     return;
                 }
 
