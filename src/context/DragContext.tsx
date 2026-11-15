@@ -22,6 +22,7 @@ type DragContextType = {
     selectIcon: (iconId: string | undefined) => void;
     createIcon: (icon: AppIcon) => AppIcon | null;
     deleteIcon: (iconId: string) => void;
+    deleteAllIcons: () => void;
 
     openWindow: (iconId: string) => void;
     closeWindow: (windowId: string) => void;
@@ -166,11 +167,22 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         const icon = icons.find((i) => i.id === iconId);
 
         if (icon) {
+
+            if (icon.parentWindowId === "recycleWindow") {
+                setIcons((prev) => prev.filter((icon) => icon.id !== iconId));
+                return;
+            }
+
             const newIcons = icons.map((i) => i.id === icon.id ? { ...i, parentWindowId: "recycleWindow" } : i)
-            // const newIcons = icons.filter((i) => i.id !== iconId);
             setIcons(newIcons);
         }
     };
+
+    // Remove all icons from the recycle bin
+    const deleteAllIcons = () => {
+        const newIcons = icons.filter((i) => i.parentWindowId !== "recycleWindow");
+        setIcons(newIcons);
+    }
 
     // Open a window when an icon is double clicked
     const openWindow = (iconId: string) => {
@@ -250,6 +262,7 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
             selectIcon,
             createIcon,
             deleteIcon,
+            deleteAllIcons,
             openWindow,
             closeWindow,
             minimizeWindow,

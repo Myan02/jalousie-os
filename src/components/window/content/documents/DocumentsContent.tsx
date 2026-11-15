@@ -163,8 +163,6 @@ const DocumentsContent = () => {
         { label: "Copy", imageSrc: "copy-icon.png", disabled: false, show: true, onClick: handleCopy },
         { label: "Paste", imageSrc: "paste-icon.png", disabled: false, show: true, onClick: handlePaste },
         { label: "Delete", imageSrc: "delete-icon.png", disabled: false, show: true, onClick: handleDelete },
-        { label: "Properties", imageSrc: "properties-icon.png", disabled: false, show: true, onClick: () => { } },
-        { label: "Views", imageSrc: "views-icon.png", disabled: false, show: true, onClick: () => { } }
     ].reduce((acc: tabButton[], tab, index) => {
 
         if (width < (64 * (index + 1)) + 85) {
@@ -220,7 +218,7 @@ const DocumentsContent = () => {
                         }
 
                         {
-                            dropdown === "main" && <Dropdown>
+                            dropdown === "main" && <Dropdown style={{ top: "139px" }}>
                                 {hiddenTabs.map((tab) => {
                                     return <Tab key={tab.label} label={tab.label} imageSrc={tab.imageSrc} click={tab.onClick} style={{ flex: "0 0 24px", flexDirection: "row", justifyContent: "flex-start", zIndex: "999" }} />
                                 })}

@@ -229,7 +229,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                     document.body.style.cursor = "default";
                 }
             }}
-            onMouseLeave={() => document.body.style.cursor = "default"}
+            onPointerLeave={() => document.body.style.cursor = "default"}
         >
             <div className="window__titlebar" onPointerDown={handleTitleMouseDown} onDoubleClick={handleScaleButtonClicked}>
                 <img className="window__titlebar-icon" src={`./src/assets/icons/${win.windowSrc}`} alt={win.title} />

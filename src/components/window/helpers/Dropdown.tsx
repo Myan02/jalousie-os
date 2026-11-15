@@ -6,10 +6,10 @@
 import type { ReactNode } from "react";
 import "./Dropdown.css";
 
-const Dropdown = ({ children }: { children: ReactNode }) => {
+const Dropdown = ({ style, children }: { style: {}, children: ReactNode, }) => {
 
     return (
-        <div className="Dropdown">
+        <div className="Dropdown" style={style}>
             {children}
         </div>
     );

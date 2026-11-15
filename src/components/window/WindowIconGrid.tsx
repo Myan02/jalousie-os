@@ -82,7 +82,7 @@ const WindowIconGrid = ({ parentWindowId, parentWidth, parentHeight }: props) =>
             onDragStart={e => e.stopPropagation()}
         >
             {windowIcons.length === 0
-                ? <p className="window-icon-grid__empty">This folder is empty</p>
+                ? <h1 className="window-icon-grid__empty">There's nothing here...</h1>
                 : windowIcons.map((icon) => (
                     <DraggableIcon key={icon.id} icon={icon} maxCols={maxCols} maxRows={maxRows} />
                 ))

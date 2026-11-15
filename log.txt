@@ -21,8 +21,6 @@ Desktop Fixes and Updates:
 - Window
     - Set a minimum width and height for windows in case they shrink too much from the window size
 - Documents
-    - copy pasted icons do not scale properly and overlap
     - Fix cut to actually work properly
-    - Change delete to just move the icon to the recycle bin
     - get rid of properties and views (or change them to something else)
     - move resume.pdf to the My Computer icon

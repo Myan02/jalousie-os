@@ -4,9 +4,6 @@
 
     position: absolute;
     right: 0;
-    
-    /* Distance from top of a window to the bottom of the header overflow dropdown. CHANGE TO STYLE PROP */
-    top: 135px; 
 
     padding: 2px;
     background-color: var(--win-text);

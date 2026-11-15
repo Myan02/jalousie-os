@@ -133,6 +133,71 @@
     border-bottom-color: var(--win-white);
 }
 
+.taskbar__volume {
+    background-color: transparent;
+    border: none;
+}
+
+.taskbar__volume-slider__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; 
+    height: 100px;
+}
+
+.taskbar__volume-slider {
+    appearance: none;
+    outline: none;
+    height: 80%;
+    width: 6%;
+    background-color: transparent;
+    writing-mode: vertical-lr;
+
+    border: 2px solid;
+    border-top-color:    var(--win-black);
+    border-left-color:   var(--win-black);
+    border-right-color:  var(--win-white);
+    border-bottom-color: var(--win-white);
+}
+
+.taskbar__volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    background-color: var(--win-silver);
+    border-radius: 0px;
+    
+    height: 12%;
+    width: 22px;
+
+    border: 2px solid;
+    border-top-color:    var(--win-white);
+    border-left-color:   var(--win-white);
+    border-right-color:  var(--win-black);
+    border-bottom-color: var(--win-black);
+}
+
+.taskbar__volume-slider::-moz-range-thumb {
+    appearance: none;
+    background-color: var(--win-silver);
+    border-radius: 0px;
+
+    height: 12%;
+    width: 22px;
+
+    border: 2px solid;
+    border-top-color:    var(--win-white);
+    border-left-color:   var(--win-white);
+    border-right-color:  var(--win-black);
+    border-bottom-color: var(--win-black);
+}
+
+.taskbar__volume-mute {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
 .taskbar__clock {
     font-size: 0.8rem;
     color: var(--win-black);
