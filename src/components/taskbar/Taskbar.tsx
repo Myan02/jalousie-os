@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDragContext } from "../../context/DragContext";
 import Dropdown from "../window/helpers/Dropdown";
-import startupSound from "../../assets/audio/startup-sound.mp3"
+import startupSound from "/src/assets/audio/startup-sound.mp3"
 import "./Taskbar.css";
 
 const Taskbar = () => {
@@ -40,7 +40,7 @@ const Taskbar = () => {
         <div className="taskbar">
 
             <button className="taskbar__start-btn">
-                <img className="taskbar__start-icon" src="./src/assets/icons/start-icon.png" alt="Start" />
+                <img className="taskbar__start-icon" src="/assets/icons/start-icon.png" alt="Start" />
                 <span>Start</span>
             </button>
 
@@ -53,7 +53,7 @@ const Taskbar = () => {
                         className={`taskbar__window-btn ${win.minimized ? "taskbar__window-btn--minimized" : ""}`}
                         onClick={() => focusWindow(win.id)}
                     >
-                        <img className="taskbar__window-icon" src={`./src/assets/icons/${win.windowSrc}`} alt={win.title} />
+                        <img className="taskbar__window-icon" src={`/assets/icons/${win.windowSrc}`} alt={win.title} />
                         <span>{win.title}</span>
                     </button>
                 ))}
@@ -65,7 +65,7 @@ const Taskbar = () => {
                 <button
                     className="taskbar__volume"
                 >
-                    <img className="taskbar__window-icon" src="./src/assets/icons/loudspeaker-icon.png" alt="volume button" />
+                    <img className="taskbar__window-icon" src="/assets/icons/loudspeaker-icon.png" alt="volume button" />
                     {volumeWindow &&
                         <Dropdown style={{
                             backgroundColor: "var(--win-silver)",

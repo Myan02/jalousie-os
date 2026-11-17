@@ -95,7 +95,7 @@ const GuideContent = () => {
 
                 <div style={sections[curIndex] == "1"
                     ? {
-                        backgroundImage: "url('./src/assets/backdrops/help-backdrop.png')",
+                        backgroundImage: "url('/assets/backdrops/help-backdrop.png')",
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "left top",
                     }

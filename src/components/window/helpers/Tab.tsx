@@ -21,7 +21,7 @@ const Tab = ({ label, imageSrc, disabled, style, click }: props) => {
 
     return (
         <button style={style} disabled={disabled} draggable="false" className="tab" onClick={click}>
-            {imageSrc && <img className="tab__img" src={`./src/assets/icons/${imageSrc}`} alt={label} />}
+            {imageSrc && <img className="tab__img" src={`/assets/icons/${imageSrc}`} alt={label} />}
             <span className="tab__label">{label}</span>
         </button>
     );

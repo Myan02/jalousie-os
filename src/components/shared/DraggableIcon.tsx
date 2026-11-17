@@ -63,7 +63,7 @@ const DraggableIcon = ({ icon, maxCols, maxRows }: Props) => {
         >
             <img
                 className="draggable-icon__img"
-                src={`./src/assets/icons/${icon.iconSrc}`}
+                src={`/assets/icons/${icon.iconSrc}`}
                 alt={icon.label}
                 onDragStart={(e) => e.preventDefault()}
             />

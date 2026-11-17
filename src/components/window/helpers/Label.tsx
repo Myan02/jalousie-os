@@ -19,7 +19,7 @@ type props = {
 const Label = ({ id, label, imageSrc, click }: props) => {
     return (
         <div id={id} draggable="false" className="WinLabel" onClick={click}>
-            {imageSrc && <img className="WinLabel__img" src={`./src/assets/icons/${imageSrc}`} alt={label} />}
+            {imageSrc && <img className="WinLabel__img" src={`/assets/icons/${imageSrc}`} alt={label} />}
             <span className="WinLabel__text">{label}</span>
         </div>
     );

@@ -1,8 +1,8 @@
 import PhotoCarousel from "../../helpers/PhotoCarousel";
 
 const CeramicsContent = () => {
-    const img_base = "/src/assets/content/ceramics/"
-    const image_modules = import.meta.glob(`/src/assets/content/ceramics/*`, { eager: true });
+    const img_base = "/assets/content/ceramics/"
+    const image_modules = import.meta.glob(`/assets/content/ceramics/*`, { eager: true });
 
     const displayMedia = Object.entries(image_modules).map(([path], index) => {
         const file = path.split('/').pop();

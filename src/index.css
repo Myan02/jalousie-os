@@ -2,12 +2,12 @@
 
 @font-face {
     font-family: "MS Sans Serif";
-    src: url("./assets/fonts/MS-Sans-Serif.ttf");
+    src: url("/assets/fonts/MS-Sans-Serif.ttf");
 }
 
 @font-face {
     font-family: "MS Sans Serif Bold";
-    src: url("./assets/fonts/MS-Sans-Serif-Bold.ttf");
+    src: url("/assets/fonts/MS-Sans-Serif-Bold.ttf");
 }
 
 /* Reset base component styling */

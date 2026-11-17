@@ -1,8 +1,8 @@
 import PhotoCarousel from "../../helpers/PhotoCarousel";
 
 const CDPlayerContent = () => {
-    const img_base = "/src/assets/content/cd-player/"
-    const image_modules = import.meta.glob(`/src/assets/content/cd-player/*`, { eager: true });
+    const img_base = "/assets/content/cd-player/"
+    const image_modules = import.meta.glob(`/assets/content/cd-player/*`, { eager: true });
 
     const displayMedia = Object.entries(image_modules).map(([path], index) => {
         const file = path.split('/').pop();

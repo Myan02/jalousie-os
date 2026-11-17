@@ -22,6 +22,7 @@ pnpm-debug.log*
 *.swp
 .DS_Store
 Thumbs.db
+public/
 
 # Docker files
 Dockerfile

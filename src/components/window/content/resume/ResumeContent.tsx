@@ -1,11 +1,9 @@
 import Divider from "../../helpers/Divider";
 import Tab from "../../helpers/Tab";
 import "./ResumeContent.css";
-import "../../../../assets/documents/resume_michael_baburyan.pdf";
+import RESUME from "/src/assets/documents/resume_michael_baburyan.pdf";
 
 const ResumeContent = () => {
-
-    const RESUME = "src/assets/documents/resume_michael_baburyan.pdf";
 
     const handleDownload = () => {
         const link = document.createElement('a');
@@ -45,7 +43,7 @@ const ResumeContent = () => {
                     height={"100%"}
                     style={{ border: "none" }}
                 >
-                    <a href="src/assets/documents/resume_michael_baburyan.pdf" target="_blank">Download my resume!</a>
+                    <a href={RESUME} target="_blank">Download my resume!</a>
                 </object>
             </div>
 

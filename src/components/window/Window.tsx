@@ -232,7 +232,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             onPointerLeave={() => document.body.style.cursor = "default"}
         >
             <div className="window__titlebar" onPointerDown={handleTitleMouseDown} onDoubleClick={handleScaleButtonClicked}>
-                <img className="window__titlebar-icon" src={`./src/assets/icons/${win.windowSrc}`} alt={win.title} />
+                <img className="window__titlebar-icon" src={`/assets/icons/${win.windowSrc}`} alt={win.title} />
                 <span className="window__titlebar-title">{win.title}</span>
 
                 <div className="window__controls">
@@ -241,7 +241,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                         onMouseDown={e => e.stopPropagation()}
                         onClick={() => minimizeWindow(win.id)}
                     >
-                        <img src="./src/assets/icons/minimize-icon.png" alt="minimize" />
+                        <img src="/assets/icons/minimize-icon.png" alt="minimize" />
                     </button>
 
                     {/* Update window icon to maximize */}
@@ -250,7 +250,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                         onMouseDown={e => e.stopPropagation()}
                         onClick={() => handleScaleButtonClicked()}
                     >
-                        <img src="./src/assets/icons/maximize-icon.png" alt="maximize" />
+                        <img src="/assets/icons/maximize-icon.png" alt="maximize" />
                     </button>
 
                     <button
@@ -258,7 +258,7 @@ const Window = ({ window: win }: { window: AppWindow }) => {
                         onMouseDown={e => e.stopPropagation()}
                         onClick={() => closeWindow(win.id)}
                     >
-                        <img src="./src/assets/icons/close-icon.png" alt="close" />
+                        <img src="/assets/icons/close-icon.png" alt="close" />
                     </button>
                 </div>
             </div>

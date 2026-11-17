@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Temporary images
-/src/assets/content/*
+/public

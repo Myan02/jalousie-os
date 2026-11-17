@@ -231,7 +231,7 @@ const DocumentsContent = () => {
 
             <div className="documents__body">
                 <div className="documents__body-summary">
-                    <img style={{ maxWidth: "48px", margin: "24px 0 24px 24px" }} src="./src/assets/icons/document-icon.png" alt="Documents Image" />
+                    <img style={{ maxWidth: "48px", margin: "24px 0 24px 24px" }} src="/assets/icons/document-icon.png" alt="Documents Image" />
                     <h1 style={{ margin: "0 0 12px 24px" }}>My Documents </h1>
                     <div className="documents__body-summary__color-lines">
                         <div style={{ border: "1px solid #ff0000", width: "100%" }} />
