@@ -27,6 +27,8 @@ const PhotoCarousel = ({ windowId, media }: Props) => {
 
     const curWindow = windows.find((w) => w.id === windowId);
 
+    console.log(media);
+
     /**
      * Increment the current media being displayed. If the user has reached the final
      * media item, loop back to the beginning.
