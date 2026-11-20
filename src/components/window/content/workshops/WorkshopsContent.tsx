@@ -12,7 +12,7 @@ const WorkshopsContent = () => {
         return {
             id: index, src: String(imgUrl), extension: extension, description: fileName
         }
-    })
+    });
 
     return (
         <PhotoCarousel windowId="workshopsWindow" media={displayMedia} />

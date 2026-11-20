@@ -62,8 +62,10 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             const distToEdgeX = window.innerWidth - windowBorderPosition.current["top-left"].x;
             const distToEdgeY = window.innerHeight - windowBorderPosition.current["top-left"].y;
 
-            newWidth = Math.max(window.innerWidth / 3, Math.min(distToEdgeX, e.clientX - win.x));
-            newHeight = Math.max(window.innerHeight / 1.875, Math.min(distToEdgeY, e.clientY - win.y + TASKBAR_HEIGHT));
+            console.log(distToEdgeX, distToEdgeY)
+
+            newWidth = Math.max(Math.min(Math.max(window.innerWidth / 3, 300), window.innerWidth - 24), Math.min(distToEdgeX, e.clientX - win.x));
+            newHeight = Math.max(Math.min(Math.max(window.innerHeight / 1.875, 200), window.innerHeight - 48), Math.min(distToEdgeY, e.clientY - win.y + TASKBAR_HEIGHT));
 
             if (pos == "bottom") {
                 document.body.style.cursor = "ns-resize";
@@ -177,10 +179,10 @@ const Window = ({ window: win }: { window: AppWindow }) => {
             newHeight = window.innerHeight;
 
         } else {
-            x = (window.innerWidth / 2) - ((window.innerWidth / 3) / 2);
-            y = (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2);
-            newWidth = window.innerWidth / 3;
-            newHeight = window.innerHeight / 1.875;
+            x = Math.max(0, (window.innerWidth - (Math.min(Math.max(window.innerWidth / 3, 300), window.innerWidth - 24))) / 2);
+            y = Math.max(0, (window.innerHeight - (Math.min(Math.max(window.innerHeight / 1.875, 200), window.innerHeight - 48))) / 2);
+            newWidth = Math.min(Math.max(window.innerWidth / 3, 300), window.innerWidth - 24);
+            newHeight = Math.min(Math.max(window.innerHeight / 1.875, 200), window.innerHeight - 48);
         }
 
         moveWindow(win.id, x, y);

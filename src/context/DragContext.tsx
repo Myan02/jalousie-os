@@ -51,15 +51,21 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
         windowSrc: "guide-icon.png",
 
         // Center of the window; get the top left corner of the window in the center of the browser and offset in by half of the size of the window
-        x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2),
-        y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2),
-        width: window.innerWidth / 3,
-        height: window.innerHeight / 1.875,
+        x: Math.max(0, (window.innerWidth - (Math.min(Math.max(window.innerWidth / 3, 300), window.innerWidth - 24))) / 2),
+        y: Math.max(0, (window.innerHeight - (Math.min(Math.max(window.innerHeight / 1.875, 200), window.innerHeight - 48))) / 2),
+        width: Math.min(Math.max(window.innerWidth / 3, 300), window.innerWidth - 24),
+        height: Math.min(Math.max(window.innerHeight / 1.875, 200), window.innerHeight - 48),
 
         zIndex: 1,
         minimized: false,
         scaleState: "neutral",
     }]);
+
+    console.log({
+        innerWidth: window.innerWidth,
+        clientWidth: document.documentElement.clientWidth,
+        visualWidth: window.visualViewport?.width
+    })
 
     // Global z index value for all windows
     const [nextZ, setNextZ] = useState(10);
@@ -197,17 +203,17 @@ export const DragProvider = ({ children }: { children: ReactNode }) => {
 
         // Use the number of open windows to determine new window offset so windows don't open on top of eachother
         const numOpenWindows: number = windows.length;
-        const WIN_POS_OFFSET: number = 20;
+        const WIN_POS_OFFSET: number = 15;
 
         // add the window to the open window state
         setWindows((prev) => [...prev, {
             id: icon.windowId,
             title: icon.label,
             windowSrc: icon.iconSrc,
-            x: (window.innerWidth / 2) - ((window.innerWidth / 3) / 2) + (numOpenWindows * WIN_POS_OFFSET),
-            y: (window.innerHeight / 2) - ((window.innerHeight / 1.875) / 2) + (numOpenWindows * WIN_POS_OFFSET),
-            width: window.innerWidth / 3,
-            height: window.innerHeight / 1.875,
+            x: Math.max(0, (window.innerWidth - (Math.min(Math.max(window.innerWidth / 3, 300), window.innerWidth - 24))) / 2) + (numOpenWindows * WIN_POS_OFFSET),
+            y: Math.max(0, (window.innerHeight - (Math.min(Math.max(window.innerHeight / 1.875, 200), window.innerHeight - 48))) / 2) + (numOpenWindows * WIN_POS_OFFSET),
+            width: Math.min(Math.max(window.innerWidth / 3, 300), window.innerWidth - 24),
+            height: Math.min(Math.max(window.innerHeight / 1.875, 200), window.innerHeight - 48),
             zIndex: getNextZ(),
             minimized: false,
             scaleState: "neutral",
