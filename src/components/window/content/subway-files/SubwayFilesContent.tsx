@@ -2,7 +2,7 @@ import PhotoCarousel from "../../helpers/PhotoCarousel";
 
 const SubwayFilesContent = () => {
     const img_base = "/src/assets/content/models/"
-    const image_modules = import.meta.glob(`/src/assets/content/models/*`, { eager: true });
+    const image_modules = import.meta.glob(`/src/assets/content/models/*`, { eager: true, import: "default" });
 
     const displayMedia = Object.entries(image_modules).map(([path], index) => {
         const file = path.split('/').pop();

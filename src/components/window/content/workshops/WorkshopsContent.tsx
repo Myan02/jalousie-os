@@ -2,7 +2,7 @@ import PhotoCarousel from "../../helpers/PhotoCarousel";
 
 const WorkshopsContent = () => {
     const img_base = "/src/assets/content/workshops/"
-    const image_modules = import.meta.glob(`/src/assets/content/workshops/*`, { eager: true });
+    const image_modules = import.meta.glob(`/src/assets/content/workshops/*`, { eager: true, import: "default" });
 
     const displayMedia = Object.entries(image_modules).map(([path], index) => {
         const file = path.split('/').pop();
